@@ -317,7 +317,7 @@ for more details.
 ### Child Elements
 
 Any HTML element may be assigned to an animator instance using `animator: animator-identifier` CSS
-syntax. In this case, the element is assigned as a child element to the first ancestor animator of
+syntax. In this case, the element is assigned as a child element to the first ancestor animator root of
 the given name.
 
 ***Note:*** The animator receives this in a flat list but we can also consider sending a sparse
