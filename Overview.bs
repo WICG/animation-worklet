@@ -349,14 +349,14 @@ the maps are those specified in <a>registerAnimator</a> for the given <a>animato
 <pre class='idl'>
 [
     Exposed=(AnimationWorklet),
-    NoInterfaceObject,
 ] interface ElementProxy {
     attribute StylePropertyMapReadOnly inputStyleMap;
     attribute StylePropertyMapReadOnly outputStyleMap;
 };
 </pre>
 
-Issue: TODO(smcgruer): Do we want NoInterfaceObject here? Do we want Exposed here?
+Issue: Todo: Should we have NoInterfaceObject/Exposed here? How do we properly represent that this
+cannot be constructed via javascript?
 
 Issue: Todo: Need to figure out how we are handling scroll offsets. Previous approach was to have 
 mutable offset on each proxy but the new idea is to have readonly ScrollTimeline.
