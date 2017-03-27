@@ -518,8 +518,9 @@ Issue: Todo: Define when we may get rid of the animator.
 CSS Animator Notation {#css-animator-notation}
 ==============================================
 
-Two CSS properties 'animator-root' and 'animator' may be used to assign an HTML elements to an animator
-instance either as a root element or a child element.
+Two CSS properties 'animator-root' and 'animator' may be used to
+assign an HTML elements to an animator instance either as a root element or a child element.
+
 
 <pre class='propdef'>
 Name: animator-root
@@ -546,6 +547,8 @@ Animatable: no
        registered.
 </dl>
 
+
+
 <pre class='propdef'>
 Name: animator
 Value:  [ none |  <<ident>> ]#
@@ -557,6 +560,7 @@ Percentages: N/A
 Media: interactive
 Animatable: no
 </pre>
+
 
 <dl dfn-type=value dfn-for=animator>
     <dt><dfn>none</dfn>
@@ -573,8 +577,10 @@ Animatable: no
       with document root element as its root.
 </dl>
 
+
 Note: All the elements in the root element's DOM sub-tree that get associated with the same animator
  name will get assigned to the the animator instance linked with this root element.
+
 
 Issue: Todo: Write the algorithm for element assignments. It will include construction of a new
 {{ElementProxy}}, looking up or creating animator instance, and assigning the animator. We probably
