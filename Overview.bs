@@ -302,7 +302,7 @@ cannot be constructed via javascript?
 Issue: Todo: Need to figure out how we are handling scroll offsets. Previous approach was to have 
 mutable offset on each proxy but the new idea is to have readonly ScrollTimeline.
 
-When user agent wants to <dfn>create an element proxy</dfn> given |animatorObj| and |element|, it
+When user agent wants to <dfn>create an element proxy</dfn> given |element|, it
 <em>must</em> run the following steps:
 
     1. Let |animatorInstance| be the <a>animator instance</a> associated with |element|
