@@ -525,6 +525,15 @@ animations and in a different thread. Supporting other composite operation is no
 point.
 
 
+Security Considerations {#security-considerations}
+==================================================
+
+Issue: Need to decide what security considerations there are for this spec.
+
+Privacy Considerations {#privacy-considerations}
+================================================
+
+Issue: Need to decide what privacy considerations there are for this spec.
 
 Examples {#examples}
 ====================
