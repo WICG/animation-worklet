@@ -462,7 +462,8 @@ Animatable: no
 <dl dfn-type=value dfn-for=animator-root>
     <dt><dfn>none</dfn>
     <dd>
-      There will be no animators with this element as their root.
+      There will be no <a>animator instance</a> that has this element as it's
+      <a>root element proxy</a>.
     <dt><dfn><<ident>>#</dfn>
     <dd>
       For each <<ident>> specified in the list, the following applies for each animation frame:
