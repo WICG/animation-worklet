@@ -90,15 +90,19 @@ animations. The worklet can be accessed via {{animationWorklet}} attribute.
 The {{animationWorklet}}'s <a>worklet global scope type</a> is {{AnimationWorkletGlobalScope}}.
 
 <pre class='idl'>
+interface AnimationWorklet {
+  [NewObject] Promise&lt;void> import(USVString moduleURL);
+};
+
 partial interface Window {
-    [SameObject] readonly attribute Worklet animationWorklet;
+    [SameObject] readonly attribute AnimationWorklet animationWorklet;
 };
 </pre>
 
 <pre class='idl'>
 callback VoidFunction = void ();
 
-[Global=(Worklet,AnimationWorklet),Exposed=AnimationWorklet]
+[Exposed=AnimationWorklet]
 interface AnimationWorkletGlobalScope : WorkletGlobalScope {
     void registerAnimator(DOMString name, VoidFunction animatorCtor);
 };
