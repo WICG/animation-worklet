@@ -43,6 +43,8 @@ urlPrefix: https://tc39.github.io/ecma262/#sec-; type: dfn;
     url: terms-and-definitions-function; text: function
     urlPrefix: native-error-types-used-in-this-standard-
         text: TypeError
+urlPrefix: https://www.w3.org/TR/hr-time-2/#dom-; type: dfn
+    text: DOMHighResTimeStamp
 </pre>
 
 <pre class=biblio>
@@ -423,7 +425,7 @@ instance list</a> as |instance|:
 
   6. Let |animateFunction| be |definition|'s <a>animate function</a>.
 
-  9. Let |timestamp| be a DOMHighResTimeStamp indicating the current frame start time.
+  9. Let |timestamp| be a <a>DOMHighResTimeStamp</a> indicating the current frame start time.
 
   10. Let |timeline| be a new {{AnimationTimeline}} with its "currentTime" set to |timestamp|.
 
