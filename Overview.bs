@@ -410,7 +410,7 @@ When the user agent wants to <dfn>run animators</dfn> in a given |workletGlobalS
 
       If |definition| does not exist then abort the following steps.
 
-  2. Let |instance| be the reuslt of looking up (|animatorName|, |rootElement|) in the
+  2. Let |instance| be the result of looking up (|animatorName|, |rootElement|) in the
         |workletGlobalScope|'s <a>(animator name, root element) to instance map</a>.
 
       If |instance| does not exist then <a>create a new animator instance</a> for |animatorName|,
