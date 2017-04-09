@@ -135,7 +135,7 @@ Concepts {#concepts}
 A <dfn>animator definition</dfn> describes an author defined animation which can be referenced by
 an <a>animator instance</a>. It consists of:
 
- - An <dfn>class constructor</dfn>.
+ - A <dfn>class constructor</dfn>.
 
  - An <dfn>animate function</dfn>.
 
