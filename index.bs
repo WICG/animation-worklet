@@ -143,7 +143,7 @@ an <a>animator instance</a>. It consists of:
     its <dfn>input property list</dfn>, and its <dfn>output propert list</dfn>.
 
 
-Each entry in the animator slot list consists of:
+Each entry in the <a>animator slot list</a> consists of:
 
  - An <dfn>animator slot</dfn> <<ident>>#.
 
@@ -232,7 +232,7 @@ run the following steps:
 
     1. Let |elementsIterable| be the result of <a>Get</a>(|animatorCtor|, |elements|).
 
-    2. If |elementsIterable| is not undefined, then for each |slot| in |elementsIterable| run the
+    2. If |elementsIterable| is not <em>undefined</em>, then for each |slot| in |elementsIterable| run the
         following steps:
 
         - Let |slotDictionary| be an empty dictionary.
@@ -255,7 +255,7 @@ the user agent <em>must</em> run the following steps:
 
     2. Let |propertiesIterable| be the result of <a>Get</a>(|slot|, |name|).
 
-    3. If |propertiesIterable| is not undefined, then set |properties| to the result of
+    3. If |propertiesIterable| is not <em>undefined</em>, then set |properties| to the result of
         converting |propertiesIterable| to a <code>sequence&lt;DOMString></code>. If an
         exception is thrown, rethrow the exception and abort all these steps.
 
@@ -500,7 +500,7 @@ Animatable: no
         one of the <a>element proxies</a> for the given <a>animator slot</a>.
 
       If the same <a>animator name</a> occurs multiple times in the list, only the first occurrence of that
-      <<ident>> is processed.
+      <a>animator name</a> is processed.
 </dl>
 
 <pre class='propdef'>

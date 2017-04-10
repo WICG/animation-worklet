@@ -1423,7 +1423,7 @@ pre.idl.highlight { color: #708090; }
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">CSS Animation Worklet API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2017-04-09">9 April 2017</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2017-04-10">10 April 2017</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1560,7 +1560,7 @@ an <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instan
      <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="animator-slot-list">animator slot list</dfn> containing a dictionary providing each <dfn data-dfn-type="dfn" data-noexport="" id="slot-name">slot name<a class="self-link" href="#slot-name"></a></dfn>,
 its <dfn data-dfn-type="dfn" data-noexport="" id="input-property-list">input property list<a class="self-link" href="#input-property-list"></a></dfn>, and its <dfn data-dfn-type="dfn" data-noexport="" id="output-propert-list">output propert list<a class="self-link" href="#output-propert-list"></a></dfn>.</p>
    </ul>
-   <p>Each entry in the animator slot list consists of:</p>
+   <p>Each entry in the <a data-link-type="dfn" href="#animator-slot-list" id="ref-for-animator-slot-list-1">animator slot list</a> consists of:</p>
    <ul>
     <li data-md="">
      <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="animator-slot">animator slot</dfn> <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-ident">&lt;ident></a>#.</p>
@@ -1643,7 +1643,7 @@ it as an input / output property of proxies but the new idea is to have a readon
     <li data-md="">
      <p>Let <var>elementsIterable</var> be the result of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<var>animatorCtor</var>, <var>elements</var>).</p>
     <li data-md="">
-     <p>If <var>elementsIterable</var> is not undefined, then for each <var>slot</var> in <var>elementsIterable</var> run the
+     <p>If <var>elementsIterable</var> is not <em>undefined</em>, then for each <var>slot</var> in <var>elementsIterable</var> run the
 following steps:</p>
      <ul>
       <li data-md="">
@@ -1666,7 +1666,7 @@ the user agent <em>must</em> run the following steps:</p>
     <li data-md="">
      <p>Let <var>propertiesIterable</var> be the result of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<var>slot</var>, <var>name</var>).</p>
     <li data-md="">
-     <p>If <var>propertiesIterable</var> is not undefined, then set <var>properties</var> to the result of
+     <p>If <var>propertiesIterable</var> is not <em>undefined</em>, then set <var>properties</var> to the result of
 converting <var>propertiesIterable</var> to a <code>sequence&lt;DOMString></code>. If an
 exception is thrown, rethrow the exception and abort all these steps.</p>
    </ol>
@@ -1727,7 +1727,7 @@ cannot be constructed via javascript?</p>
     <li data-md="">
      <p>Let <var>definition</var> be the result of looking up <var>name</var> on the <var>workletGlobalScope</var>’s <a data-link-type="dfn" href="#animator-name-to-animator-definition-map" id="ref-for-animator-name-to-animator-definition-map-4">animator name to animator definition map</a>.</p>
     <li data-md="">
-     <p>Let <var>slot</var> be the result of finding the item with name <var>animatorSlot</var> in the <a data-link-type="dfn" href="#animator-slot-list" id="ref-for-animator-slot-list-1">animator slot list</a> of <var>definition</var>.</p>
+     <p>Let <var>slot</var> be the result of finding the item with name <var>animatorSlot</var> in the <a data-link-type="dfn" href="#animator-slot-list" id="ref-for-animator-slot-list-2">animator slot list</a> of <var>definition</var>.</p>
     <li data-md="">
      <p>Let <var>inputProperties</var> be <a data-link-type="dfn" href="#animator-input-property-list" id="ref-for-animator-input-property-list-1">animator input property list</a> of <var>slot</var>.</p>
     <li data-md="">
@@ -1774,7 +1774,7 @@ either <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="frame-r
     <li data-md="">
      <p>Let <var>definition</var> be the result of looking up <var>name</var> on the <var>workletGlobalScope</var>’s <a data-link-type="dfn" href="#animator-name-to-animator-definition-map" id="ref-for-animator-name-to-animator-definition-map-5">animator name to animator definition map</a>.</p>
     <li data-md="">
-     <p>Let <var>slot</var> be the result of finding the item with name <var>animatorSlot</var> in the <a data-link-type="dfn" href="#animator-slot-list" id="ref-for-animator-slot-list-2">animator slot list</a> of <var>definition</var>.</p>
+     <p>Let <var>slot</var> be the result of finding the item with name <var>animatorSlot</var> in the <a data-link-type="dfn" href="#animator-slot-list" id="ref-for-animator-slot-list-3">animator slot list</a> of <var>definition</var>.</p>
     <li data-md="">
      <p>Let <var>inputProperties</var> be <a data-link-type="dfn" href="#animator-input-property-list" id="ref-for-animator-input-property-list-2">animator input property list</a> of <var>slot</var>.</p>
     <li data-md="">
@@ -1872,7 +1872,7 @@ of that <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-
 laid out in <a href="#running-animators">§8 Running Animators</a>) with an <a data-link-type="dfn" href="#element-proxy" id="ref-for-element-proxy-6">element proxy</a> for this element passed as
 one of the <a data-link-type="dfn" href="#element-proxy" id="ref-for-element-proxy-7">element proxies</a> for the given <a data-link-type="dfn" href="#animator-slot" id="ref-for-animator-slot-4">animator slot</a>.</p>
      </ul>
-     <p>If the same <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-8">animator name</a> occurs multiple times in the list, only the first occurrence of that <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-ident">&lt;ident></a> is processed.</p>
+     <p>If the same <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-8">animator name</a> occurs multiple times in the list, only the first occurrence of that <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-9">animator name</a> is processed.</p>
    </dl>
    <table class="def propdef" data-link-for-hint="animator">
     <tbody>
@@ -1881,7 +1881,7 @@ one of the <a data-link-type="dfn" href="#element-proxy" id="ref-for-element-pro
       <td><dfn class="dfn-paneled css" data-dfn-type="property" data-export="" id="propdef-animator">animator</dfn>
      <tr class="value">
       <th>Value:
-      <td class="prod">none <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one">|</a> [<a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-9">animator name</a> <a data-link-type="dfn" href="#animator-slot" id="ref-for-animator-slot-5">animator slot</a><a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-comma">,</a> ]<a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-zero-plus">*</a>
+      <td class="prod">none <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one">|</a> [<a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-10">animator name</a> <a data-link-type="dfn" href="#animator-slot" id="ref-for-animator-slot-5">animator slot</a><a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-comma">,</a> ]<a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-zero-plus">*</a>
      <tr>
       <th>Initial:
       <td>none
@@ -1910,18 +1910,18 @@ one of the <a data-link-type="dfn" href="#element-proxy" id="ref-for-element-pro
    <dl>
     <dt><dfn class="css" data-dfn-for="animator" data-dfn-type="value" data-export="" id="valdef-animator-none">none<a class="self-link" href="#valdef-animator-none"></a></dfn> 
     <dd> This element will not be passed into any <a data-link-type="dfn" href="#animate-function" id="ref-for-animate-function-4">animate function</a> as one of the <a data-link-type="dfn" href="#element-proxy" id="ref-for-element-proxy-8">element proxies</a>. 
-    <dt><a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-10">animator name</a> <a data-link-type="dfn" href="#animator-slot" id="ref-for-animator-slot-6">animator slot</a> 
+    <dt><a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-11">animator name</a> <a data-link-type="dfn" href="#animator-slot" id="ref-for-animator-slot-6">animator slot</a> 
     <dd>
-      For each <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-11">animator name</a> specified in the list, the following applies for each animation frame: 
+      For each <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-12">animator name</a> specified in the list, the following applies for each animation frame: 
      <ul>
       <li data-md="">
-       <p>If there is no <a data-link-type="dfn" href="#animator-definition" id="ref-for-animator-definition-4">animator definition</a> registered with the given <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-12">animator name</a>, the inclusion
-of that <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-13">animator name</a> as a value has no effect.</p>
+       <p>If there is no <a data-link-type="dfn" href="#animator-definition" id="ref-for-animator-definition-4">animator definition</a> registered with the given <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-13">animator name</a>, the inclusion
+of that <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-14">animator name</a> as a value has no effect.</p>
       <li data-md="">
-       <p>Otherwise, an <a data-link-type="dfn" href="#element-proxy" id="ref-for-element-proxy-9">element proxy</a> for this element will be passed into the <a data-link-type="dfn" href="#animate-function" id="ref-for-animate-function-5">animate function</a> of the closest ancestor <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-16">animator instance</a> with the given <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-14">animator name</a> as one of the <a data-link-type="dfn" href="#element-proxy" id="ref-for-element-proxy-10">element proxies</a> for the given <a data-link-type="dfn" href="#animator-slot" id="ref-for-animator-slot-7">animator slot</a>. If no
+       <p>Otherwise, an <a data-link-type="dfn" href="#element-proxy" id="ref-for-element-proxy-9">element proxy</a> for this element will be passed into the <a data-link-type="dfn" href="#animate-function" id="ref-for-animate-function-5">animate function</a> of the closest ancestor <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-16">animator instance</a> with the given <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-15">animator name</a> as one of the <a data-link-type="dfn" href="#element-proxy" id="ref-for-element-proxy-10">element proxies</a> for the given <a data-link-type="dfn" href="#animator-slot" id="ref-for-animator-slot-7">animator slot</a>. If no
 such <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-17">animator instance</a> exists, one is created with the document root element as its <a data-link-type="dfn" href="#root-element" id="ref-for-root-element-3">root element</a>.</p>
      </ul>
-     <p>If the same <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-15">animator name</a> occurs multiple times in the list, only the first occurrence of that <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-16">animator name</a> is processed.</p>
+     <p>If the same <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-16">animator name</a> occurs multiple times in the list, only the first occurrence of that <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-17">animator name</a> is processed.</p>
    </dl>
    <h2 class="heading settled" data-level="11" id="effect-stack"><span class="secno">11. </span><span class="content">Effect Stack</span><a class="self-link" href="#effect-stack"></a></h2>
    <p class="issue" id="issue-b3b90f2d"><a class="self-link" href="#issue-b3b90f2d"></a> Todo: the animators output style values have the highest order in animation stack effect and
@@ -2392,8 +2392,9 @@ point.<a href="#issue-b3b90f2d"> ↵ </a></div>
   <aside class="dfn-panel" data-for="animator-slot-list">
    <b><a href="#animator-slot-list">#animator-slot-list</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-animator-slot-list-1">6. Creating an Element Proxy</a>
-    <li><a href="#ref-for-animator-slot-list-2">7. Requesting Animation Frames</a>
+    <li><a href="#ref-for-animator-slot-list-1">3. Concepts</a>
+    <li><a href="#ref-for-animator-slot-list-2">6. Creating an Element Proxy</a>
+    <li><a href="#ref-for-animator-slot-list-3">7. Requesting Animation Frames</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="animator-slot">
@@ -2432,7 +2433,7 @@ point.<a href="#issue-b3b90f2d"> ↵ </a></div>
    <ul>
     <li><a href="#ref-for-animator-name-1">4. Registering an Animator Definition</a>
     <li><a href="#ref-for-animator-name-2">5. Creating an Animator</a>
-    <li><a href="#ref-for-animator-name-3">10. CSS Animator Notation</a> <a href="#ref-for-animator-name-4">(2)</a> <a href="#ref-for-animator-name-5">(3)</a> <a href="#ref-for-animator-name-6">(4)</a> <a href="#ref-for-animator-name-7">(5)</a> <a href="#ref-for-animator-name-8">(6)</a> <a href="#ref-for-animator-name-9">(7)</a> <a href="#ref-for-animator-name-10">(8)</a> <a href="#ref-for-animator-name-11">(9)</a> <a href="#ref-for-animator-name-12">(10)</a> <a href="#ref-for-animator-name-13">(11)</a> <a href="#ref-for-animator-name-14">(12)</a> <a href="#ref-for-animator-name-15">(13)</a> <a href="#ref-for-animator-name-16">(14)</a>
+    <li><a href="#ref-for-animator-name-3">10. CSS Animator Notation</a> <a href="#ref-for-animator-name-4">(2)</a> <a href="#ref-for-animator-name-5">(3)</a> <a href="#ref-for-animator-name-6">(4)</a> <a href="#ref-for-animator-name-7">(5)</a> <a href="#ref-for-animator-name-8">(6)</a> <a href="#ref-for-animator-name-9">(7)</a> <a href="#ref-for-animator-name-10">(8)</a> <a href="#ref-for-animator-name-11">(9)</a> <a href="#ref-for-animator-name-12">(10)</a> <a href="#ref-for-animator-name-13">(11)</a> <a href="#ref-for-animator-name-14">(12)</a> <a href="#ref-for-animator-name-15">(13)</a> <a href="#ref-for-animator-name-16">(14)</a> <a href="#ref-for-animator-name-17">(15)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="root-element">
