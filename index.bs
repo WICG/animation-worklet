@@ -311,8 +311,8 @@ the user agent <em>must</em> run the following steps:
 
     5. Let |animatorInstance| be the result of <a>Construct</a>(|animatorCtor|).
 
-      If <a>Construct</a> throws an exception, set the result of looking up |name| and
-      |root element| in |animatorInstanceMap| to <b>null</b>, and abort the following steps.
+        If <a>Construct</a> throws an exception, set the result of looking up |name| and
+        |root element| in |animatorInstanceMap| to <b>null</b>, and abort the following steps.
 
     6. Set the following on |animatorInstance| with:
         - <a>animator name</a> being |name|
