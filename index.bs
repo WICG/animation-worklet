@@ -684,7 +684,7 @@ registerAnimator('spring', class {
 
     static elements = [
         {name: 'fadein', inputProperties:  ['--spring-k'], outputProperties =  ['opacity']}];
-    static timelines = [ 'document' ];
+    static timelines = ['document'];
 
     animate(elementMap, timelines) {
         this.startTime_ = this.startTime_ || timelines[0].currentTime;
