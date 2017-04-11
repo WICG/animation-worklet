@@ -404,10 +404,20 @@ Requesting Animation Frames {#requesting-animation-frames}
 ====================
 Each <a>animator instance</a> has an associated <dfn>animation requested flag</dfn>. It must be
 either <dfn>frame-requested</dfn>, <dfn>frame-current</dfn>. It is initially set to
+<a>frame-current</a>. Various events can cause the <a>animation requested flag</a> to be set to
+<a>frame-requested</a>.
+
+[[#running-animators]] resets the <a>animation requested flag</a> on animators to
 <a>frame-current</a>.
+
+Element proxy creation/removal {#requesting-animation-frames-element-proxy}
+------------------------------
 
 When a new element proxy is assigned to or removed from an <a>animator instance</a>, that 
 <a>animator instance</a>'s <a>animation requested flag</a> should be set to <a>frame-requested</a>.
+
+Change in an element's computed style {#requesting-animation-frames-computed-style}
+-------------------------------------
 
 When the computed style for an element changes, the user agent <em>must</em> run the following steps:
 
@@ -430,18 +440,29 @@ For each <a>element proxy</a> for that element, perform the following steps:
     7. For each property in |inputProperties|, if the property’s computed value has changed,
         set the <a>animation requested flag</a> on the |animator| to <a>frame-requested</a>.
 
-The timelines present in an animator's <a>animator timeline list</a> can also affect the
-<a>animation requested flag</a>:
+DocumentTimeline change {#requesting-animation-frames-document-timeline}
+-----------------------
 
-    * If the string "document" is present in an animator's <a>animator timeline list</a>, then that
-        animator's <a>animation requested flag</a> must be set to <a>frame-requested</a> at the start
-        of each animation frame.
-    * If the string "scroll" is present in an animator's <a>animator timeline list</a>, then when
-        the scroll position of the nearest non-visible overflow ancestor to the animator’s
-        <a>root element</a> changes, that animator's <a>animation requested flag</a> must be set to
-        <a>frame-requested</a>.
+If a {{DocumentTimelineOptions}} instance is present in an animator's <a>animator timeline list</a>
+then that animator's <a>animation requested flag</a> <em>must</em> be set to <a>frame-requested</a>
+at the start of each animation frame.
 
-[[#running-animators]] sets <a>animation requested flag</a> on animators to <a>frame-current</a>.
+ScrollTimeline change {#requesting-animation-frames-scroll-timeline}
+---------------------
+
+Issue: This needs to be better spec'd, and the fill mode properly handled.
+
+If a {{ScrollTimelineOptions}} instance is present in an animator's <a>animator timeline list</a>
+then the user agent <em>must</em> run the following steps when the scroll position of the nearest
+non-visible overflow ancestor to the animator’s <a>root element</a> changes:
+
+For each {{ScrollTimelineOptions}} instance |options| in the <a>animator timeline list</a>:
+
+  1. If the orientation of the |options| does not match the orientation of the change in scroll
+       position, abort the following steps.
+  2. If the previous and current scroll position are outside the range specified by the |options|
+       startScrollOffset and endScrollOffset and the fill is <b>none</b>, abort the following steps.
+  3. Set the animator's <a>animation requested flag</a> to <a>frame-requested</a>.
 
 Running Animators {#running-animators}
 ======================================================
