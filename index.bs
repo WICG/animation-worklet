@@ -29,8 +29,6 @@ urlPrefix: https://www.w3.org/TR/css3-transitions/#; type: dfn;
     text: animatable properties
 urlPrefix: https://www.w3.org/TR/web-animations/#; type: dfn;
     url: the-documents-default-timeline; text: default document timeline
-    url: documenttimeline; text: DocumentTimeline
-    url: dictdef-documenttimelineoptions; text: DocumentTimelineOptions
 urlPrefix: https://tc39.github.io/ecma262/#sec-; type: dfn;
     text: constructor
     text: Construct

@@ -1176,8 +1176,7 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version ebf2734db77b4aff3d5749f39c4209550544a23e" name="generator">
-  <link href="https://wicg.github.io/animation-worklet/" rel="canonical">
+  <meta content="Bikeshed version fa6d32dea6b39d19cbb9dd6d5e69f189e8bdd53f" name="generator">
 <style>/* style-md-lists */
 
             /* This is a weird hack for me not yet following the commonmark spec
@@ -1430,6 +1429,7 @@ pre.idl.highlight { color: #708090; }
      <dt>This version:
      <dd><a class="u-url" href="https://wicg.github.io/animation-worklet/">https://wicg.github.io/animation-worklet/</a>
      <dt>Issue Tracking:
+     <dd><a href="https://github.com/WICG/animation-worklet/issues/">GitHub</a>
      <dd><a href="#issues-index">Inline In Spec</a>
      <dt class="editor">Editors:
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:majidvp@google.com">Majid Valipour</a>
@@ -1905,7 +1905,7 @@ in the same frame.</p>
    </table>
    <dl>
     <dt><dfn class="css" data-dfn-for="animator-root" data-dfn-type="value" data-export="" id="valdef-animator-root-none">none<a class="self-link" href="#valdef-animator-root-none"></a></dfn> 
-    <dd> There will be no <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-14">animator instance</a> that has this element as its <a data-link-type="dfn" href="#root-element" id="ref-for-root-element-1">root element</a>. 
+    <dd> There will be no <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-14">animator instance</a> that has this element as its <a data-link-type="dfn" href="#root-element" id="ref-for-root-element-2">root element</a>. 
     <dt><a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-4">animator name</a> <a data-link-type="dfn" href="#animator-slot" id="ref-for-animator-slot-3">animator slot</a> 
     <dd>
       For each <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-5">animator name</a> specified in the list, the following applies for each animation frame: 
@@ -1914,7 +1914,7 @@ in the same frame.</p>
        <p>If there is no <a data-link-type="dfn" href="#animator-definition" id="ref-for-animator-definition-3">animator definition</a> registered with the given <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-6">animator name</a>, the inclusion
 of that <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-7">animator name</a> as a value has no effect.</p>
       <li data-md="">
-       <p>Otherwise, an <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-15">animator instance</a> with this element as its <a data-link-type="dfn" href="#root-element" id="ref-for-root-element-2">root element</a> will exist and will have its <a data-link-type="dfn" href="#animate-function" id="ref-for-animate-function-3">animate function</a> called (with respect to the rules
+       <p>Otherwise, an <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-15">animator instance</a> with this element as its <a data-link-type="dfn" href="#root-element" id="ref-for-root-element-3">root element</a> will exist and will have its <a data-link-type="dfn" href="#animate-function" id="ref-for-animate-function-3">animate function</a> called (with respect to the rules
 laid out in <a href="#running-animators">§8 Running Animators</a>) with an <a data-link-type="dfn" href="#element-proxy" id="ref-for-element-proxy-6">element proxy</a> for this element passed as
 one of the <a data-link-type="dfn" href="#element-proxy" id="ref-for-element-proxy-7">element proxies</a> for the given <a data-link-type="dfn" href="#animator-slot" id="ref-for-animator-slot-4">animator slot</a>.</p>
      </ul>
@@ -1965,8 +1965,7 @@ one of the <a data-link-type="dfn" href="#element-proxy" id="ref-for-element-pro
 of that <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-14">animator name</a> as a value has no effect.</p>
       <li data-md="">
        <p>Otherwise, an <a data-link-type="dfn" href="#element-proxy" id="ref-for-element-proxy-9">element proxy</a> for this element will be passed into the <a data-link-type="dfn" href="#animate-function" id="ref-for-animate-function-5">animate function</a> of the closest ancestor <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-16">animator instance</a> with the given <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-15">animator name</a> as one of the <a data-link-type="dfn" href="#element-proxy" id="ref-for-element-proxy-10">element proxies</a> for the given <a data-link-type="dfn" href="#animator-slot" id="ref-for-animator-slot-7">animator slot</a>. If no
-such <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-17">animator instance</a> exists, one is created with the document root element as its <a data-link-type="dfn" href="#root-element" id="ref-for-root-element-5">root element</a>.</p>
-such <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-17">animator instance</a> exists, one is created with the document root element as its <a data-link-type="dfn" href="#root-element" id="ref-for-root-element-3">root element</a>.</p>
+such <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-17">animator instance</a> exists, one is created with the document root element as its <a data-link-type="dfn" href="#root-element" id="ref-for-root-element-4">root element</a>.</p>
      </ul>
      <p>If the same <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-16">animator name</a> occurs multiple times in the list, only the first occurrence of that <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-17">animator name</a> is processed.</p>
    </dl>
@@ -2496,9 +2495,7 @@ point.<a href="#issue-b3b90f2d"> ↵ </a></div>
    <b><a href="#root-element">#root-element</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-root-element-1">7. Requesting Animation Frames</a>
-    <li><a href="#ref-for-root-element-2">8. Running Animators</a>
-    <li><a href="#ref-for-root-element-3">10. CSS Animator Notation</a> <a href="#ref-for-root-element-4">(2)</a> <a href="#ref-for-root-element-5">(3)</a>
-    <li><a href="#ref-for-root-element-1">10. CSS Animator Notation</a> <a href="#ref-for-root-element-2">(2)</a> <a href="#ref-for-root-element-3">(3)</a>
+    <li><a href="#ref-for-root-element-2">10. CSS Animator Notation</a> <a href="#ref-for-root-element-3">(2)</a> <a href="#ref-for-root-element-4">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="element-proxy-map">
