@@ -126,8 +126,8 @@ interface AnimationWorkletGlobalScope : WorkletGlobalScope {
             };
 
             static timelines = [
-                { originTime: 0 },
-                { orientation: 'vertical' },
+                'document',
+                { type: 'scroll', { orientation: 'vertical' } },
             ];
 
             animate(elementMap, timelines) {
@@ -278,17 +278,30 @@ the user agent <em>must</em> run the following steps:
 
     2. Let |timelinesIterable| be the result of <a>Get</a>(|animatorCtor|, |timelines|).
 
-    3. For each |timeline| in |timelinesIterable|, run the following steps:
+    3. For each |timeline| in |timelinesIterable|, run the following sub-steps:
 
-        - If <a>Type</a>(|timeline|) is not {{DocumentTimelineOptions}} or {{ScrollTimelineOptions}}
-            then <a>throw</a> a <a>NotSupportedError</a> and abort all these steps.
+        1. If <a>Type</a>(|timeline|) is {{DOMString}} and |timeline| is "document",
+             push a default {{DocumentTimelineOptions}} onto |timelines| and abort the following
+             sub-steps.
 
-    4. If |timelinesIterable| is not undefined, then set |timelines| to the result of
-        converting |timelinesIterable| to a <code>sequence&lt;Object></code>. If an
-        exception is thrown, rethrow the exception and abort all these steps.
+        2. If <a>Type</a>(|timeline|) is {{DOMString}} and |timeline| is "scroll",
+             push a default {{ScrollTimelineOptions}} onto |timelines| and abort the following
+             sub-steps.
 
-Issue: It's not clear if we can actually tell the type of DocumentTimelineOptions or
-       ScrollTimelineOptions.
+        3. Let |type| be the result of <a>Get</a>(|timeline|, "type").
+
+        4. Let |options| be the result of <a>Get</a>(|timeline|, "options").
+
+        5. If |type| or |options| is <b>undefined</b> then throw a <a>NotSupportedError</a> and
+             abort all these steps.
+
+        6. If |type| is "document", push a {{DocumentTimelineOptions}} created from |options| onto
+             |timelines| and abort the following sub-steps.
+
+        7. If |type| is "scroll", push a {{ScrollTimelineOptions}} created from |options| onto
+             |timelines| and abort the following sub-steps.
+
+        8. Throw a <a>NotSupportedError</a> and abort all these steps.
 
 Creating an Animator {#creating-animator}
 ====================================================
@@ -506,9 +519,8 @@ When the user agent wants to <dfn>run animators</dfn> in a given |workletGlobalS
 
   7. For each |timeline| in the <a>animator timeline list</a> of |definition|, do the following:
 
-    - If <a>Type</a>(|timeline|) is {{DocumentTimelineOptions}}, push a new {{DocumentTimeline}} 
-        created using |timeline| to the |timelines| list, with the "currentTime" set to a
-        <a>DOMHighResTimeStamp</a> indicating the current frame start time.
+    - If <a>Type</a>(|timeline|) is {{DocumentTimelineOptions}}, push a new {{DocumentTimeline}}
+        created using |timeline| to the |timelines| list.
 
     - If <a>Type</a>(|timeline|) is {{ScrollTimelineOptions}}, push a new {{ScrollTimeline}} created
         using |timeline| to the |timelines| list, adding the nearest non-visible overflow ancestor
@@ -647,7 +659,7 @@ registerAnimator('spring', class {
 
     static elements = [
         {name: 'fadein', inputProperties:  ['--spring-k'], outputProperties =  ['opacity']}];
-    static timelines = [{ originTime: 0 }];
+    static timelines = [ 'document' ];
 
     animate(elementMap, timelines) {
         this.startTime_ = this.startTime_ || timelines[0].currentTime;
