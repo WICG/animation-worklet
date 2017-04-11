@@ -1698,26 +1698,30 @@ the user agent <em>must</em> run the following steps:</p>
      <p>For each <var>timeline</var> in <var>timelinesIterable</var>, run the following sub-steps:</p>
      <ol>
       <li data-md="">
-       <p>If <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a>(<var>timeline</var>) is <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a></code> and <var>timeline</var> is "document",
- push a default <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/web-animations/#dictdef-documenttimelineoptions">DocumentTimelineOptions</a></code> onto <var>timelines</var> and abort the following
- sub-steps.</p>
-      <li data-md="">
-       <p>If <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a>(<var>timeline</var>) is <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a></code> and <var>timeline</var> is "scroll",
- push a default <code class="idl"><a data-link-type="idl" href="https://wicg.github.io/scroll-animations/#dictdef-scrolltimelineoptions">ScrollTimelineOptions</a></code> onto <var>timelines</var> and abort the following
- sub-steps.</p>
+       <p>If <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a>(<var>timeline</var>) is <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a></code>, treat <var>timeline</var> as if it had been specified
+ as <code>{ type: <var>timeline</var>, options: {} }</code>.</p>
       <li data-md="">
        <p>Let <var>type</var> be the result of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<var>timeline</var>, "type").</p>
       <li data-md="">
        <p>Let <var>options</var> be the result of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<var>timeline</var>, "options").</p>
       <li data-md="">
-       <p>If <var>type</var> or <var>options</var> is <b>undefined</b> then throw a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#notsupportederror">NotSupportedError</a> and
- abort all these steps.</p>
-      <li data-md="">
-       <p>If <var>type</var> is "document", push a <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/web-animations/#dictdef-documenttimelineoptions">DocumentTimelineOptions</a></code> created from <var>options</var> onto <var>timelines</var> and abort the following sub-steps.</p>
-      <li data-md="">
-       <p>If <var>type</var> is "scroll", push a <code class="idl"><a data-link-type="idl" href="https://wicg.github.io/scroll-animations/#dictdef-scrolltimelineoptions">ScrollTimelineOptions</a></code> created from <var>options</var> onto <var>timelines</var> and abort the following sub-steps.</p>
-      <li data-md="">
-       <p>Throw a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#notsupportederror">NotSupportedError</a> and abort all these steps.</p>
+       <p>Process <var>type</var> and <var>options</var> according to the first matching condition in the following:</p>
+       <div class="switch">
+        <dl>
+         <dt data-md="">If <var>type</var> or <var>options</var> is <b>undefined</b>,
+         <dd data-md="">
+          <p>throw a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#notsupportederror">NotSupportedError</a> and abort all remaining steps.</p>
+         <dt data-md="">If <var>type</var> is "document",
+         <dd data-md="">
+          <p>Push a <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/web-animations/#dictdef-documenttimelineoptions">DocumentTimelineOptions</a></code> created from <var>options</var> onto <var>timelines</var>.</p>
+         <dt data-md="">If <var>type</var> is "scroll",
+         <dd data-md="">
+          <p>Push a <code class="idl"><a data-link-type="idl" href="https://wicg.github.io/scroll-animations/#dictdef-scrolltimelineoptions">ScrollTimelineOptions</a></code> created from <var>options</var> onto <var>timelines</var>.</p>
+         <dt data-md="">Otherwise,
+         <dd data-md="">
+          <p>throw a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#notsupportederror">NotSupportedError</a> and abort all remaining steps.</p>
+        </dl>
+       </div>
      </ol>
    </ol>
    <h2 class="heading settled" data-level="5" id="creating-animator"><span class="secno">5. </span><span class="content">Creating an Animator</span><a class="self-link" href="#creating-animator"></a></h2>
