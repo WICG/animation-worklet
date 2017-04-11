@@ -278,7 +278,7 @@ the user agent <em>must</em> run the following steps:
 
     2. Let |timelinesIterable| be the result of <a>Get</a>(|animatorCtor|, |timelines|).
 
-    3. For each |timeline| in |timelinesIterable|, run the following sub-steps:
+    3. For each |timeline| in |timelinesIterable|, run the following steps:
 
         1. If <a>Type</a>(|timeline|) is {{DOMString}}, treat |timeline| as if it had been specified
              as <code>{ type: |timeline|, options: {} }</code>.
