@@ -1691,7 +1691,7 @@ the user agent <em>must</em> run the following steps:</p>
      <p>For each <var>timeline</var> in <var>timelinesIterable</var>, run the following steps:</p>
      <ul>
       <li data-md="">
-       <p>If <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a>(<var>timeline</var>) is not <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/web-animations/#dictdef-documenttimelineoptions">DocumentTimelineOptions</a></code> or <code class="idl"><a data-link-type="idl">ScrollTimelineOptions</a></code> then <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#notsupportederror">NotSupportedError</a> and abort all these steps.</p>
+       <p>If <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a>(<var>timeline</var>) is not <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/web-animations/#dictdef-documenttimelineoptions">DocumentTimelineOptions</a></code> or <code class="idl"><a data-link-type="idl" href="https://wicg.github.io/scroll-animations/#dictdef-scrolltimelineoptions">ScrollTimelineOptions</a></code> then <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#notsupportederror">NotSupportedError</a> and abort all these steps.</p>
      </ul>
     <li data-md="">
      <p>If <var>timelinesIterable</var> is not undefined, then set <var>timelines</var> to the result of
@@ -1854,9 +1854,9 @@ associated <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-
       <li data-md="">
        <p>If <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a>(<var>timeline</var>) is <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/web-animations/#dictdef-documenttimelineoptions">DocumentTimelineOptions</a></code>, push a new <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/web-animations/#documenttimeline">DocumentTimeline</a></code> created using <var>timeline</var> to the <var>timelines</var> list, with the "currentTime" set to a <a data-link-type="dfn" href="https://www.w3.org/TR/hr-time-2/#dom-domhighrestimestamp">DOMHighResTimeStamp</a> indicating the current frame start time.</p>
       <li data-md="">
-       <p>If <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a>(<var>timeline</var>) is <code class="idl"><a data-link-type="idl">ScrollTimelineOptions</a></code>, push a new <code class="idl"><a data-link-type="idl">ScrollTimeline</a></code> created
+       <p>If <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a>(<var>timeline</var>) is <code class="idl"><a data-link-type="idl" href="https://wicg.github.io/scroll-animations/#dictdef-scrolltimelineoptions">ScrollTimelineOptions</a></code>, push a new <code class="idl"><a data-link-type="idl" href="https://wicg.github.io/scroll-animations/#scrolltimeline">ScrollTimeline</a></code> created
 using <var>timeline</var> to the <var>timelines</var> list, adding the nearest non-visible overflow ancestor
-of <var>rootElement</var> as the <var>scrollSource</var>.</p>
+of <var>rootElement</var> as the <code class="idl"><a data-link-type="idl" href="https://wicg.github.io/scroll-animations/#dom-scrolltimeline-scrollsource">scrollSource</a></code>.</p>
      </ul>
     <li data-md="">
      <p>Let <var>elementMap</var> be an <a data-link-type="dfn" href="#element-proxy-map" id="ref-for-element-proxy-map-2">element proxy map</a> of <var>instance</var>.</p>

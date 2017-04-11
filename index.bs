@@ -46,9 +46,10 @@ urlPrefix: https://tc39.github.io/ecma262/#sec-; type: dfn;
         text: TypeError
 urlPrefix: https://www.w3.org/TR/hr-time-2/#dom-; type: dfn
     text: DOMHighResTimeStamp
-urlPrefix: https://wicg.github.io/scroll-animations/#; type: dfn
+urlPrefix: https://wicg.github.io/scroll-animations/#; type: interface
     url: scrolltimeline; text: ScrollTimeline
     url: dictdef-scrolltimelineoptions; text: ScrollTimelineOptions
+    url: dom-scrolltimeline-scrollsource; text: scrollSource
 </pre>
 
 <pre class=biblio>
@@ -492,7 +493,7 @@ When the user agent wants to <dfn>run animators</dfn> in a given |workletGlobalS
 
     - If <a>Type</a>(|timeline|) is {{ScrollTimelineOptions}}, push a new {{ScrollTimeline}} created
         using |timeline| to the |timelines| list, adding the nearest non-visible overflow ancestor
-        of |rootElement| as the |scrollSource|.
+        of |rootElement| as the {{scrollSource}}.
 
   8. Let |elementMap| be an <a>element proxy map</a> of |instance|.
 
