@@ -1471,8 +1471,8 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
      <ol class="toc">
       <li><a href="#requesting-animation-frames-element-proxy"><span class="secno">7.1</span> <span class="content">Element proxy creation/removal</span></a>
       <li><a href="#requesting-animation-frames-computed-style"><span class="secno">7.2</span> <span class="content">Change in an element’s computed style</span></a>
-      <li><a href="#requesting-animation-frames-document-timeline"><span class="secno">7.3</span> <span class="content">DocumentTimeline change</span></a>
-      <li><a href="#requesting-animation-frames-scroll-timeline"><span class="secno">7.4</span> <span class="content">ScrollTimeline change</span></a>
+      <li><a href="#requesting-animation-frames-document-timeline"><span class="secno">7.3</span> <span class="content">Animator specifies a DocumentTimeline</span></a>
+      <li><a href="#requesting-animation-frames-scroll-timeline"><span class="secno">7.4</span> <span class="content">Animator specifies a ScrollTimeline</span></a>
      </ol>
     <li><a href="#running-animators"><span class="secno">8</span> <span class="content">Running Animators</span></a>
     <li><a href="#closing-animator"><span class="secno">9</span> <span class="content">Closing an Animator</span></a>
@@ -1838,25 +1838,50 @@ either <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="frame-r
      <p>For each property in <var>inputProperties</var>, if the property’s computed value has changed,
 set the <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-animation-requested-flag-6">animation requested flag</a> on the <var>animator</var> to <a data-link-type="dfn" href="#frame-requested" id="ref-for-frame-requested-3">frame-requested</a>.</p>
    </ol>
-   <h3 class="heading settled" data-level="7.3" id="requesting-animation-frames-document-timeline"><span class="secno">7.3. </span><span class="content">DocumentTimeline change</span><a class="self-link" href="#requesting-animation-frames-document-timeline"></a></h3>
+   <h3 class="heading settled" data-level="7.3" id="requesting-animation-frames-document-timeline"><span class="secno">7.3. </span><span class="content">Animator specifies a DocumentTimeline</span><a class="self-link" href="#requesting-animation-frames-document-timeline"></a></h3>
    <p>If a <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/web-animations/#dictdef-documenttimelineoptions">DocumentTimelineOptions</a></code> instance is present in an animator’s <a data-link-type="dfn" href="#animator-timeline-list" id="ref-for-animator-timeline-list-2">animator timeline list</a> then that animator’s <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-animation-requested-flag-7">animation requested flag</a> <em>must</em> be set to <a data-link-type="dfn" href="#frame-requested" id="ref-for-frame-requested-4">frame-requested</a> at the start of each animation frame.</p>
-   <h3 class="heading settled" data-level="7.4" id="requesting-animation-frames-scroll-timeline"><span class="secno">7.4. </span><span class="content">ScrollTimeline change</span><a class="self-link" href="#requesting-animation-frames-scroll-timeline"></a></h3>
-   <p class="issue" id="issue-a4ad40e0"><a class="self-link" href="#issue-a4ad40e0"></a> This needs to be better spec’d, and the fill mode properly handled.</p>
+   <h3 class="heading settled" data-level="7.4" id="requesting-animation-frames-scroll-timeline"><span class="secno">7.4. </span><span class="content">Animator specifies a ScrollTimeline</span><a class="self-link" href="#requesting-animation-frames-scroll-timeline"></a></h3>
    <p>If a <code class="idl"><a data-link-type="idl" href="https://wicg.github.io/scroll-animations/#dictdef-scrolltimelineoptions">ScrollTimelineOptions</a></code> instance is present in an animator’s <a data-link-type="dfn" href="#animator-timeline-list" id="ref-for-animator-timeline-list-3">animator timeline list</a> then the user agent <em>must</em> run the following steps when the scroll position of the nearest
 non-visible overflow ancestor to the animator’s <a data-link-type="dfn" href="#root-element" id="ref-for-root-element-1">root element</a> changes:</p>
-   <p>For each <code class="idl"><a data-link-type="idl" href="https://wicg.github.io/scroll-animations/#dictdef-scrolltimelineoptions">ScrollTimelineOptions</a></code> instance <var>options</var> in the <a data-link-type="dfn" href="#animator-timeline-list" id="ref-for-animator-timeline-list-4">animator timeline list</a>:</p>
    <ol>
     <li data-md="">
-     <p>If the orientation of the <var>options</var> does not match the orientation of the change in scroll
-   position, abort the following steps.</p>
-    <li data-md="">
-     <p>If the previous and current scroll position are outside the range specified by the <var>options</var> startScrollOffset and endScrollOffset and the fill is <b>none</b>, abort the following steps.</p>
-    <li data-md="">
-     <p>Set the animator’s <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-animation-requested-flag-8">animation requested flag</a> to <a data-link-type="dfn" href="#frame-requested" id="ref-for-frame-requested-5">frame-requested</a>.</p>
+     <p>For each <code class="idl"><a data-link-type="idl" href="https://wicg.github.io/scroll-animations/#dictdef-scrolltimelineoptions">ScrollTimelineOptions</a></code> instance <var>options</var> in the animator’s <a data-link-type="dfn" href="#animator-timeline-list" id="ref-for-animator-timeline-list-4">animator timeline
+   list</a> do the following steps:</p>
+     <ol>
+      <li data-md="">
+       <p>Let <var>orientation</var> be the result of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<var>options</var>, "orientation").</p>
+      <li data-md="">
+       <p>Let <var>startScrollOffset</var> be the result of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<var>options</var>, "startScrollOffset").</p>
+      <li data-md="">
+       <p>Let <var>endScrollOffset</var> be the result of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<var>options</var>, "endScrollOffset").</p>
+      <li data-md="">
+       <p>Let <var>fillMode</var> be the result of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<var>options</var>, "fill").</p>
+      <li data-md="">
+       <p>Process the <var>options</var> according to the first matching conditional in the following:</p>
+       <div class="switch">
+        <dl>
+         <dt data-md="">
+          <p>If <em>any</em> of the following are true:</p>
+          <ol>
+           <li data-md="">
+            <p>the orientation of the change in scroll position does not match <var>orientation</var>, or</p>
+           <li data-md="">
+            <p>the scroll position is before <var>startScrollOffset</var> and <var>fillMode</var> is <b>none</b> or <b>backwards</b>, or</p>
+           <li data-md="">
+            <p>the scroll position is after <var>endScrollOffset</var> and <var>fillMode</var> is <b>none</b> or <b>forwards</b>.</p>
+          </ol>
+         <dd data-md="">
+          <p>do not change the animator’s <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-animation-requested-flag-8">animation requested flag</a> value.</p>
+         <dt data-md="">Otherwise
+         <dd data-md="">
+          <p>set the animator’s <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-animation-requested-flag-9">animation requested flag</a> to <a data-link-type="dfn" href="#frame-requested" id="ref-for-frame-requested-5">frame-requested</a>.</p>
+        </dl>
+       </div>
+     </ol>
    </ol>
    <h2 class="heading settled" data-level="8" id="running-animators"><span class="secno">8. </span><span class="content">Running Animators</span><a class="self-link" href="#running-animators"></a></h2>
    <p>When a user agent wants to produce a new animation frame, if for any <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-12">animator instance</a> the
-associated <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-animation-requested-flag-9">animation requested flag</a> is <a data-link-type="dfn" href="#frame-requested" id="ref-for-frame-requested-6">frame-requested</a> then the the user agent <em>must</em> <a data-link-type="dfn" href="#run-animators" id="ref-for-run-animators-1">run animators</a> for the current frame.</p>
+associated <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-animation-requested-flag-10">animation requested flag</a> is <a data-link-type="dfn" href="#frame-requested" id="ref-for-frame-requested-6">frame-requested</a> then the the user agent <em>must</em> <a data-link-type="dfn" href="#run-animators" id="ref-for-run-animators-1">run animators</a> for the current frame.</p>
    <p class="note" role="note"><span>Note:</span> The user agent is not required to run animations on every frame. It is legal to defer
       generating an animation frame until a later frame. This allow the user agent to
       provide a different service level according to their policy.</p>
@@ -1871,7 +1896,7 @@ associated <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-
     <li data-md="">
      <p>If <var>instance</var> still does not exist or <var>instance</var> is <b>null</b> then abort the following steps.</p>
     <li data-md="">
-     <p>If the <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-animation-requested-flag-10">animation requested flag</a> for <var>instance</var> is <a data-link-type="dfn" href="#frame-current" id="ref-for-frame-current-4">frame-current</a> or the proxies
+     <p>If the <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-animation-requested-flag-11">animation requested flag</a> for <var>instance</var> is <a data-link-type="dfn" href="#frame-current" id="ref-for-frame-current-4">frame-current</a> or the proxies
     belonging to <var>instance</var> will not be visible within the visual viewport of the current frame
     the user agent <em>may</em> abort all the following steps.</p>
      <p class="issue" id="issue-dc52329c"><a class="self-link" href="#issue-dc52329c"></a> Consider giving user agents permission to skip running animator instances to throttle
@@ -2395,7 +2420,6 @@ point.</p>
   <div style="counter-reset:issue">
    <div class="issue"> Todo: Should we have NoInterfaceObject/Exposed here? How do we properly represent that this
 cannot be constructed via javascript?<a href="#issue-65c145a8"> ↵ </a></div>
-   <div class="issue"> This needs to be better spec’d, and the fill mode properly handled.<a href="#issue-a4ad40e0"> ↵ </a></div>
    <div class="issue"> Consider giving user agents permission to skip running animator instances to throttle
     slow animators.<a href="#issue-dc52329c"> ↵ </a></div>
    <div class="issue"> Todo: Define when we may get rid of the animator.<a href="#issue-d4d8f39c"> ↵ </a></div>
@@ -2479,8 +2503,8 @@ point.<a href="#issue-b3b90f2d"> ↵ </a></div>
    <b><a href="#animator-timeline-list">#animator-timeline-list</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-animator-timeline-list-1">4. Registering an Animator Definition</a>
-    <li><a href="#ref-for-animator-timeline-list-2">7.3. DocumentTimeline change</a>
-    <li><a href="#ref-for-animator-timeline-list-3">7.4. ScrollTimeline change</a> <a href="#ref-for-animator-timeline-list-4">(2)</a>
+    <li><a href="#ref-for-animator-timeline-list-2">7.3. Animator specifies a DocumentTimeline</a>
+    <li><a href="#ref-for-animator-timeline-list-3">7.4. Animator specifies a ScrollTimeline</a> <a href="#ref-for-animator-timeline-list-4">(2)</a>
     <li><a href="#ref-for-animator-timeline-list-5">8. Running Animators</a>
    </ul>
   </aside>
@@ -2527,7 +2551,7 @@ point.<a href="#issue-b3b90f2d"> ↵ </a></div>
   <aside class="dfn-panel" data-for="root-element">
    <b><a href="#root-element">#root-element</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-root-element-1">7.4. ScrollTimeline change</a>
+    <li><a href="#ref-for-root-element-1">7.4. Animator specifies a ScrollTimeline</a>
     <li><a href="#ref-for-root-element-2">10. CSS Animator Notation</a> <a href="#ref-for-root-element-3">(2)</a> <a href="#ref-for-root-element-4">(3)</a>
    </ul>
   </aside>
@@ -2627,9 +2651,9 @@ point.<a href="#issue-b3b90f2d"> ↵ </a></div>
     <li><a href="#ref-for-animation-requested-flag-3">7. Requesting Animation Frames</a> <a href="#ref-for-animation-requested-flag-4">(2)</a>
     <li><a href="#ref-for-animation-requested-flag-5">7.1. Element proxy creation/removal</a>
     <li><a href="#ref-for-animation-requested-flag-6">7.2. Change in an element’s computed style</a>
-    <li><a href="#ref-for-animation-requested-flag-7">7.3. DocumentTimeline change</a>
-    <li><a href="#ref-for-animation-requested-flag-8">7.4. ScrollTimeline change</a>
-    <li><a href="#ref-for-animation-requested-flag-9">8. Running Animators</a> <a href="#ref-for-animation-requested-flag-10">(2)</a>
+    <li><a href="#ref-for-animation-requested-flag-7">7.3. Animator specifies a DocumentTimeline</a>
+    <li><a href="#ref-for-animation-requested-flag-8">7.4. Animator specifies a ScrollTimeline</a> <a href="#ref-for-animation-requested-flag-9">(2)</a>
+    <li><a href="#ref-for-animation-requested-flag-10">8. Running Animators</a> <a href="#ref-for-animation-requested-flag-11">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="frame-requested">
@@ -2638,8 +2662,8 @@ point.<a href="#issue-b3b90f2d"> ↵ </a></div>
     <li><a href="#ref-for-frame-requested-1">7. Requesting Animation Frames</a>
     <li><a href="#ref-for-frame-requested-2">7.1. Element proxy creation/removal</a>
     <li><a href="#ref-for-frame-requested-3">7.2. Change in an element’s computed style</a>
-    <li><a href="#ref-for-frame-requested-4">7.3. DocumentTimeline change</a>
-    <li><a href="#ref-for-frame-requested-5">7.4. ScrollTimeline change</a>
+    <li><a href="#ref-for-frame-requested-4">7.3. Animator specifies a DocumentTimeline</a>
+    <li><a href="#ref-for-frame-requested-5">7.4. Animator specifies a ScrollTimeline</a>
     <li><a href="#ref-for-frame-requested-6">8. Running Animators</a>
    </ul>
   </aside>

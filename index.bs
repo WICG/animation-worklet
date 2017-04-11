@@ -455,29 +455,52 @@ For each <a>element proxy</a> for that element, perform the following steps:
     7. For each property in |inputProperties|, if the property’s computed value has changed,
         set the <a>animation requested flag</a> on the |animator| to <a>frame-requested</a>.
 
-DocumentTimeline change {#requesting-animation-frames-document-timeline}
------------------------
+Animator specifies a DocumentTimeline {#requesting-animation-frames-document-timeline}
+-------------------------------------
 
 If a {{DocumentTimelineOptions}} instance is present in an animator's <a>animator timeline list</a>
 then that animator's <a>animation requested flag</a> <em>must</em> be set to <a>frame-requested</a>
 at the start of each animation frame.
 
-ScrollTimeline change {#requesting-animation-frames-scroll-timeline}
----------------------
-
-Issue: This needs to be better spec'd, and the fill mode properly handled.
+Animator specifies a ScrollTimeline {#requesting-animation-frames-scroll-timeline}
+-----------------------------------
 
 If a {{ScrollTimelineOptions}} instance is present in an animator's <a>animator timeline list</a>
 then the user agent <em>must</em> run the following steps when the scroll position of the nearest
 non-visible overflow ancestor to the animator’s <a>root element</a> changes:
 
-For each {{ScrollTimelineOptions}} instance |options| in the <a>animator timeline list</a>:
+  1. For each {{ScrollTimelineOptions}} instance |options| in the animator's <a>animator timeline
+       list</a> do the following steps:
 
-  1. If the orientation of the |options| does not match the orientation of the change in scroll
-       position, abort the following steps.
-  2. If the previous and current scroll position are outside the range specified by the |options|
-       startScrollOffset and endScrollOffset and the fill is <b>none</b>, abort the following steps.
-  3. Set the animator's <a>animation requested flag</a> to <a>frame-requested</a>.
+    1. Let |orientation| be the result of <a>Get</a>(|options|, "orientation").
+
+    2. Let |startScrollOffset| be the result of <a>Get</a>(|options|, "startScrollOffset").
+
+    3. Let |endScrollOffset| be the result of <a>Get</a>(|options|, "endScrollOffset").
+
+    4. Let |fillMode| be the result of <a>Get</a>(|options|, "fill").
+
+    5. Process the |options| according to the first matching conditional in the following:
+
+         <div class="switch">
+
+         :  If <em>any</em> of the following are true:
+
+             1. the orientation of the change in scroll position does not match |orientation|, or
+
+             2. the scroll position is before |startScrollOffset| and |fillMode| is <b>none</b> or
+                  <b>backwards</b>, or
+
+             3. the scroll position is after |endScrollOffset| and |fillMode| is <b>none</b> or
+                  <b>forwards</b>.
+
+         :: do not change the animator's <a>animation requested flag</a> value.
+
+         :  Otherwise
+         :: set the animator's <a>animation requested flag</a> to <a>frame-requested</a>.
+
+         </div>
+
 
 Running Animators {#running-animators}
 ======================================================
