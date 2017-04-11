@@ -29,6 +29,8 @@ urlPrefix: https://www.w3.org/TR/css3-transitions/#; type: dfn;
     text: animatable properties
 urlPrefix: https://www.w3.org/TR/web-animations/#; type: dfn;
     url: the-documents-default-timeline; text: default document timeline
+    url: documenttimeline; text: DocumentTimeline
+    url: dictdef-documenttimelineoptions; text: DocumentTimelineOptions
 urlPrefix: https://tc39.github.io/ecma262/#sec-; type: dfn;
     text: constructor
     text: Construct
@@ -44,6 +46,9 @@ urlPrefix: https://tc39.github.io/ecma262/#sec-; type: dfn;
         text: TypeError
 urlPrefix: https://www.w3.org/TR/hr-time-2/#dom-; type: dfn
     text: DOMHighResTimeStamp
+urlPrefix: https://wicg.github.io/scroll-animations/#; type: dfn
+    url: scrolltimeline; text: ScrollTimeline
+    url: dictdef-scrolltimelineoptions; text: ScrollTimelineOptions
 </pre>
 
 <pre class=biblio>
@@ -122,8 +127,8 @@ interface AnimationWorkletGlobalScope : WorkletGlobalScope {
             };
 
             static timelines = [
-                'document',
-                'scroll',
+                { originTime: 0 },
+                { orientation: 'vertical' },
             ];
 
             animate(elementMap, timelines) {
@@ -270,19 +275,21 @@ the user agent <em>must</em> run the following steps:
 When <dfn>parsing an animator timeline list</dfn> for {{animatorCtor}},
 the user agent <em>must</em> run the following steps:
 
-    1. Let |properties| be an empty <code>sequence&lt;DOMString></code>.
+    1. Let |timelines| be an empty <code>sequence&lt;Object></code>.
 
     2. Let |timelinesIterable| be the result of <a>Get</a>(|animatorCtor|, |timelines|).
 
     3. For each |timeline| in |timelinesIterable|, run the following steps:
 
-        - If |timeline| is not "document" or "scroll", <a>throw</a> a <a>NotSupportedError</a>
-            and abort all these steps.
+        - If <a>Type</a>(|timeline|) is not {{DocumentTimelineOptions}} or {{ScrollTimelineOptions}}
+            then <a>throw</a> a <a>NotSupportedError</a> and abort all these steps.
 
     4. If |timelinesIterable| is not undefined, then set |timelines| to the result of
-        converting |timelinesIterable| to a <code>sequence&lt;DOMString></code>. If an
+        converting |timelinesIterable| to a <code>sequence&lt;Object></code>. If an
         exception is thrown, rethrow the exception and abort all these steps.
 
+Issue: It's not clear if we can actually tell the type of DocumentTimelineOptions or
+       ScrollTimelineOptions.
 
 Creating an Animator {#creating-animator}
 ====================================================
@@ -479,11 +486,13 @@ When the user agent wants to <dfn>run animators</dfn> in a given |workletGlobalS
 
   7. For each |timeline| in the <a>animator timeline list</a> of |definition|, do the following:
 
-    - If |timeline| is "document", push a new {{AnimationTimeline}} with its "currentTime" set to
-        a <a>DOMHighResTimeStamp</a> indicating the current frame start time to the |timelines| list.
+    - If <a>Type</a>(|timeline|) is {{DocumentTimelineOptions}}, push a new {{DocumentTimeline}} 
+        created using |timeline| to the |timelines| list, with the "currentTime" set to a
+        <a>DOMHighResTimeStamp</a> indicating the current frame start time.
 
-    - If |timeline| is "scroll", push a new {{AnimationTimeline}} with its "currentTime" set to the
-        scroll position of the nearest non-visible overflow ancestor to the animator's <a>root element</a>.
+    - If <a>Type</a>(|timeline|) is {{ScrollTimelineOptions}}, push a new {{ScrollTimeline}} created
+        using |timeline| to the |timelines| list, adding the nearest non-visible overflow ancestor
+        of |rootElement| as the |scrollSource|.
 
   8. Let |elementMap| be an <a>element proxy map</a> of |instance|.
 
@@ -618,7 +627,7 @@ registerAnimator('spring', class {
 
     static elements = [
         {name: 'fadein', inputProperties:  ['--spring-k'], outputProperties =  ['opacity']}];
-    static timelines = ['document'];
+    static timelines = [{ originTime: 0 }];
 
     animate(elementMap, timelines) {
         this.startTime_ = this.startTime_ || timelines[0].currentTime;

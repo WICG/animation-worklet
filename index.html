@@ -1176,7 +1176,8 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version fa6d32dea6b39d19cbb9dd6d5e69f189e8bdd53f" name="generator">
+  <meta content="Bikeshed version ebf2734db77b4aff3d5749f39c4209550544a23e" name="generator">
+  <link href="https://wicg.github.io/animation-worklet/" rel="canonical">
 <style>/* style-md-lists */
 
             /* This is a weird hack for me not yet following the commonmark spec
@@ -1429,7 +1430,6 @@ pre.idl.highlight { color: #708090; }
      <dt>This version:
      <dd><a class="u-url" href="https://wicg.github.io/animation-worklet/">https://wicg.github.io/animation-worklet/</a>
      <dt>Issue Tracking:
-     <dd><a href="https://github.com/WICG/animation-worklet/issues/">GitHub</a>
      <dd><a href="#issues-index">Inline In Spec</a>
      <dt class="editor">Editors:
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:majidvp@google.com">Majid Valipour</a>
@@ -1543,8 +1543,8 @@ animations. The worklet can be accessed via <code class="idl"><a data-link-type=
     <span class="p">}</span><span class="p">;</span>
 
     <span class="kr">static</span> timelines <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">'document'</span><span class="p">,</span>
-        <span class="s1">'scroll'</span><span class="p">,</span>
+        <span class="p">{</span> originTime<span class="o">:</span> <span class="mi">0</span> <span class="p">}</span><span class="p">,</span>
+        <span class="p">{</span> orientation<span class="o">:</span> <span class="s1">'vertical'</span> <span class="p">}</span><span class="p">,</span>
     <span class="p">]</span><span class="p">;</span>
 
     animate<span class="p">(</span>elementMap<span class="p">,</span> timelines<span class="p">)</span> <span class="p">{</span>
@@ -1684,20 +1684,22 @@ exception is thrown, rethrow the exception and abort all these steps.</p>
 the user agent <em>must</em> run the following steps:</p>
    <ol>
     <li data-md="">
-     <p>Let <var>properties</var> be an empty <code>sequence&lt;DOMString></code>.</p>
+     <p>Let <var>timelines</var> be an empty <code>sequence&lt;Object></code>.</p>
     <li data-md="">
      <p>Let <var>timelinesIterable</var> be the result of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<var>animatorCtor</var>, <var>timelines</var>).</p>
     <li data-md="">
      <p>For each <var>timeline</var> in <var>timelinesIterable</var>, run the following steps:</p>
      <ul>
       <li data-md="">
-       <p>If <var>timeline</var> is not "document" or "scroll", <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#notsupportederror">NotSupportedError</a> and abort all these steps.</p>
+       <p>If <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a>(<var>timeline</var>) is not <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/web-animations/#dictdef-documenttimelineoptions">DocumentTimelineOptions</a></code> or <code class="idl"><a data-link-type="idl">ScrollTimelineOptions</a></code> then <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#notsupportederror">NotSupportedError</a> and abort all these steps.</p>
      </ul>
     <li data-md="">
      <p>If <var>timelinesIterable</var> is not undefined, then set <var>timelines</var> to the result of
-converting <var>timelinesIterable</var> to a <code>sequence&lt;DOMString></code>. If an
+converting <var>timelinesIterable</var> to a <code>sequence&lt;Object></code>. If an
 exception is thrown, rethrow the exception and abort all these steps.</p>
    </ol>
+   <p class="issue" id="issue-f4f0af08"><a class="self-link" href="#issue-f4f0af08"></a> It’s not clear if we can actually tell the type of DocumentTimelineOptions or
+       ScrollTimelineOptions.</p>
    <h2 class="heading settled" data-level="5" id="creating-animator"><span class="secno">5. </span><span class="content">Creating an Animator</span><a class="self-link" href="#creating-animator"></a></h2>
     Each <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-3">animator instance</a> lives in an <code class="idl"><a data-link-type="idl" href="#animationworkletglobalscope" id="ref-for-animationworkletglobalscope-3">AnimationWorkletGlobalScope</a></code>. The <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-4">animator instance</a> cannot be disposed arbitrarily (e.g., in the middle of running animation
 as it may contain the scripted animation state. 
@@ -1850,11 +1852,11 @@ associated <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-
      <p>For each <var>timeline</var> in the <a data-link-type="dfn" href="#animator-timeline-list" id="ref-for-animator-timeline-list-5">animator timeline list</a> of <var>definition</var>, do the following:</p>
      <ul>
       <li data-md="">
-       <p>If <var>timeline</var> is "document", push a new <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/web-animations/#animationtimeline">AnimationTimeline</a></code> with its "currentTime" set to
-a <a data-link-type="dfn" href="https://www.w3.org/TR/hr-time-2/#dom-domhighrestimestamp">DOMHighResTimeStamp</a> indicating the current frame start time to the <var>timelines</var> list.</p>
+       <p>If <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a>(<var>timeline</var>) is <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/web-animations/#dictdef-documenttimelineoptions">DocumentTimelineOptions</a></code>, push a new <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/web-animations/#documenttimeline">DocumentTimeline</a></code> created using <var>timeline</var> to the <var>timelines</var> list, with the "currentTime" set to a <a data-link-type="dfn" href="https://www.w3.org/TR/hr-time-2/#dom-domhighrestimestamp">DOMHighResTimeStamp</a> indicating the current frame start time.</p>
       <li data-md="">
-       <p>If <var>timeline</var> is "scroll", push a new <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/web-animations/#animationtimeline">AnimationTimeline</a></code> with its "currentTime" set to the
-scroll position of the nearest non-visible overflow ancestor to the animator’s <a data-link-type="dfn" href="#root-element" id="ref-for-root-element-2">root element</a>.</p>
+       <p>If <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a>(<var>timeline</var>) is <code class="idl"><a data-link-type="idl">ScrollTimelineOptions</a></code>, push a new <code class="idl"><a data-link-type="idl">ScrollTimeline</a></code> created
+using <var>timeline</var> to the <var>timelines</var> list, adding the nearest non-visible overflow ancestor
+of <var>rootElement</var> as the <var>scrollSource</var>.</p>
      </ul>
     <li data-md="">
      <p>Let <var>elementMap</var> be an <a data-link-type="dfn" href="#element-proxy-map" id="ref-for-element-proxy-map-2">element proxy map</a> of <var>instance</var>.</p>
@@ -1903,7 +1905,7 @@ in the same frame.</p>
    </table>
    <dl>
     <dt><dfn class="css" data-dfn-for="animator-root" data-dfn-type="value" data-export="" id="valdef-animator-root-none">none<a class="self-link" href="#valdef-animator-root-none"></a></dfn> 
-    <dd> There will be no <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-14">animator instance</a> that has this element as its <a data-link-type="dfn" href="#root-element" id="ref-for-root-element-3">root element</a>. 
+    <dd> There will be no <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-14">animator instance</a> that has this element as its <a data-link-type="dfn" href="#root-element" id="ref-for-root-element-1">root element</a>. 
     <dt><a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-4">animator name</a> <a data-link-type="dfn" href="#animator-slot" id="ref-for-animator-slot-3">animator slot</a> 
     <dd>
       For each <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-5">animator name</a> specified in the list, the following applies for each animation frame: 
@@ -1912,7 +1914,7 @@ in the same frame.</p>
        <p>If there is no <a data-link-type="dfn" href="#animator-definition" id="ref-for-animator-definition-3">animator definition</a> registered with the given <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-6">animator name</a>, the inclusion
 of that <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-7">animator name</a> as a value has no effect.</p>
       <li data-md="">
-       <p>Otherwise, an <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-15">animator instance</a> with this element as its <a data-link-type="dfn" href="#root-element" id="ref-for-root-element-4">root element</a> will exist and will have its <a data-link-type="dfn" href="#animate-function" id="ref-for-animate-function-3">animate function</a> called (with respect to the rules
+       <p>Otherwise, an <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-15">animator instance</a> with this element as its <a data-link-type="dfn" href="#root-element" id="ref-for-root-element-2">root element</a> will exist and will have its <a data-link-type="dfn" href="#animate-function" id="ref-for-animate-function-3">animate function</a> called (with respect to the rules
 laid out in <a href="#running-animators">§8 Running Animators</a>) with an <a data-link-type="dfn" href="#element-proxy" id="ref-for-element-proxy-6">element proxy</a> for this element passed as
 one of the <a data-link-type="dfn" href="#element-proxy" id="ref-for-element-proxy-7">element proxies</a> for the given <a data-link-type="dfn" href="#animator-slot" id="ref-for-animator-slot-4">animator slot</a>.</p>
      </ul>
@@ -1964,6 +1966,7 @@ of that <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-
       <li data-md="">
        <p>Otherwise, an <a data-link-type="dfn" href="#element-proxy" id="ref-for-element-proxy-9">element proxy</a> for this element will be passed into the <a data-link-type="dfn" href="#animate-function" id="ref-for-animate-function-5">animate function</a> of the closest ancestor <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-16">animator instance</a> with the given <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-15">animator name</a> as one of the <a data-link-type="dfn" href="#element-proxy" id="ref-for-element-proxy-10">element proxies</a> for the given <a data-link-type="dfn" href="#animator-slot" id="ref-for-animator-slot-7">animator slot</a>. If no
 such <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-17">animator instance</a> exists, one is created with the document root element as its <a data-link-type="dfn" href="#root-element" id="ref-for-root-element-5">root element</a>.</p>
+such <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-17">animator instance</a> exists, one is created with the document root element as its <a data-link-type="dfn" href="#root-element" id="ref-for-root-element-3">root element</a>.</p>
      </ul>
      <p>If the same <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-16">animator name</a> occurs multiple times in the list, only the first occurrence of that <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-17">animator name</a> is processed.</p>
    </dl>
@@ -1994,7 +1997,7 @@ point.</p>
 
     <span class="kr">static</span> elements <span class="o">=</span> <span class="p">[</span>
         <span class="p">{</span>name<span class="o">:</span> <span class="s1">'fadein'</span><span class="p">,</span> inputProperties<span class="o">:</span>  <span class="p">[</span><span class="s1">'--spring-k'</span><span class="p">]</span><span class="p">,</span> outputProperties <span class="o">=</span>  <span class="p">[</span><span class="s1">'opacity'</span><span class="p">]</span><span class="p">}</span><span class="p">]</span><span class="p">;</span>
-    <span class="kr">static</span> timelines <span class="o">=</span> <span class="p">[</span><span class="s1">'document'</span><span class="p">]</span><span class="p">;</span>
+    <span class="kr">static</span> timelines <span class="o">=</span> <span class="p">[</span><span class="p">{</span> originTime<span class="o">:</span> <span class="mi">0</span> <span class="p">}</span><span class="p">]</span><span class="p">;</span>
 
     animate<span class="p">(</span>elementMap<span class="p">,</span> timelines<span class="p">)</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span>startTime_ <span class="o">=</span> <span class="k">this</span><span class="p">.</span>startTime_ <span class="o">||</span> timelines<span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">.</span>currentTime<span class="p">;</span>
@@ -2246,7 +2249,8 @@ point.</p>
    <li>
     <a data-link-type="biblio">[web-animations-1]</a> defines the following terms:
     <ul>
-     <li><a href="https://w3c.github.io/web-animations/#animationtimeline">AnimationTimeline</a>
+     <li><a href="https://w3c.github.io/web-animations/#documenttimeline">DocumentTimeline</a>
+     <li><a href="https://w3c.github.io/web-animations/#dictdef-documenttimelineoptions">DocumentTimelineOptions</a>
     </ul>
    <li>
     <a data-link-type="biblio">[WebIDL]</a> defines the following terms:
@@ -2358,6 +2362,8 @@ point.</p>
 </pre>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
+   <div class="issue"> It’s not clear if we can actually tell the type of DocumentTimelineOptions or
+       ScrollTimelineOptions.<a href="#issue-f4f0af08"> ↵ </a></div>
    <div class="issue"> Todo: Should we have NoInterfaceObject/Exposed here? How do we properly represent that this
 cannot be constructed via javascript?<a href="#issue-65c145a8"> ↵ </a></div>
    <div class="issue"> Consider giving user agents permission to skip running animator instances to throttle
@@ -2492,6 +2498,7 @@ point.<a href="#issue-b3b90f2d"> ↵ </a></div>
     <li><a href="#ref-for-root-element-1">7. Requesting Animation Frames</a>
     <li><a href="#ref-for-root-element-2">8. Running Animators</a>
     <li><a href="#ref-for-root-element-3">10. CSS Animator Notation</a> <a href="#ref-for-root-element-4">(2)</a> <a href="#ref-for-root-element-5">(3)</a>
+    <li><a href="#ref-for-root-element-1">10. CSS Animator Notation</a> <a href="#ref-for-root-element-2">(2)</a> <a href="#ref-for-root-element-3">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="element-proxy-map">
