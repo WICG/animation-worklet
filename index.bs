@@ -481,7 +481,8 @@ nearest non-visible overflow ancestor to the animator’s <a>root element</a> ch
          change in scroll position, set the animator's <a>animation requested flag</a> to
          <a>frame-requested</a>.
 
-Issue: Creating a ScrollTimeline here is awkward.
+Issue: Give each animator instance a re-used set of AnimationTimelines instead of creating them
+       specifically here and when running animations.
 
 Issue: Need to add a definition for 'nearest non-visible overflow ancestor' to make sure all mentions
        stay in sync.

@@ -1856,7 +1856,8 @@ nearest non-visible overflow ancestor to the animator’s <a data-link-type="dfn
  change in scroll position, set the animator’s <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-animation-requested-flag-8">animation requested flag</a> to <a data-link-type="dfn" href="#frame-requested" id="ref-for-frame-requested-5">frame-requested</a>.</p>
      </ol>
    </ol>
-   <p class="issue" id="issue-3a98e7b7"><a class="self-link" href="#issue-3a98e7b7"></a> Creating a ScrollTimeline here is awkward.</p>
+   <p class="issue" id="issue-9b16e52a"><a class="self-link" href="#issue-9b16e52a"></a> Give each animator instance a re-used set of AnimationTimelines instead of creating them
+       specifically here and when running animations.</p>
    <p class="issue" id="issue-a9c8649c"><a class="self-link" href="#issue-a9c8649c"></a> Need to add a definition for 'nearest non-visible overflow ancestor' to make sure all mentions
        stay in sync.</p>
    <h2 class="heading settled" data-level="8" id="running-animators"><span class="secno">8. </span><span class="content">Running Animators</span><a class="self-link" href="#running-animators"></a></h2>
@@ -2400,7 +2401,8 @@ point.</p>
   <div style="counter-reset:issue">
    <div class="issue"> Todo: Should we have NoInterfaceObject/Exposed here? How do we properly represent that this
 cannot be constructed via javascript?<a href="#issue-65c145a8"> ↵ </a></div>
-   <div class="issue"> Creating a ScrollTimeline here is awkward.<a href="#issue-3a98e7b7"> ↵ </a></div>
+   <div class="issue"> Give each animator instance a re-used set of AnimationTimelines instead of creating them
+       specifically here and when running animations.<a href="#issue-9b16e52a"> ↵ </a></div>
    <div class="issue"> Need to add a definition for 'nearest non-visible overflow ancestor' to make sure all mentions
        stay in sync.<a href="#issue-a9c8649c"> ↵ </a></div>
    <div class="issue"> Consider giving user agents permission to skip running animator instances to throttle
