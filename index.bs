@@ -48,6 +48,8 @@ urlPrefix: https://wicg.github.io/scroll-animations/#; type: interface
     url: scrolltimeline; text: ScrollTimeline
     url: dictdef-scrolltimelineoptions; text: ScrollTimelineOptions
     url: dom-scrolltimeline-scrollsource; text: scrollSource
+urlPrefix: https://wicg.github.io/scroll-animations/#; type: dfn
+    url: current-time-algorithm; text: current time of the ScrollTimeline;
 </pre>
 
 <pre class=biblio>
@@ -151,7 +153,7 @@ an <a>animator instance</a>. It consists of:
  - An <dfn>animator slot list</dfn> containing a dictionary providing each <dfn>slot name</dfn>,
     its <dfn>input property list</dfn>, and its <dfn>output propert list</dfn>.
 
- - A <dfn>animator timeline list</dfn>.
+ - An <dfn>animator timeline options list</dfn>.
 
 
 Each entry in the <a>animator slot list</a> consists of:
@@ -217,8 +219,8 @@ When the <dfn method for=AnimationWorkletGlobalScope>registerAnimator(|name|,
     8. Let |elements| be the result of <a>parsing an animator slot list</a> for |animatorCtor|.
         If an exception is thrown, rethrow the exception and abort all these steps.
 
-    9. Let |timelines| be the result of <a>parsing an animator timeline list</a> for |animatorCtor|.
-        If an exception is thrown, rethrow the exception and abort all these steps.
+    9. Let |timelineOptions| be the result of <a>parsing an animator timeline options list</a> for
+        |animatorCtor|. If an exception is thrown, rethrow the exception and abort all these steps.
 
     10. Let |definition| be a new <a>animator definition</a> with:
 
@@ -230,7 +232,7 @@ When the <dfn method for=AnimationWorkletGlobalScope>registerAnimator(|name|,
 
         - <a>element proxy map</a> being |elements|
 
-        - <a>animator timeline list</a> being |timelines|
+        - <a>animator timeline options list</a> being |timelineOptions|
 
 
     11. Add the key-value pair (|name| - |definition|) to the <a>animator name to animator
@@ -271,17 +273,17 @@ the user agent <em>must</em> run the following steps:
         converting |propertiesIterable| to a <code>sequence&lt;DOMString></code>. If an
         exception is thrown, rethrow the exception and abort all these steps.
 
-When <dfn>parsing an animator timeline list</dfn> for {{animatorCtor}},
+When <dfn>parsing an animator timeline options list</dfn> for {{animatorCtor}},
 the user agent <em>must</em> run the following steps:
 
-    1. Let |timelines| be an empty <code>sequence&lt;Object></code>.
+    1. Let |timelineOptions| be an empty <code>sequence&lt;Object></code>.
 
     2. Let |timelinesIterable| be the result of <a>Get</a>(|animatorCtor|, |timelines|).
 
     3. For each |timeline| in |timelinesIterable|, run the following steps:
 
-        1. If <a>Type</a>(|timeline|) is {{DOMString}}, treat |timeline| as if it had been specified
-             as <code>{ type: |timeline|, options: {} }</code>.
+        1. If <a>Type</a>(|timeline|) is {{DOMString}} let |timelineObject| be <code>{ type:
+             |timeline|, options: {} }</code>, otherwise let |timelineObject| be |timeline|.
 
         2. Let |type| be the result of <a>Get</a>(|timeline|, "type").
 
@@ -295,10 +297,10 @@ the user agent <em>must</em> run the following steps:
              :: throw a <a>NotSupportedError</a> and abort all remaining steps.
 
              :  If |type| is "document",
-             :: Push a {{DocumentTimelineOptions}} created from |options| onto |timelines|.
+             :: Push a {{DocumentTimelineOptions}} created from |options| onto |timelineOptions|.
 
              :  If |type| is "scroll",
-             :: Push a {{ScrollTimelineOptions}} created from |options| onto |timelines|.
+             :: Push a {{ScrollTimelineOptions}} created from |options| onto |timelineOptions|.
 
              :  Otherwise,
              :: throw a <a>NotSupportedError</a> and abort all remaining steps.
@@ -458,49 +460,31 @@ For each <a>element proxy</a> for that element, perform the following steps:
 Animator specifies a DocumentTimeline {#requesting-animation-frames-document-timeline}
 -------------------------------------
 
-If a {{DocumentTimelineOptions}} instance is present in an animator's <a>animator timeline list</a>
-then that animator's <a>animation requested flag</a> <em>must</em> be set to <a>frame-requested</a>
-at the start of each animation frame.
+If a {{DocumentTimelineOptions}} instance is present in an animator's <a>animator timeline options
+list</a> then that animator's <a>animation requested flag</a> <em>must</em> be set to
+<a>frame-requested</a> at the start of each animation frame.
 
 Animator specifies a ScrollTimeline {#requesting-animation-frames-scroll-timeline}
 -----------------------------------
 
-If a {{ScrollTimelineOptions}} instance is present in an animator's <a>animator timeline list</a>
-then the user agent <em>must</em> run the following steps when the scroll position of the nearest
-non-visible overflow ancestor to the animator’s <a>root element</a> changes:
+If a {{ScrollTimelineOptions}} |instance| is present in an animator's <a>animator timeline options
+list</a> then the user agent <em>must</em> run the following steps when the scroll position of the
+nearest non-visible overflow ancestor to the animator’s <a>root element</a> changes:
 
   1. For each {{ScrollTimelineOptions}} instance |options| in the animator's <a>animator timeline
-       list</a> do the following steps:
+       options list</a> do the following steps:
 
-    1. Let |orientation| be the result of <a>Get</a>(|options|, "orientation").
+    1. Let |timeline| be a {{ScrollTimeline}} created from |options|, adding the nearest non-visible
+         overflow ancestor of the <a>root element</a> as the {{scrollSource}}.
 
-    2. Let |startScrollOffset| be the result of <a>Get</a>(|options|, "startScrollOffset").
+    2. If the <a>current time of the ScrollTimeline</a> |timeline| would have changed due to the
+         change in scroll position, set the animator's <a>animation requested flag</a> to
+         <a>frame-requested</a>.
 
-    3. Let |endScrollOffset| be the result of <a>Get</a>(|options|, "endScrollOffset").
+Issue: Creating a ScrollTimeline here is awkward.
 
-    4. Let |fillMode| be the result of <a>Get</a>(|options|, "fill").
-
-    5. Process the |options| according to the first matching conditional in the following:
-
-         <div class="switch">
-
-         :  If <em>any</em> of the following are true:
-
-             1. the orientation of the change in scroll position does not match |orientation|, or
-
-             2. the scroll position is before |startScrollOffset| and |fillMode| is <b>none</b> or
-                  <b>backwards</b>, or
-
-             3. the scroll position is after |endScrollOffset| and |fillMode| is <b>none</b> or
-                  <b>forwards</b>.
-
-         :: do not change the animator's <a>animation requested flag</a> value.
-
-         :  Otherwise
-         :: set the animator's <a>animation requested flag</a> to <a>frame-requested</a>.
-
-         </div>
-
+Issue: Need to add a definition for 'nearest non-visible overflow ancestor' to make sure all mentions
+       stay in sync.
 
 Running Animators {#running-animators}
 ======================================================
@@ -542,14 +526,15 @@ When the user agent wants to <dfn>run animators</dfn> in a given |workletGlobalS
 
   6. Let |timelines| be an empty <code>sequence&lt;AnimationTimeline></code>.
 
-  7. For each |timeline| in the <a>animator timeline list</a> of |definition|, do the following:
+  7. For each |timelineOptions| in the <a>animator timeline options list</a> of |definition|, do the
+       following:
 
-    - If <a>Type</a>(|timeline|) is {{DocumentTimelineOptions}}, push a new {{DocumentTimeline}}
-        created using |timeline| to the |timelines| list.
+    - If <a>Type</a>(|timelineOptions|) is {{DocumentTimelineOptions}}, push a new
+        {{DocumentTimeline}} created using |timelineOptions| to the |timelines| list.
 
-    - If <a>Type</a>(|timeline|) is {{ScrollTimelineOptions}}, push a new {{ScrollTimeline}} created
-        using |timeline| to the |timelines| list, adding the nearest non-visible overflow ancestor
-        of |rootElement| as the {{scrollSource}}.
+    - If <a>Type</a>(|timelineOptions|) is {{ScrollTimelineOptions}}, push a new {{ScrollTimeline}}
+        created using |timelineOptions| to the |timelines| list, adding the nearest non-visible
+        overflow ancestor of |rootElement| as the {{scrollSource}}.
 
   8. Let |elementMap| be an <a>element proxy map</a> of |instance|.
 
