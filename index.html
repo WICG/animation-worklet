@@ -1699,9 +1699,9 @@ the user agent <em>must</em> run the following steps:</p>
       <li data-md="">
        <p>If <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a>(<var>timeline</var>) is <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMString">DOMString</a></code> let <var>timelineObject</var> be <code>{ type: <var>timeline</var>, options: {} }</code>, otherwise let <var>timelineObject</var> be <var>timeline</var>.</p>
       <li data-md="">
-       <p>Let <var>type</var> be the result of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<var>timeline</var>, "type").</p>
+       <p>Let <var>type</var> be the result of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<var>timelineObject</var>, "type").</p>
       <li data-md="">
-       <p>Let <var>options</var> be the result of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<var>timeline</var>, "options").</p>
+       <p>Let <var>options</var> be the result of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<var>timelineObject</var>, "options").</p>
       <li data-md="">
        <p>Process <var>type</var> and <var>options</var> according to the first matching condition in the following:</p>
        <div class="switch">

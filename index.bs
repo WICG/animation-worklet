@@ -285,9 +285,9 @@ the user agent <em>must</em> run the following steps:
         1. If <a>Type</a>(|timeline|) is {{DOMString}} let |timelineObject| be <code>{ type:
              |timeline|, options: {} }</code>, otherwise let |timelineObject| be |timeline|.
 
-        2. Let |type| be the result of <a>Get</a>(|timeline|, "type").
+        2. Let |type| be the result of <a>Get</a>(|timelineObject|, "type").
 
-        3. Let |options| be the result of <a>Get</a>(|timeline|, "options").
+        3. Let |options| be the result of <a>Get</a>(|timelineObject|, "options").
 
         4. Process |type| and |options| according to the first matching condition in the following:
 
