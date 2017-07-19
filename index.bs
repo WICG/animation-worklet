@@ -55,6 +55,7 @@ urlPrefix: https://wicg.github.io/scroll-animations/#; type: interface
     url: dom-scrolltimeline-scrollsource; text: scrollSource
 urlPrefix: https://wicg.github.io/scroll-animations/#; type: dfn
     url: current-time-algorithm; text: current time of the ScrollTimeline;
+
 </pre>
 
 <pre class=biblio>
@@ -88,7 +89,6 @@ The <a>Animation Worklet</a> provides a method to create scripted animations tha
 animations to run in their own dedicated thread to provide a degree of performance isolation
 from main thread.
 
-
 <strong>Relationship to Web Animation API</strong>: Animations that are running inside a
 <a>Animation Worklet</a> execution context expose the same {{Animation}} interface on the main
 javascript execution context. So they can be created, played, canceled, inspected, and generally
@@ -96,7 +96,6 @@ controlled from main thread using Web Animation APIs. However, worklet animation
 different timing model which enables them to be script-driven, statefull, and runnable in a
 parallel worklet execution context. As such Web Animation API that seek or alter the input
 time (reverse, finish, etc.) has a different semantic for worklet animations.
-
 
 Note: <strong>Access to input</strong>: We are interested on exposing additional user input (e.g.,
 scrolling input) to these animations so that authors can create jank-free input driven animations
