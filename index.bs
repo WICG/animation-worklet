@@ -55,7 +55,6 @@ urlPrefix: https://wicg.github.io/scroll-animations/#; type: interface
     url: dom-scrolltimeline-scrollsource; text: scrollSource
 urlPrefix: https://wicg.github.io/scroll-animations/#; type: dfn
     url: current-time-algorithm; text: current time of the ScrollTimeline;
-
 </pre>
 
 <pre class=biblio>
