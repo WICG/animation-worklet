@@ -145,13 +145,12 @@ animations. The worklet can be accessed via {{animationWorklet}} attribute.
 
 The {{animationWorklet}}'s <a>worklet global scope type</a> is {{AnimationWorkletGlobalScope}}.
 
-<pre class='idl'>
-interface AnimationWorklet {
-  [NewObject] Promise&lt;void> addModule(USVString moduleURL);
-};
+The {{AnimationWorkletGlobalScope}} represents the <dfn>global execution context</dfn> of
+{{animationWorklet}}.
 
+<pre class='idl'>
 partial interface Window {
-    [SameObject] readonly attribute AnimationWorklet animationWorklet;
+    [SameObject] readonly attribute Worklet animationWorklet;
 };
 </pre>
 
@@ -169,18 +168,9 @@ interface AnimationWorkletGlobalScope : WorkletGlobalScope {
     Note: This is how the class should look.
     <pre class='lang-javascript'>
         class FooAnimator {
-            static get elements() {
-                return [
-                    {name: 'foo', inputProperties: ['--foo'], outputProperties: []},
-                    {name: 'bar', inputProperties: [], outputProperties: ['transform']},
-                ];
-            };
-
-            static timelines = [
-                'document',
-                { type: 'scroll', { orientation: 'vertical' } },
-            ];
-
+            constructor(options) {
+                // Called one
+            }
             animate(elementMap, timelines) {
                 // Animation frame logic goes here
             }
@@ -192,31 +182,21 @@ interface AnimationWorkletGlobalScope : WorkletGlobalScope {
 
 Concepts {#concepts}
 ====================
-A <dfn>animator definition</dfn> describes an author defined animation which can be referenced by
-an <a>animator instance</a>. It consists of:
+An <dfn>animator definition</dfn> is a <a>struct</a> which describes the author defined custom
+animation as needed by {{AnimationWorkletGlobalScope}}. It consists of:
 
  - A <dfn>class constructor</dfn>.
 
  - An <dfn>animate function</dfn>.
 
- - An <dfn>animator slot list</dfn> containing a dictionary providing each <dfn>slot name</dfn>,
-    its <dfn>input property list</dfn>, and its <dfn>output property list</dfn>.
+ - An <dfn>animator output effect</dfn>.
 
- - An <dfn>animator timeline options list</dfn>.
-
-
-Each entry in the <a>animator slot list</a> consists of:
-
- - An <dfn>animator slot</dfn> <<ident>>#.
-
- - An <dfn>animator input property list</dfn>.
-
- - An <dfn>animator output property list</dfn>.
+ - An <dfn>animator timelines list</dfn>.
 
 
-An <dfn>animator instance</dfn> describes a fully realized custom animation instance in the worklet
-context and links an <a>animator definition</a> with the instance specific state such as its element
-proxies. It consists of:
+An <dfn>animator instance</dfn> describes a fully realized custom animation instance in the
+{{AnimationWorkletGlobalScope}}. It links an <a>animator definition</a> with the instance specific state
+such as its element proxies. It consists of:
 
  - An <dfn>animator name</dfn> <<ident>>#.
 
@@ -242,6 +222,9 @@ Registering an Animator Definition {#registering-animator-definition}
 ============================================================
 The {{AnimationWorkletGlobalScope}} has a <dfn>animator name to animator definition map</dfn>.
 The map gets populated when {{registerAnimator(name, animatorCtor)}} is called.
+
+
+<div algorithm>
 
 When the <dfn method for=AnimationWorkletGlobalScope>registerAnimator(|name|,
 |animatorCtor|)</dfn> method is called, the user agent <em>must</em> run the following steps:
@@ -286,7 +269,10 @@ When the <dfn method for=AnimationWorkletGlobalScope>registerAnimator(|name|,
 
     11. Add the key-value pair (|name| - |definition|) to the <a>animator name to animator
         definition map</a> of the associated <a>document</a>.
+</div>
 
+
+<div algorithm>
 
 When <dfn>parsing an animator slot list</dfn> for {{animatorCtor}}, the user agent <em>must</em>
 run the following steps:
