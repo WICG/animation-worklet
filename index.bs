@@ -37,6 +37,11 @@ urlPrefix: https://w3c.github.io/web-animations/#; type: dfn;
     text: target property
     text: timeline
     text: animation effect
+    text: current time
+    text: local time
+    text: inherited time
+    text: ready
+    text: play state
 urlPrefix: https://tc39.github.io/ecma262/#sec-; type: dfn;
     text: constructor
     text: Construct
@@ -210,18 +215,6 @@ consists of:
  - An <dfn>animator timelines list</dfn> which is <a>list</a> of <a>timelines</a>.
 
 
-An <dfn>worklet animation</dfn> is a <a>animation</a> in the <a>document</a> which may corresponds
-to an <a>animator instance</a> in the worklet global scope. It controls the lifetime of its
-corresponding <a>animator instance</a> and provides playback control. It consists of:
-
- - An <a>animator name</a>.
-
- - An <dfn>effect</dfn> which is an <a>animation effect</a>.
-
- - A <dfn>timeline</dfn> which is a <a>timeline</a>.
-
-
-
 Registering an Animator Definition {#registering-animator-definition}
 ============================================================
 The {{AnimationWorkletGlobalScope}} has a <dfn>animator name to animator definition map</dfn>.
@@ -391,21 +384,111 @@ timelines list</a>  currentTime can cause the <a>animation requested flag</a> to
 Integration With Web Animations {#integration-web-animation}
 ===============================
 
+
+Worklet Animation {#worklet-animation-desc}
+-------------------------------------------
+<dfn>Worklet animation</dfn> is a kind of <a>animation</a> that allows a <a>animator instance</a> to
+control the animation playback. It controls the lifetime of its corresponding <a>animator
+instance</a> while giving it the playback control effectively allowing an author-defined programming
+callback that runs in <a>global execution context</a> of {{animationWorklet}} to drive its output.
+
+Being an <a>animation</a>, <a>worklet animation</a> has an <a>animation effect</a> and a
+<a>timeline</a>. However unlike other animations, the <a>worklet animation</a>'s <a>current time</a>
+does not directly determine its effect's <a>local time</a> (via its <a> <a>inherited time</a>) but
+instead the associated <a>animator instance</a> controls the effect's <a>local time</a> directly. Another
+implication of this is that the the <a>timeline</a>'s current time does not fully determine the
+animation's output.
+
+<a>Worklet animation</a> also has an <a>animator name</a> which identifies its <a>animator
+definition</a>.
+
+
+
 Creating an Worklet Animation {#creating-worklet-animation}
 -----------------------------------------------------------
 <!-- Big Text: TODO -->
 
+<pre class='idl'>
+
+[Constructor (DOMString animatorId,
+              optional (AnimationEffectReadOnly or array<AnimationEffectReadOnly>)? effects = null,
+              AnimationTimeline? timeline,
+              optional WorkletAnimationOptions)]
+interface WorkletAnimation : Animation {
+        readonly attribute array<AnimationTimeline> attachedTimelines;
+        readonly attribute DOMString animatorId;
+};
+
+</pre>
+
+<div algorithm="create-worklet-animation">
+<dfn constructor for=WorkletAnimation>WorkletAnimation(animatorId, effects, timeline)</dfn>
+Creates a new {{WorkletAnimation}} object using the following procedure.
+
+    1. Let |workletAnimation| be a new {{WorkletAnimation}} object.
+
+    2. Run the procedure to <a>set the timeline of an animation</a> on |workletAnimation| passing
+        |timeline| as the <var>new timeline</var> or, if a |timeline| argument is not provided,
+        passing the <a>default document timeline</a> of the {{Document}} associated with the
+        {{Window}} that is the <a>current global object</a>.
+
+    3. Let |effect| be the result corresponding to the first matching condition from below.
+         : If |effects| is a AnimationEffectReadOnly object,
+         :: Let effect be |effects|.
+         : If |effects| is an  <a>array</a> of <a>AnimationEffectReadOnly</a>,
+         :: Let |effect| be a new {{WorkletGroupEffect}} with its childern set to |effects|.
+         : Otherwise (effect is undefined),
+         :: Let |effect| be a undefined
+
+    4. Run the procedure to <a>set the target effect of an animation</a> on |workletAnimation|
+         passing |effect| as the <var>new effect</var>.
+
+    5. Run the procedure to <a>set the animator id of a worklet animation</a> on |workletAnimation|
+</div>
+
+
 TODO:
-  - add IDL for worklet animation
-  - describe how constructor handles single or sequence of effects
-  - define new semantics for reverse/finish/playbackRate.
   - define what happens when timeline or effect is modified document scope
-  - define what it means when localTime is read on this instance (i.e., we get last value synced
-    from worklet scope)
 
 Issue(62): describe how constructor handles single or sequence of effects.
 
-Issue(63): define worklet animation appropriate semantics for reverse/finish/playbackRate.
+Worklet Animation timing model {#timing-model}
+------------------------------------
+<!-- Big Text: TODO -->
+
+The section describes how <a>worklet animation</a> timing model differs from other <a>animations</a>.
+
+In addition to existing conditions on when the <a>animation</a> is considered <a>ready</a>, a
+ <a>Worklet animation</a> readiness also depends on the following condition to be true:
+
+   - the user agent has completed any setup required to create the <a>worklet animation</a>'s
+      corresponding <a>animator instance</a>.
+
+
+As mentioned earlier, the <a>worklet animation</a>'s <a>current time</a> does not directly determine
+its effect's <a>local time</a> (via its <a>inherited time</a>) but instead the associated
+<a>animator instance</a> controls the effect's <a>local time</a> directly. The effect's local time is set
+is {{animationWorklet}}'s <a>global execution context</a> which can be a parallel scope. This means
+that the
+
+
+Here are a few implications of the above semantics:
+
+ - Seeking current time of a <a>Worklet Animation</a> does not necessarily change its output. So setting
+    the animation <a>start time</a> or <a>current time</a> is not going to necessarily change it
+    but can change the animation <a>play state</a>.
+ - Similarly invoking {{Animation/finish}} or updating <a>animation</a>'s <a>playback rate</a> will
+    only change the animation <a>play state</a>.
+ - Querying the animation effect's local time using {{Effect/getComputedTiming()}} returns the last
+    known value set in the {{animationWorklet}} global scope and synced back to the main thread. In cases where the
+    <a>animator instance</a> is running is a parallel execution context this value may be stale.
+
+
+Issue(63): Come with appropriate mechanism's for <a>Animator</a> to get notified when its animation
+   currentTime is changing e.g., via reverse(), finish() or playbackRate change. So that it can
+   react appropriately.
+
+
 
 Timeline Attachment {#timeline-attachment}
 -------------------
@@ -415,22 +498,20 @@ TODO:
 
 Issue(61): Define semantics of attachment and detachment
 
+
+
+
 WorkletGroupEffect {#worklet-group-effect}
 ------------------
 <!-- Big Text: TODO -->
 
+A <a>worklet animation</a>'s effect can additionally be of {{WorkletGroupEffect}} type. Using this
+group effect allows the corresponding <a>animator instance</a> to directly control its children
+<a>local time</a>s.
+
 TODO:
   - Add idl for worklet group effect
   - define the children start time schedule for the group effect. [Issue](https://github.com/w3c/web-animations/issues/191)
-
-WorkletAnimation timing model {#timing-model}
-------------------------------------
-<!-- Big Text: TODO -->
-
-TODO:
- - Describe the relation of WorkletAnimation.currentTime with its timeline time
- - Describe the relation of WorkletAnimation.effect.getComputedTiming().localTime with the local time
-    set in the worklet scope.
 
 
 Effect Stack {#effect-stack}
