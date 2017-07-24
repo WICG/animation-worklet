@@ -174,7 +174,7 @@ interface AnimationWorkletGlobalScope : WorkletGlobalScope {
             constructor(options) {
                 // Called when a new animator is instantiated.
             }
-            animate(elementMap, timelines) {
+            animate(timelines, effect) {
                 // Animation frame logic goes here.
             }
         }
