@@ -190,9 +190,9 @@ animation as needed by {{AnimationWorkletGlobalScope}}. It consists of:
 
  - An <dfn>animator name</dfn> <<ident>>#.
 
- - A <dfn>class constructor</dfn>.
+ - A <dfn>class constructor</dfn> which is the class <a>constructor</a>.
 
- - An <dfn>animate function</dfn>.
+ - An <dfn>animate function</dfn> which is the animate <a>function</a> callback.
 
 
 
@@ -205,15 +205,14 @@ consists of:
 
  - An <a>animation requested flag</a>.
 
- - An <dfn>animator output effect</dfn>.
+ - An <dfn>animator effect</dfn> which is an <a>animation effect</a>.
 
- - An <dfn>animator timelines list</dfn>.
+ - An <dfn>animator timelines list</dfn> which is <a>list</a> of <a>timelines</a>.
 
 
 An <dfn>worklet animation</dfn> is a <a>animation</a> in the <a>document</a> which may corresponds
-to an <a>animator instance</a> in the <a>worklet global scope</a>. It provides playback control
-and controls the lifetime of its corresponding <a>animator instance</a>. It
-consists of:
+to an <a>animator instance</a> in the worklet global scope. It controls the lifetime of its
+corresponding <a>animator instance</a> and provides playback control. It consists of:
 
  - An <a>animator name</a>.
 
@@ -227,6 +226,7 @@ Registering an Animator Definition {#registering-animator-definition}
 ============================================================
 The {{AnimationWorkletGlobalScope}} has a <dfn>animator name to animator definition map</dfn>.
 The map gets populated when {{registerAnimator(name, animatorCtor)}} is called.
+
 
 
 <div algorithm="register-animator">
@@ -266,7 +266,7 @@ When the <dfn method for=AnimationWorkletGlobalScope>registerAnimator(|name|,
 </div>
 
 
-Animator Instance {#animator-instance}
+Animator Instance {#animator-instance-section}
 ======================================
 
 Creating an Animator Instance {#creating-animator-instance}
@@ -312,7 +312,7 @@ the user agent <em>must</em> run the following steps:
     6. Set the following on |animatorInstance| with:
         - <a>animator name</a> being |name|
         - <a>animation requested flag</a> being <a>frame-current</a>
-        - <a>animator output effect</a> being |effect|
+        - <a>animator effect</a> being |effect|
         - <a>animator timelines list</a> being |timelineList|
 
     7. Set the result of looking up |animationId| in |animatorInstanceMap| to
@@ -361,7 +361,7 @@ When the user agent wants to <dfn>run animators</dfn> in a given |workletGlobalS
 
   6. Let |timelines| be </a>animator timelines list</a> of |instance|.
 
-  8. Let |effect| be an <a>animator</a> of |instance|.
+  8. Let |effect| be an <a>animator effect</a> of |instance|.
 
   9. <a>Invoke</a> |animateFunction| with arguments «|timelines|, |effect|»,
         and with |instance| as the <a>callback this value</a>.
@@ -379,10 +379,10 @@ Requesting Animation Frames {#requesting-animation-frames}
 ----------------------------------------------------------
 
 Each <a>animator instance</a> has an associated <dfn>animation requested flag</dfn>. It must be
-either <dfn>frame-requested</dfn> or <dfn>frame-current</dfn>. It is initially set to <a>frame-
-current</a>. Various events, for example changes in of the animator's <a>animator timelines
-list</a>  currentTime can cause the <a>animation requested flag</a> to be set to <a>frame-
-requested</a>.
+either <dfn>frame-requested</dfn> or <dfn>frame-current</dfn>. It is initially set to
+<a>frame-current</a>. Various events, for example changes in of the animator's <a>animator
+timelines list</a>  currentTime can cause the <a>animation requested flag</a> to be set to
+<a>frame-requested</a>.
 
 [[#running-animators]] resets the <a>animation requested flag</a> on animators to
 <a>frame-current</a>.
@@ -393,6 +393,8 @@ Integration With Web Animations {#integration-web-animation}
 
 Creating an Worklet Animation {#creating-worklet-animation}
 -----------------------------------------------------------
+<!-- Big Text: TODO -->
+
 TODO:
   - add IDL for worklet animation
   - describe how constructor handles single or sequence of effects
@@ -401,24 +403,30 @@ TODO:
   - define what it means when localTime is read on this instance (i.e., we get last value synced
     from worklet scope)
 
-Issue(62): describe how constructor handles single or sequence of effects
-Issue(63): define new semantics for reverse/finish/playbackRate
+Issue(62): describe how constructor handles single or sequence of effects.
+
+Issue(63): define worklet animation appropriate semantics for reverse/finish/playbackRate.
 
 Timeline Attachment {#timeline-attachment}
 -------------------
+<!-- Big Text: TODO -->
 
-TODO
+TODO:
 
 Issue(61): Define semantics of attachment and detachment
 
 WorkletGroupEffect {#worklet-group-effect}
 ------------------
+<!-- Big Text: TODO -->
+
 TODO:
   - Add idl for worklet group effect
   - define the children start time schedule for the group effect. [Issue](https://github.com/w3c/web-animations/issues/191)
 
 WorkletAnimation timing model {#timing-model}
 ------------------------------------
+<!-- Big Text: TODO -->
+
 TODO:
  - Describe the relation of WorkletAnimation.currentTime with its timeline time
  - Describe the relation of WorkletAnimation.effect.getComputedTiming().localTime with the local time
@@ -505,7 +513,7 @@ registerAnimator('hidey-bar', class {
 
 </pre>
 
-Issue: This example uses a hypothetical 'phase' property on timeline as a way to detect when user
+Issue: This example uses a hypothetical "phase" property on timeline as a way to detect when user
 is no longer actively scrolling. This is a reasonable thing to have on scroll timeline. A simple
 fallback can emulate this by detecting when timeline time (i.e. scroll offset) has not changed in
 the last few frames.
@@ -568,5 +576,6 @@ registerAnimator('twitter-header', class {
 
 Example 3: Parallax backgrounds. {#example-3}
 -----------------------------------------
+<!-- Big Text: TODO -->
 
 TODO

@@ -1424,12 +1424,13 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">CSS Animation Worklet API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2017-07-21">21 July 2017</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2017-07-24">24 July 2017</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
      <dd><a class="u-url" href="https://wicg.github.io/animation-worklet/">https://wicg.github.io/animation-worklet/</a>
      <dt>Issue Tracking:
+     <dd><a href="https://github.com/majido/animation-worklet/issues/">GitHub</a>
      <dd><a href="#issues-index">Inline In Spec</a>
      <dt class="editor">Editors:
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:majidvp@google.com">Majid Valipour</a>
@@ -1468,7 +1469,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
     <li><a href="#concepts"><span class="secno">5</span> <span class="content">Concepts</span></a>
     <li><a href="#registering-animator-definition"><span class="secno">6</span> <span class="content">Registering an Animator Definition</span></a>
     <li>
-     <a href="#animator-instance0"><span class="secno">7</span> <span class="content">Animator Instance</span></a>
+     <a href="#animator-instance-section"><span class="secno">7</span> <span class="content">Animator Instance</span></a>
      <ol class="toc">
       <li><a href="#creating-animator-instance"><span class="secno">7.1</span> <span class="content">Creating an Animator Instance</span></a>
       <li><a href="#running-animators"><span class="secno">7.2</span> <span class="content">Running Animators</span></a>
@@ -1591,9 +1592,9 @@ animation as needed by <code class="idl"><a data-link-type="idl" href="#animatio
     <li data-md="">
      <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="animator-name">animator name</dfn> <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-ident">&lt;ident></a>#.</p>
     <li data-md="">
-     <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="class-constructor">class constructor</dfn>.</p>
+     <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="class-constructor">class constructor</dfn> which is the class <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-constructor">constructor</a>.</p>
     <li data-md="">
-     <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="animate-function">animate function</dfn>.</p>
+     <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="animate-function">animate function</dfn> which is the animate <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-terms-and-definitions-function">function</a> callback.</p>
    </ul>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="animator-instance">animator instance</dfn> a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct">struct</a> which describes a fully realized custom animation
 instance in the <code class="idl"><a data-link-type="idl" href="#animationworkletglobalscope" id="ref-for-animationworkletglobalscope-4">AnimationWorkletGlobalScope</a></code>. It has a reference to an <a data-link-type="dfn" href="#animator-definition" id="ref-for-animator-definition-1">animator
@@ -1605,21 +1606,20 @@ consists of:</p>
     <li data-md="">
      <p>An <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-animation-requested-flag-1">animation requested flag</a>.</p>
     <li data-md="">
-     <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="animator-output-effect">animator output effect</dfn>.</p>
+     <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="animator-effect">animator effect</dfn> which is an <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#animation-effect">animation effect</a>.</p>
     <li data-md="">
-     <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="animator-timelines-list">animator timelines list</dfn>.</p>
+     <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="animator-timelines-list">animator timelines list</dfn> which is <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list">list</a> of <a data-link-type="dfn" href="#timeline" id="ref-for-timeline-1">timelines</a>.</p>
    </ul>
    <p>An <dfn data-dfn-type="dfn" data-noexport="" id="worklet-animation">worklet animation<a class="self-link" href="#worklet-animation"></a></dfn> is a <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#concept-animation">animation</a> in the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document">document</a> which may corresponds
-to an <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-1">animator instance</a> in the <a data-link-type="dfn">worklet global scope</a>. It provides playback control
-and controls the lifetime of its corresponding <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-2">animator instance</a>. It
-consists of:</p>
+to an <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-1">animator instance</a> in the worklet global scope. It controls the lifetime of its
+corresponding <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-2">animator instance</a> and provides playback control. It consists of:</p>
    <ul>
     <li data-md="">
      <p>An <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-2">animator name</a>.</p>
     <li data-md="">
      <p>An <dfn data-dfn-type="dfn" data-noexport="" id="effect">effect<a class="self-link" href="#effect"></a></dfn> which is an <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#animation-effect">animation effect</a>.</p>
     <li data-md="">
-     <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="timeline">timeline</dfn> which is a <a data-link-type="dfn" href="#timeline" id="ref-for-timeline-1">timeline</a>.</p>
+     <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="timeline">timeline</dfn> which is a <a data-link-type="dfn" href="#timeline" id="ref-for-timeline-2">timeline</a>.</p>
    </ul>
    <h2 class="heading settled" data-level="6" id="registering-animator-definition"><span class="secno">6. </span><span class="content">Registering an Animator Definition</span><a class="self-link" href="#registering-animator-definition"></a></h2>
     The <code class="idl"><a data-link-type="idl" href="#animationworkletglobalscope" id="ref-for-animationworkletglobalscope-5">AnimationWorkletGlobalScope</a></code> has a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="animator-name-to-animator-definition-map">animator name to animator definition map</dfn>.
@@ -1658,7 +1658,7 @@ abort all these steps.</p>
 definition map</a> of the associated <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document">document</a>.</p>
     </ol>
    </div>
-   <h2 class="heading settled" data-level="7" id="animator-instance0"><span class="secno">7. </span><span class="content">Animator Instance</span><a class="self-link" href="#animator-instance0"></a></h2>
+   <h2 class="heading settled" data-level="7" id="animator-instance-section"><span class="secno">7. </span><span class="content">Animator Instance</span><a class="self-link" href="#animator-instance-section"></a></h2>
    <h3 class="heading settled" data-level="7.1" id="creating-animator-instance"><span class="secno">7.1. </span><span class="content">Creating an Animator Instance</span><a class="self-link" href="#creating-animator-instance"></a></h3>
    <p>Each <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-3">animator instance</a> lives in an <code class="idl"><a data-link-type="idl" href="#animationworkletglobalscope" id="ref-for-animationworkletglobalscope-6">AnimationWorkletGlobalScope</a></code>. The <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-4">animator instance</a> cannot be disposed arbitrarily (e.g., in the middle of running animation
 as it may contain the scripted animation state.</p>
@@ -1695,7 +1695,7 @@ steps.</p>
        <li data-md="">
         <p><a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-animation-requested-flag-2">animation requested flag</a> being <a data-link-type="dfn" href="#frame-current" id="ref-for-frame-current-1">frame-current</a></p>
        <li data-md="">
-        <p><a data-link-type="dfn" href="#animator-output-effect" id="ref-for-animator-output-effect-1">animator output effect</a> being <var>effect</var></p>
+        <p><a data-link-type="dfn" href="#animator-effect" id="ref-for-animator-effect-1">animator effect</a> being <var>effect</var></p>
        <li data-md="">
         <p><a data-link-type="dfn" href="#animator-timelines-list" id="ref-for-animator-timelines-list-1">animator timelines list</a> being <var>timelineList</var></p>
       </ul>
@@ -1731,7 +1731,7 @@ associated <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-
      <li data-md="">
       <p>Let <var>timelines</var> be animator timelines list of <var>instance</var>.</p>
      <li data-md="">
-      <p>Let <var>effect</var> be an <a data-link-type="dfn">animator</a> of <var>instance</var>.</p>
+      <p>Let <var>effect</var> be an <a data-link-type="dfn" href="#animator-effect" id="ref-for-animator-effect-2">animator effect</a> of <var>instance</var>.</p>
      <li data-md="">
       <p><a data-link-type="dfn" href="https://heycam.github.io/webidl/#es-invoking-callback-functions">Invoke</a> <var>animateFunction</var> with arguments «<var>timelines</var>, <var>effect</var>»,
     and with <var>instance</var> as the <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-callback-this-value">callback this value</a>.</p>
@@ -1743,14 +1743,12 @@ in the same frame.
    <p class="issue" id="issue-216cac5b"><a class="self-link" href="#issue-216cac5b"></a> Define when we may get rid of the animator.</p>
    <h3 class="heading settled" data-level="7.4" id="requesting-animation-frames"><span class="secno">7.4. </span><span class="content">Requesting Animation Frames</span><a class="self-link" href="#requesting-animation-frames"></a></h3>
    <p>Each <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-7">animator instance</a> has an associated <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="animation-requested-flag">animation requested flag</dfn>. It must be
-either <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="frame-requested">frame-requested</dfn> or <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="frame-current">frame-current</dfn>. It is initially set to <a data-link-type="dfn">frame-
-current</a>. Various events, for example changes in of the animator’s <a data-link-type="dfn" href="#animator-timelines-list" id="ref-for-animator-timelines-list-2">animator timelines
-list</a> currentTime can cause the <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-animation-requested-flag-5">animation requested flag</a> to be set to <a data-link-type="dfn">frame-
-requested</a>.</p>
-   <p><a href="#running-animators">§7.2 Running Animators</a> resets the <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-animation-requested-flag-6">animation requested flag</a> on animators to <a data-link-type="dfn" href="#frame-current" id="ref-for-frame-current-3">frame-current</a>.</p>
+either <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="frame-requested">frame-requested</dfn> or <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="frame-current">frame-current</dfn>. It is initially set to <a data-link-type="dfn" href="#frame-current" id="ref-for-frame-current-3">frame-current</a>. Various events, for example changes in of the animator’s <a data-link-type="dfn" href="#animator-timelines-list" id="ref-for-animator-timelines-list-2">animator
+timelines list</a> currentTime can cause the <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-animation-requested-flag-5">animation requested flag</a> to be set to <a data-link-type="dfn" href="#frame-requested" id="ref-for-frame-requested-2">frame-requested</a>.</p>
+   <p><a href="#running-animators">§7.2 Running Animators</a> resets the <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-animation-requested-flag-6">animation requested flag</a> on animators to <a data-link-type="dfn" href="#frame-current" id="ref-for-frame-current-4">frame-current</a>.</p>
    <h2 class="heading settled" data-level="8" id="integration-web-animation"><span class="secno">8. </span><span class="content">Integration With Web Animations</span><a class="self-link" href="#integration-web-animation"></a></h2>
    <h3 class="heading settled" data-level="8.1" id="creating-worklet-animation"><span class="secno">8.1. </span><span class="content">Creating an Worklet Animation</span><a class="self-link" href="#creating-worklet-animation"></a></h3>
-    TODO: 
+   <p>TODO:</p>
    <ul>
     <li data-md="">
      <p>add IDL for worklet animation</p>
@@ -1764,13 +1762,13 @@ requested</a>.</p>
      <p>define what it means when localTime is read on this instance (i.e., we get last value synced
 from worklet scope)</p>
    </ul>
-   <p class="issue" id="issue-c2cb2c27"><a class="self-link" href="#issue-c2cb2c27"></a> describe how constructor handles single or sequence of effects
-Issue(63): define new semantics for reverse/finish/playbackRate</p>
+   <p class="issue" id="issue-fb4f14aa"><a class="self-link" href="#issue-fb4f14aa"></a> describe how constructor handles single or sequence of effects. <a href="https://github.com/majido/animation-worklet/issues/62">&lt;https://github.com/majido/animation-worklet/issues/62></a></p>
+   <p class="issue" id="issue-60474131"><a class="self-link" href="#issue-60474131"></a> define worklet animation appropriate semantics for reverse/finish/playbackRate. <a href="https://github.com/majido/animation-worklet/issues/63">&lt;https://github.com/majido/animation-worklet/issues/63></a></p>
    <h3 class="heading settled" data-level="8.2" id="timeline-attachment"><span class="secno">8.2. </span><span class="content">Timeline Attachment</span><a class="self-link" href="#timeline-attachment"></a></h3>
-   <p>TODO</p>
-   <p class="issue" id="issue-8cedaea7"><a class="self-link" href="#issue-8cedaea7"></a> Define semantics of attachment and detachment</p>
+   <p>TODO:</p>
+   <p class="issue" id="issue-8cedaea7"><a class="self-link" href="#issue-8cedaea7"></a> Define semantics of attachment and detachment <a href="https://github.com/majido/animation-worklet/issues/61">&lt;https://github.com/majido/animation-worklet/issues/61></a></p>
    <h3 class="heading settled" data-level="8.3" id="worklet-group-effect"><span class="secno">8.3. </span><span class="content">WorkletGroupEffect</span><a class="self-link" href="#worklet-group-effect"></a></h3>
-    TODO: 
+   <p>TODO:</p>
    <ul>
     <li data-md="">
      <p>Add idl for worklet group effect</p>
@@ -1778,7 +1776,7 @@ Issue(63): define new semantics for reverse/finish/playbackRate</p>
      <p>define the children start time schedule for the group effect. [Issue](https://github.com/w3c/web-animations/issues/191)</p>
    </ul>
    <h3 class="heading settled" data-level="8.4" id="timing-model"><span class="secno">8.4. </span><span class="content">WorkletAnimation timing model</span><a class="self-link" href="#timing-model"></a></h3>
-    TODO: 
+   <p>TODO:</p>
    <ul>
     <li data-md="">
      <p>Describe the relation of WorkletAnimation.currentTime with its timeline time</p>
@@ -1798,13 +1796,13 @@ composite operation is not in scope at this point.</p>
    <h2 class="heading settled" data-level="11" id="examples"><span class="secno">11. </span><span class="content">Examples</span><a class="self-link" href="#examples"></a></h2>
    <h3 class="heading settled" data-level="11.1" id="example-1"><span class="secno">11.1. </span><span class="content">Example 1: Hidey Bar.</span><a class="self-link" href="#example-1"></a></h3>
     An example of header effect where a header is moved with scroll and as soon as finger is lifted it animates fully to close or open position depending on its current position. 
-<pre class="lang-markup highlight"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">'scrollingContainer'</span><span class="p">></span>
-  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">'header'</span><span class="p">></span>Some header<span class="p">&lt;/</span><span class="nt">div</span><span class="p">></span>
-  <span class="p">&lt;</span><span class="nt">div</span><span class="p">></span>content<span class="p">&lt;/</span><span class="nt">div</span><span class="p">></span>
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">></span>
+<pre class="lang-markup highlight"><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">'scrollingContainer'</span><span class="nt">></span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">'header'</span><span class="nt">></span>Some header<span class="nt">&lt;/div></span>
+  <span class="nt">&lt;div></span>content<span class="nt">&lt;/div></span>
+<span class="nt">&lt;/div></span>
 
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
-animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span class="s1">'hidey-bar-animator.js'</span><span class="p">).</span>then<span class="p">(</span> _ <span class="p">=></span> <span class="p">{</span>
+<span class="nt">&lt;script></span>
+animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span class="s1">'hidey-bar-animator.js'</span><span class="p">).</span>then<span class="p">(</span> _ <span class="o">=></span> <span class="p">{</span>
   <span class="kr">const</span> scrollTimeline <span class="o">=</span> <span class="k">new</span> ScrollTimeline<span class="p">(</span>$scrollingContainer<span class="p">,</span> <span class="p">{</span>timeRange<span class="o">:</span> <span class="mi">100</span><span class="p">});</span>
 
   <span class="kd">var</span> workletAnim <span class="o">=</span> <span class="k">new</span> WorkletAnimation<span class="p">(</span><span class="s1">'hidey-bar'</span><span class="p">,</span>
@@ -1818,7 +1816,7 @@ animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span c
 
 workletAnim<span class="p">.</span>timeline <span class="o">==</span> scrollTimeline<span class="p">;</span> <span class="c1">// true, timeline returns the primary timeline</span>
 <span class="c1"></span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">></span>
+<span class="nt">&lt;/script></span>
 </pre>
 <pre class="lang-javascript highlight"><span class="c1">// Inside AnimationWorkletGlobalScope</span>
 <span class="c1"></span>
@@ -1847,7 +1845,7 @@ registerAnimator<span class="p">(</span><span class="s1">'hidey-bar'</span><span
   <span class="p">}</span>
 <span class="p">});</span>
 </pre>
-   <p class="issue" id="issue-e1ad2274"><a class="self-link" href="#issue-e1ad2274"></a> This example uses a hypothetical <a class="property" data-link-type="propdesc">phase</a> property on timeline as a way to detect when user
+   <p class="issue" id="issue-2eb87a7a"><a class="self-link" href="#issue-2eb87a7a"></a> This example uses a hypothetical "phase" property on timeline as a way to detect when user
 is no longer actively scrolling. This is a reasonable thing to have on scroll timeline. A simple
 fallback can emulate this by detecting when timeline time (i.e. scroll offset) has not changed in
 the last few frames.</p>
@@ -1855,13 +1853,13 @@ the last few frames.</p>
     An example of twitter profile header effect where two elements (avatar, and header) are updated in
 sync with scroll offset. 
 <pre class="lang-markup highlight">// In document scope
-<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">'scrollingContainer'</span><span class="p">></span>
-  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">'header'</span> <span class="na">style</span><span class="o">=</span><span class="s">'height: 150px'</span><span class="p">>&lt;/</span><span class="nt">div</span><span class="p">></span>
-  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">'avatar'</span><span class="p">>&lt;</span><span class="nt">img</span><span class="p">>&lt;/</span><span class="nt">div</span><span class="p">></span>
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">></span>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">'scrollingContainer'</span><span class="nt">></span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">'header'</span> <span class="na">style=</span><span class="s">'height: 150px'</span><span class="nt">>&lt;/div></span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">'avatar'</span><span class="nt">>&lt;img>&lt;/div></span>
+<span class="nt">&lt;/div></span>
 
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
-animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span class="s1">'twitter-header-animator.js'</span><span class="p">).</span>then<span class="p">(</span> _ <span class="p">=></span> <span class="p">{</span>
+<span class="nt">&lt;script></span>
+animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span class="s1">'twitter-header-animator.js'</span><span class="p">).</span>then<span class="p">(</span> _ <span class="o">=></span> <span class="p">{</span>
   <span class="kr">const</span> workletAnim <span class="o">=</span> <span class="k">new</span> WorkletAnimation<span class="p">(</span><span class="s1">'twitter-header'</span><span class="p">,</span>
     <span class="p">[</span><span class="k">new</span> KeyFrameEffect<span class="p">(</span>$avatar<span class="p">,</span>  <span class="cm">/* scales down as we scroll up */</span>
                         <span class="p">[{</span>transform<span class="o">:</span> <span class="s1">'scale(1)'</span><span class="p">},</span> <span class="p">{</span>transform<span class="o">:</span> <span class="s1">'scale(0.5)'</span><span class="p">}],</span>
@@ -1876,7 +1874,7 @@ animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span c
 <span class="c1"></span>  workletAnim <span class="o">==</span> $avatarEl<span class="p">.</span>getAnimations<span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> $headerEl<span class="p">.</span>getAnimations<span class="p">()[</span><span class="mi">0</span><span class="p">];</span>
 
 <span class="p">});</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">></span>
+<span class="nt">&lt;/script></span>
 </pre>
 <pre class="lang-javascript highlight"><span class="c1">// Ins AnimationWorkletGlobalScope.</span>
 <span class="c1"></span>registerAnimator<span class="p">(</span><span class="s1">'twitter-header'</span><span class="p">,</span> <span class="kr">class</span> <span class="p">{</span>
@@ -2056,10 +2054,10 @@ animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span c
    <li><a href="#dom-window-animationworklet">animationWorklet</a><span>, in §4</span>
    <li><a href="#animationworkletglobalscope">AnimationWorkletGlobalScope</a><span>, in §4</span>
    <li><a href="#animator-definition">animator definition</a><span>, in §5</span>
+   <li><a href="#animator-effect">animator effect</a><span>, in §5</span>
    <li><a href="#animator-instance">animator instance</a><span>, in §5</span>
    <li><a href="#animator-name">animator name</a><span>, in §5</span>
    <li><a href="#animator-name-to-animator-definition-map">animator name to animator definition map</a><span>, in §6</span>
-   <li><a href="#animator-output-effect">animator output effect</a><span>, in §5</span>
    <li><a href="#animator-timelines-list">animator timelines list</a><span>, in §5</span>
    <li><a href="#class-constructor">class constructor</a><span>, in §5</span>
    <li><a href="#create-a-new-animator-instance">create a new animator instance</a><span>, in §7.1</span>
@@ -2160,19 +2158,19 @@ animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span c
    <div class="issue"> Consider giving user agents permission to skip running animator instances to
     throttle slow animators.<a href="#issue-07876098"> ↵ </a></div>
    <div class="issue"> Define when we may get rid of the animator.<a href="#issue-216cac5b"> ↵ </a></div>
-   <div class="issue"> describe how constructor handles single or sequence of effects
-Issue(63): define new semantics for reverse/finish/playbackRate<a href="#issue-c2cb2c27"> ↵ </a></div>
-   <div class="issue"> Define semantics of attachment and detachment<a href="#issue-8cedaea7"> ↵ </a></div>
+   <div class="issue"> describe how constructor handles single or sequence of effects. <a href="https://github.com/majido/animation-worklet/issues/62">&lt;https://github.com/majido/animation-worklet/issues/62></a><a href="#issue-fb4f14aa"> ↵ </a></div>
+   <div class="issue"> define worklet animation appropriate semantics for reverse/finish/playbackRate. <a href="https://github.com/majido/animation-worklet/issues/63">&lt;https://github.com/majido/animation-worklet/issues/63></a><a href="#issue-60474131"> ↵ </a></div>
+   <div class="issue"> Define semantics of attachment and detachment <a href="https://github.com/majido/animation-worklet/issues/61">&lt;https://github.com/majido/animation-worklet/issues/61></a><a href="#issue-8cedaea7"> ↵ </a></div>
    <div class="issue"> Worklet animations will have a special animation class that  ranks them with the highest
 order in animation stack effect. also their composite operation is "replace" which is going to
 allow them to run in parallel to other web animations in the system. Supporting other
 composite operation is not in scope at this point.<a href="#issue-8d2c2dd1"> ↵ </a></div>
    <div class="issue"> Need to decide what security considerations there are for this spec.<a href="#issue-de770110"> ↵ </a></div>
    <div class="issue"> Need to decide what privacy considerations there are for this spec.<a href="#issue-19f9ed9b"> ↵ </a></div>
-   <div class="issue"> This example uses a hypothetical <a class="property" data-link-type="propdesc">phase</a> property on timeline as a way to detect when user
+   <div class="issue"> This example uses a hypothetical "phase" property on timeline as a way to detect when user
 is no longer actively scrolling. This is a reasonable thing to have on scroll timeline. A simple
 fallback can emulate this by detecting when timeline time (i.e. scroll offset) has not changed in
-the last few frames.<a href="#issue-e1ad2274"> ↵ </a></div>
+the last few frames.<a href="#issue-2eb87a7a"> ↵ </a></div>
   </div>
   <aside class="dfn-panel" data-for="animation-worklet">
    <b><a href="#animation-worklet">#animation-worklet</a></b><b>Referenced in:</b>
@@ -2241,10 +2239,11 @@ the last few frames.<a href="#issue-e1ad2274"> ↵ </a></div>
     <li><a href="#ref-for-animator-instance-7">7.4. Requesting Animation Frames</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="animator-output-effect">
-   <b><a href="#animator-output-effect">#animator-output-effect</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="animator-effect">
+   <b><a href="#animator-effect">#animator-effect</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-animator-output-effect-1">7.1. Creating an Animator Instance</a>
+    <li><a href="#ref-for-animator-effect-1">7.1. Creating an Animator Instance</a>
+    <li><a href="#ref-for-animator-effect-2">7.2. Running Animators</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="animator-timelines-list">
@@ -2257,7 +2256,7 @@ the last few frames.<a href="#issue-e1ad2274"> ↵ </a></div>
   <aside class="dfn-panel" data-for="timeline">
    <b><a href="#timeline">#timeline</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-timeline-1">5. Concepts</a>
+    <li><a href="#ref-for-timeline-1">5. Concepts</a> <a href="#ref-for-timeline-2">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="animator-name-to-animator-definition-map">
@@ -2301,6 +2300,7 @@ the last few frames.<a href="#issue-e1ad2274"> ↵ </a></div>
    <b><a href="#frame-requested">#frame-requested</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-frame-requested-1">7.2. Running Animators</a>
+    <li><a href="#ref-for-frame-requested-2">7.4. Requesting Animation Frames</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="frame-current">
@@ -2308,7 +2308,7 @@ the last few frames.<a href="#issue-e1ad2274"> ↵ </a></div>
    <ul>
     <li><a href="#ref-for-frame-current-1">7.1. Creating an Animator Instance</a>
     <li><a href="#ref-for-frame-current-2">7.2. Running Animators</a>
-    <li><a href="#ref-for-frame-current-3">7.4. Requesting Animation Frames</a>
+    <li><a href="#ref-for-frame-current-3">7.4. Requesting Animation Frames</a> <a href="#ref-for-frame-current-4">(2)</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */
