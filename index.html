@@ -1430,7 +1430,7 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
      <dt>This version:
      <dd><a class="u-url" href="https://wicg.github.io/animation-worklet/">https://wicg.github.io/animation-worklet/</a>
      <dt>Issue Tracking:
-     <dd><a href="https://github.com/WICG/animation-worklet/issues/">GitHub</a>
+     <dd><a href="https://github.com/majido/animation-worklet/issues/">GitHub</a>
      <dd><a href="#issues-index">Inline In Spec</a>
      <dt class="editor">Editors:
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:majidvp@google.com">Majid Valipour</a>
@@ -1750,6 +1750,16 @@ Another implication of this is that the the <a data-link-type="dfn" href="https:
 the animation’s output.</p>
    <p><a data-link-type="dfn" href="#worklet-animation" id="ref-for-worklet-animation-5">Worklet animation</a> also has an <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-5">animator name</a> which identifies its <a data-link-type="dfn" href="#animator-definition" id="ref-for-animator-definition-3">animator
 definition</a>.</p>
+   <figure>
+     <img alt="Overview of the WorkletAnimation timing model." src="img/WorkletAnimation-timing-model.svg" width="600"> 
+    <figcaption>
+      Overview of the WorkletAnimation timing model. <br> 
+     <p>The animation current time is input to the animator which produces local time value for
+    animation effect. If animator is running in a parallel global scope, the implementation may also
+    choose to use the local time value to produce the final effect value and update the visual in
+    parallel.</p>
+    </figcaption>
+   </figure>
    <h3 class="heading settled" data-level="7.2" id="creating-worklet-animation"><span class="secno">7.2. </span><span class="content">Creating an Worklet Animation</span><a class="self-link" href="#creating-worklet-animation"></a></h3>
 <pre class="idl highlight def">[Constructor (DOMString animatorName,
               optional (AnimationEffectReadOnly or array)? effects = null,
@@ -1792,7 +1802,7 @@ passing the <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#
     <li data-md="">
      <p>define what happens when timeline or effect is modified document scope</p>
    </ul>
-   <p class="issue" id="issue-fb4f14aa"><a class="self-link" href="#issue-fb4f14aa"></a> describe how constructor handles single or sequence of effects. <a href="https://github.com/WICG/animation-worklet/issues/62">&lt;https://github.com/WICG/animation-worklet/issues/62></a></p>
+   <p class="issue" id="issue-fb4f14aa"><a class="self-link" href="#issue-fb4f14aa"></a> describe how constructor handles single or sequence of effects. <a href="https://github.com/majido/animation-worklet/issues/62">&lt;https://github.com/majido/animation-worklet/issues/62></a></p>
    <h3 class="heading settled" data-level="7.3" id="timing-model"><span class="secno">7.3. </span><span class="content">Worklet Animation timing model</span><a class="self-link" href="#timing-model"></a></h3>
    <p>The section describes how <a data-link-type="dfn" href="#worklet-animation" id="ref-for-worklet-animation-6">worklet animation</a> timing model differs from other <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#concept-animation">animations</a>.</p>
    <p>In addition to existing conditions on when the <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#concept-animation">animation</a> is considered <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#ready">ready</a>, a <a data-link-type="dfn" href="#worklet-animation" id="ref-for-worklet-animation-7">Worklet animation</a> readiness also depends on the following condition to be true:</p>
@@ -1820,7 +1830,7 @@ context this value may be stale.</p>
    </ul>
    <p class="issue" id="issue-ecc3a1c5"><a class="self-link" href="#issue-ecc3a1c5"></a> Come with appropriate mechanism’s for <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-13">animator instance</a> to get notified when its
    animation currentTime is changing e.g., via reverse(), finish() or playbackRate change. So that
-   it can react appropriately. <a href="https://github.com/WICG/animation-worklet/issues/63">&lt;https://github.com/WICG/animation-worklet/issues/63></a></p>
+   it can react appropriately. <a href="https://github.com/majido/animation-worklet/issues/63">&lt;https://github.com/majido/animation-worklet/issues/63></a></p>
    <h3 class="heading settled" data-level="7.4" id="worklet-animation-animator-instances"><span class="secno">7.4. </span><span class="content">Interaction with Animator Instances</span><a class="self-link" href="#worklet-animation-animator-instances"></a></h3>
    <p>A <a data-link-type="dfn" href="#worklet-animation" id="ref-for-worklet-animation-11">worklet animation</a> corresponds to at most one <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-14">animator instance</a> at any time, and may
 have no current corresponding <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-15">animator instance</a>. The correspondance of an <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-16">animator
@@ -1869,7 +1879,7 @@ following steps.</p>
 corresponding <a data-link-type="dfn" href="#worklet-animation" id="ref-for-worklet-animation-13">worklet animation</a>. Instead, see <a href="#removing-animator">§6.3 Removing an Animator</a>.</p>
    <h3 class="heading settled" data-level="7.5" id="timeline-attachment"><span class="secno">7.5. </span><span class="content">Timeline Attachment</span><a class="self-link" href="#timeline-attachment"></a></h3>
    <p>TODO:</p>
-   <p class="issue" id="issue-1b7aae40"><a class="self-link" href="#issue-1b7aae40"></a> Define semantics of attachment and detachment. <a href="https://github.com/WICG/animation-worklet/issues/61">&lt;https://github.com/WICG/animation-worklet/issues/61></a></p>
+   <p class="issue" id="issue-1b7aae40"><a class="self-link" href="#issue-1b7aae40"></a> Define semantics of attachment and detachment. <a href="https://github.com/majido/animation-worklet/issues/61">&lt;https://github.com/majido/animation-worklet/issues/61></a></p>
    <h3 class="heading settled" data-level="7.6" id="worklet-group-effect"><span class="secno">7.6. </span><span class="content">WorkletGroupEffect</span><a class="self-link" href="#worklet-group-effect"></a></h3>
    <p>A <a data-link-type="dfn" href="#worklet-animation" id="ref-for-worklet-animation-14">worklet animation</a>’s effect can additionally be of <code class="idl"><a data-link-type="idl" href="#workletgroupeffect" id="ref-for-workletgroupeffect-2">WorkletGroupEffect</a></code> type. Using this
 group effect allows the corresponding <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-23">animator instance</a> to directly control its children <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#local-time">local time</a>s.</p>
@@ -1903,13 +1913,13 @@ composite operation is not in scope at this point.</p>
    <h3 class="heading settled" data-level="10.1" id="example-1"><span class="secno">10.1. </span><span class="content">Example 1: Hidey Bar.</span><a class="self-link" href="#example-1"></a></h3>
     An example of header effect where a header is moved with scroll and as soon as finger is lifted it
 animates fully to close or open position depending on its current position. 
-<pre class="lang-markup highlight"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">'scrollingContainer'</span><span class="p">></span>
-  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">'header'</span><span class="p">></span>Some header<span class="p">&lt;/</span><span class="nt">div</span><span class="p">></span>
-  <span class="p">&lt;</span><span class="nt">div</span><span class="p">></span>content<span class="p">&lt;/</span><span class="nt">div</span><span class="p">></span>
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">></span>
+<pre class="lang-markup highlight"><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">'scrollingContainer'</span><span class="nt">></span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">'header'</span><span class="nt">></span>Some header<span class="nt">&lt;/div></span>
+  <span class="nt">&lt;div></span>content<span class="nt">&lt;/div></span>
+<span class="nt">&lt;/div></span>
 
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
-animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span class="s1">'hidey-bar-animator.js'</span><span class="p">).</span>then<span class="p">(</span> _ <span class="p">=></span> <span class="p">{</span>
+<span class="nt">&lt;script></span>
+animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span class="s1">'hidey-bar-animator.js'</span><span class="p">).</span>then<span class="p">(</span> _ <span class="o">=></span> <span class="p">{</span>
   <span class="kr">const</span> scrollTimeline <span class="o">=</span> <span class="k">new</span> ScrollTimeline<span class="p">(</span>$scrollingContainer<span class="p">,</span> <span class="p">{</span>timeRange<span class="o">:</span> <span class="mi">100</span><span class="p">});</span>
   <span class="kr">const</span> documentTimeline <span class="o">=</span> document<span class="p">.</span>timeline<span class="p">;</span>
 
@@ -1926,7 +1936,7 @@ animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span c
 
 workletAnim<span class="p">.</span>timeline <span class="o">==</span> scrollTimeline<span class="p">;</span> <span class="c1">// true, timeline returns the primary timeline</span>
 <span class="c1"></span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">></span>
+<span class="nt">&lt;/script></span>
 </pre>
 <pre class="lang-javascript highlight"><span class="c1">// Inside AnimationWorkletGlobalScope</span>
 <span class="c1"></span>
@@ -1968,13 +1978,13 @@ the last few frames.</p>
     An example of twitter profile header effect where two elements (avatar, and header) are updated in
 sync with scroll offset. 
 <pre class="lang-markup highlight">// In document scope
-<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">'scrollingContainer'</span><span class="p">></span>
-  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">'header'</span> <span class="na">style</span><span class="o">=</span><span class="s">'height: 150px'</span><span class="p">>&lt;/</span><span class="nt">div</span><span class="p">></span>
-  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">'avatar'</span><span class="p">>&lt;</span><span class="nt">img</span><span class="p">>&lt;/</span><span class="nt">div</span><span class="p">></span>
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">></span>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">'scrollingContainer'</span><span class="nt">></span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">'header'</span> <span class="na">style=</span><span class="s">'height: 150px'</span><span class="nt">>&lt;/div></span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">'avatar'</span><span class="nt">>&lt;img>&lt;/div></span>
+<span class="nt">&lt;/div></span>
 
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
-animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span class="s1">'twitter-header-animator.js'</span><span class="p">).</span>then<span class="p">(</span> _ <span class="p">=></span> <span class="p">{</span>
+<span class="nt">&lt;script></span>
+animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span class="s1">'twitter-header-animator.js'</span><span class="p">).</span>then<span class="p">(</span> _ <span class="o">=></span> <span class="p">{</span>
   <span class="kr">const</span> workletAnim <span class="o">=</span> <span class="k">new</span> WorkletAnimation<span class="p">(</span><span class="s1">'twitter-header'</span><span class="p">,</span>
     <span class="p">[</span><span class="k">new</span> KeyFrameEffect<span class="p">(</span>$avatar<span class="p">,</span>  <span class="cm">/* scales down as we scroll up */</span>
                         <span class="p">[{</span>transform<span class="o">:</span> <span class="s1">'scale(1)'</span><span class="p">},</span> <span class="p">{</span>transform<span class="o">:</span> <span class="s1">'scale(0.5)'</span><span class="p">}],</span>
@@ -1989,7 +1999,7 @@ animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span c
 <span class="c1"></span>  workletAnim <span class="o">==</span> $avatarEl<span class="p">.</span>getAnimations<span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> $headerEl<span class="p">.</span>getAnimations<span class="p">()[</span><span class="mi">0</span><span class="p">];</span>
 
 <span class="p">});</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">></span>
+<span class="nt">&lt;/script></span>
 </pre>
 <pre class="lang-javascript highlight"><span class="c1">// Ins AnimationWorkletGlobalScope.</span>
 <span class="c1"></span>registerAnimator<span class="p">(</span><span class="s1">'twitter-header'</span><span class="p">,</span> <span class="kr">class</span> <span class="p">{</span>
@@ -2311,11 +2321,11 @@ animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span c
    <div class="issue"> Consider giving user agents permission to skip running animator instances to
     throttle slow animators.<a href="#issue-07876098"> ↵ </a></div>
    <div class="issue"> Define when we may get rid of the animator.<a href="#issue-216cac5b"> ↵ </a></div>
-   <div class="issue"> describe how constructor handles single or sequence of effects. <a href="https://github.com/WICG/animation-worklet/issues/62">&lt;https://github.com/WICG/animation-worklet/issues/62></a><a href="#issue-fb4f14aa"> ↵ </a></div>
+   <div class="issue"> describe how constructor handles single or sequence of effects. <a href="https://github.com/majido/animation-worklet/issues/62">&lt;https://github.com/majido/animation-worklet/issues/62></a><a href="#issue-fb4f14aa"> ↵ </a></div>
    <div class="issue"> Come with appropriate mechanism’s for <a data-link-type="dfn" href="#animator-instance">animator instance</a> to get notified when its
    animation currentTime is changing e.g., via reverse(), finish() or playbackRate change. So that
-   it can react appropriately. <a href="https://github.com/WICG/animation-worklet/issues/63">&lt;https://github.com/WICG/animation-worklet/issues/63></a><a href="#issue-ecc3a1c5"> ↵ </a></div>
-   <div class="issue"> Define semantics of attachment and detachment. <a href="https://github.com/WICG/animation-worklet/issues/61">&lt;https://github.com/WICG/animation-worklet/issues/61></a><a href="#issue-1b7aae40"> ↵ </a></div>
+   it can react appropriately. <a href="https://github.com/majido/animation-worklet/issues/63">&lt;https://github.com/majido/animation-worklet/issues/63></a><a href="#issue-ecc3a1c5"> ↵ </a></div>
+   <div class="issue"> Define semantics of attachment and detachment. <a href="https://github.com/majido/animation-worklet/issues/61">&lt;https://github.com/majido/animation-worklet/issues/61></a><a href="#issue-1b7aae40"> ↵ </a></div>
    <div class="issue"> Worklet animations will have a special animation class that  ranks them with the highest
 order in animation stack effect. also their composite operation is "replace" which is going to
 allow them to run in parallel to other web animations in the system. Supporting other
