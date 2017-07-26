@@ -403,10 +403,10 @@ an <a>animator instance</a>. It controls the lifetime and playback state of it's
 
 Being an <a>animation</a>, <a>worklet animation</a> has an <a>animation effect</a> and a
 <a>timeline</a>. However unlike other animations the worklet animation's <a>current time</a> does
-not determine the animation effect's <a>local time</a> (via its <a>inherited time</a>).  Instead the
-associated <a>animator instance</a> controls the animation effect's <a>local time</a> directly. Note
-that this means that the <a>timeline's</a> current time does not fully determine the animation's
-output.
+not directly determine the animation effect's <a>local time</a> (via its <a>inherited time</a>).
+Instead the associated <a>animator instance</a> controls the animation effect's <a>local time</a>
+directly. Note that this means that the <a>timeline's</a> current time does not fully determine the
+animation's output.
 
 <a>Worklet animation</a> has the following properties in addition to the {{Animation}} interface:
   - an <dfn>animation animator name</dfn> which identifies it's <a>animator definition</a>.
