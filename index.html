@@ -2014,13 +2014,13 @@ such animations in parallel to directly update the visuals.</p>
    <h3 class="heading settled" data-level="9.1" id="example-1"><span class="secno">9.1. </span><span class="content">Example 1: Hidey Bar.</span><a class="self-link" href="#example-1"></a></h3>
     An example of header effect where a header is moved with scroll and as soon as finger is lifted it
 animates fully to close or open position depending on its current position. 
-<pre class="lang-markup highlight"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">'scrollingContainer'</span><span class="p">></span>
-  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">'header'</span><span class="p">></span>Some header<span class="p">&lt;/</span><span class="nt">div</span><span class="p">></span>
-  <span class="p">&lt;</span><span class="nt">div</span><span class="p">></span>content<span class="p">&lt;/</span><span class="nt">div</span><span class="p">></span>
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">></span>
+<pre class="lang-markup highlight"><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">'scrollingContainer'</span><span class="nt">></span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">'header'</span><span class="nt">></span>Some header<span class="nt">&lt;/div></span>
+  <span class="nt">&lt;div></span>content<span class="nt">&lt;/div></span>
+<span class="nt">&lt;/div></span>
 
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
-animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span class="s1">'hidey-bar-animator.js'</span><span class="p">).</span>then<span class="p">(</span> _ <span class="p">=></span> <span class="p">{</span>
+<span class="nt">&lt;script></span>
+animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span class="s1">'hidey-bar-animator.js'</span><span class="p">).</span>then<span class="p">(</span> _ <span class="o">=></span> <span class="p">{</span>
   <span class="kr">const</span> scrollTimeline <span class="o">=</span> <span class="k">new</span> ScrollTimeline<span class="p">(</span>$scrollingContainer<span class="p">,</span> <span class="p">{</span>timeRange<span class="o">:</span> <span class="mi">100</span><span class="p">});</span>
   <span class="kr">const</span> documentTimeline <span class="o">=</span> document<span class="p">.</span>timeline<span class="p">;</span>
 
@@ -2036,7 +2036,7 @@ animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span c
 
 
 workletAnim<span class="p">.</span>timeline <span class="o">==</span> scrollTimeline<span class="p">;</span> <span class="c1">// true</span>
-<span class="c1"></span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">></span>
+<span class="c1"></span><span class="nt">&lt;/script></span>
 </pre>
 <pre class="lang-javascript highlight"><span class="c1">// Inside AnimationWorkletGlobalScope</span>
 <span class="c1"></span>
@@ -2079,19 +2079,19 @@ the last few frames.</p>
     An example of twitter profile header effect where two elements (avatar, and header) are updated in
 sync with scroll offset. 
 <pre class="lang-markup highlight">// In document scope
-<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">'scrollingContainer'</span><span class="p">></span>
-  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">'header'</span> <span class="na">style</span><span class="o">=</span><span class="s">'height: 150px'</span><span class="p">>&lt;/</span><span class="nt">div</span><span class="p">></span>
-  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">'avatar'</span><span class="p">>&lt;</span><span class="nt">img</span><span class="p">>&lt;/</span><span class="nt">div</span><span class="p">></span>
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">></span>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">'scrollingContainer'</span><span class="nt">></span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">'header'</span> <span class="na">style=</span><span class="s">'height: 150px'</span><span class="nt">>&lt;/div></span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">'avatar'</span><span class="nt">>&lt;img>&lt;/div></span>
+<span class="nt">&lt;/div></span>
 
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">></span>
-animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span class="s1">'twitter-header-animator.js'</span><span class="p">).</span>then<span class="p">(</span> _ <span class="p">=></span> <span class="p">{</span>
+<span class="nt">&lt;script></span>
+animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span class="s1">'twitter-header-animator.js'</span><span class="p">).</span>then<span class="p">(</span> _ <span class="o">=></span> <span class="p">{</span>
   <span class="kr">const</span> workletAnim <span class="o">=</span> <span class="k">new</span> WorkletAnimation<span class="p">(</span><span class="s1">'twitter-header'</span><span class="p">,</span>
     <span class="p">[</span><span class="k">new</span> KeyFrameEffect<span class="p">(</span>$avatar<span class="p">,</span>  <span class="cm">/* scales down as we scroll up */</span>
                         <span class="p">[{</span>transform<span class="o">:</span> <span class="s1">'scale(1)'</span><span class="p">},</span> <span class="p">{</span>transform<span class="o">:</span> <span class="s1">'scale(0.5)'</span><span class="p">}],</span>
                         <span class="p">{</span>duration<span class="o">:</span> <span class="mi">1</span><span class="p">,</span> iterations<span class="o">:</span> <span class="mi">1</span><span class="p">}),</span>
      <span class="k">new</span> KeyFrameEffect<span class="p">(</span>$header<span class="p">,</span> <span class="cm">/* loses transparency as we scroll up */</span>
-                        <span class="p">{</span>opacity<span class="o">:</span> <span class="mi">0</span><span class="p">,</span> opacity<span class="o">:</span> <span class="mf">0.8</span><span class="p">},</span>
+                        <span class="p">[{</span>opacity<span class="o">:</span> <span class="mi">0</span><span class="p">},</span> <span class="p">{</span>opacity<span class="o">:</span> <span class="mf">0.8</span><span class="p">}],</span>
                         <span class="p">{</span>duration<span class="o">:</span> <span class="mi">1</span><span class="p">,</span> iterations<span class="o">:</span> <span class="mi">1</span><span class="p">})],</span>
      <span class="k">new</span> ScrollTimeline<span class="p">(</span>$scrollingContainer<span class="p">,</span> <span class="p">{</span>timeRange<span class="o">:</span> <span class="mi">1</span><span class="p">,</span> startScrollOffset<span class="o">:</span> <span class="mi">0</span><span class="p">,</span> endScrollOffset<span class="o">:</span> $header<span class="p">.</span>clientHeight<span class="p">}),</span>
   <span class="p">);</span>
@@ -2100,7 +2100,7 @@ animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span c
 <span class="c1"></span>  workletAnim <span class="o">==</span> $avatarEl<span class="p">.</span>getAnimations<span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> $headerEl<span class="p">.</span>getAnimations<span class="p">()[</span><span class="mi">0</span><span class="p">];</span>
 
 <span class="p">});</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">></span>
+<span class="nt">&lt;/script></span>
 </pre>
 <pre class="lang-javascript highlight"><span class="c1">// Ins AnimationWorkletGlobalScope.</span>
 <span class="c1"></span>registerAnimator<span class="p">(</span><span class="s1">'twitter-header'</span><span class="p">,</span> <span class="kr">class</span> <span class="p">{</span>
@@ -2116,8 +2116,8 @@ animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span c
     <span class="kr">const</span> scroll <span class="o">=</span> currentTime<span class="p">;</span>  <span class="c1">// scroll is in [0, 1] range</span>
 <span class="c1"></span>
     <span class="c1">// Drive the output group effect by setting its children local times individually.</span>
-<span class="c1"></span>    effects<span class="p">.</span>children<span class="p">[</span><span class="mi">0</span><span class="p">].</span>localTime <span class="o">=</span> scroll<span class="p">;</span>
-    effects<span class="p">.</span>children<span class="p">[</span><span class="mi">1</span><span class="p">].</span>localTime <span class="o">=</span> <span class="k">this</span><span class="p">.</span>timing_<span class="p">(</span>clamp<span class="p">(</span>scroll<span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">));</span>
+<span class="c1"></span>    effect<span class="p">.</span>children<span class="p">[</span><span class="mi">0</span><span class="p">].</span>localTime <span class="o">=</span> scroll<span class="p">;</span>
+    effect<span class="p">.</span>children<span class="p">[</span><span class="mi">1</span><span class="p">].</span>localTime <span class="o">=</span> <span class="k">this</span><span class="p">.</span>timing_<span class="p">(</span>clamp<span class="p">(</span>scroll<span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">));</span>
   <span class="p">}</span>
 <span class="p">});</span>
 </pre>
