@@ -63,6 +63,7 @@ urlPrefix: https://w3c.github.io/web-animations/level-2/#;
         text: Animation
     type: dfn;
         text: group effect
+        text: child effect
 urlPrefix: https://tc39.github.io/ecma262/#sec-; type: dfn;
     text: constructor
     text: Construct
@@ -373,6 +374,8 @@ To <dfn>remove an animator instance</dfn> given |instance| and |workletGlobalSco
 
 </div>
 
+Issue: What about actually destructing animatorInstance?
+
 
 Requesting Animation Frames {#requesting-animation-frames}
 ----------------------------------------------------------
@@ -554,20 +557,19 @@ user age <em>must</em> run the following steps:
 
 Timeline Attachment {#timeline-attachment}
 -------------------
+
 Issue(61): Define semantics of attachment and detachment.
-
-
 
 WorkletGroupEffect {#worklet-group-effect}
 ------------------
 
-{{WorkletGroupEffect}} is a type of <a>group effect</a> which allows its children local time to be
-mutated individually.
+{{WorkletGroupEffect}} is a type of <a>group effect</a> that allows it's <a>child effect's</a>
+<a>local times</a> to be mutated individually.
 
-A <a>worklet animation</a>'s effect can additionally be of {{WorkletGroupEffect}} type. When a
-{{WorkletAnimation}} uses a {{WorkletGroupEffect}}, its corresponding <a>animator instance</a> can
-directly control the effect's children <a>local time</a>s. This effectively means that a single
-worklet animation can coordinate multiple effects which is necessary for some usecases.
+When a {{WorkletGroupEffect}} is set as the <a>animation effect</a> of a {{WorkletAnimation}}, the
+corresponding <a>animator instance</a> can directly control the <a>child effects</a>' <a>local
+times</a>. This allows a single worklet animation to coordinate multiple effects - see
+[[#example-2]] for an example of such a use-case.
 
 <pre class='idl'>
 
@@ -586,8 +588,8 @@ partial interface AnimationEffectReadOnly {
 
 <div algorithm="set-local-time">
 
-To set {{localTime}} property on an |effect| to value |t|, the user agent does the action that
-corresponds to the first matching condition from the following:
+To set the {{localTime}} property on a |effect| to value |t|, the user agent should perform the
+action that corresponds to the first matching condition from the following:
 
  :  If the |effect| does not have a parent group,
  :: Set the |effect| local time to |t|.
@@ -600,20 +602,24 @@ corresponds to the first matching condition from the following:
 
 </div>
 
+Issue: The above algorithm should probably only apply to within the AnimationWorkletGlobalScope?
+
 [Issue](https://github.com/w3c/web-animations/issues/191)
 
 
 Effect Stack and Composite Order {#effect-stack-composite-order}
-----------------------------
-As with other animations, <a>Worklet animations</a> participates in the <a>effect stack</a>.
-WorkletAnimation <a>animation class</a> is "Worklet Animation" and has a higher composite order than
-animations whose class is either "CSS animation", "CSS Animation", or have no specific class.
+--------------------------------
+
+As with other animations, <a>worklet animations</a> participate in the <a>effect stack</a>.  A
+worklet animation's <a>animation class</a> is "Worklet Animation" and it has a higher composite
+order than animations whose <a>animation class</a> is "CSS animation", "CSS Animation", or that have
+no specific class.
 
 Note:
-The higher composite order means <a>worklet animations</a> are sorted later in the effect stack.
-Being higher in the stack combined with with the <a>animation effect</a>'s
-<a>composite operation</a> being replace by default helps improve the chances of user agents being
-able to run such animations in parallel to directly update the visuals.
+Having a higher composite order means that <a>worklet animations</a> are sorted later in the effect
+stack. Being higher in the stack combined with with the <a>animation effect</a>'s <a>composite
+operation</a> being replace by default helps improve the chances of user agents being able to run
+such animations in parallel to directly update the visuals.
 
 
 Security Considerations {#security-considerations}

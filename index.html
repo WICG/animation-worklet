@@ -1735,6 +1735,7 @@ in the same frame.
       <p>Remove <var>animatorInstance</var> from <var>workletGlobalScope</var>’s <a data-link-type="dfn" href="#animator-instance-set" id="ref-for-animator-instance-set-3">animator instance set</a>.</p>
     </ol>
    </div>
+   <p class="issue" id="issue-0eb0049e"><a class="self-link" href="#issue-0eb0049e"></a> What about actually destructing animatorInstance?</p>
    <h3 class="heading settled" data-level="5.4" id="requesting-animation-frames"><span class="secno">5.4. </span><span class="content">Requesting Animation Frames</span><a class="self-link" href="#requesting-animation-frames"></a></h3>
    <p>Each <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-7">animator instance</a> has an associated <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="animation-requested-flag">animation requested flag</dfn>. It must be
 either <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="frame-requested">frame-requested</dfn> or <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="frame-current">frame-current</dfn>. It is initially set to <a data-link-type="dfn" href="#frame-current" id="ref-for-frame-current-3">frame-current</a>. Different circumstances can cause the <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-animation-requested-flag-5">animation requested flag</a> to be
@@ -1894,18 +1895,17 @@ following steps.</p>
     </ol>
    </div>
    <h3 class="heading settled" data-level="6.5" id="timeline-attachment"><span class="secno">6.5. </span><span class="content">Timeline Attachment</span><a class="self-link" href="#timeline-attachment"></a></h3>
-    Issue(61): Define semantics of attachment and detachment. 
+   <p class="issue" id="issue-1b7aae40"><a class="self-link" href="#issue-1b7aae40"></a> Define semantics of attachment and detachment. <a href="https://github.com/wicg/animation-worklet/issues/61">&lt;https://github.com/wicg/animation-worklet/issues/61></a></p>
    <h3 class="heading settled" data-level="6.6" id="worklet-group-effect"><span class="secno">6.6. </span><span class="content">WorkletGroupEffect</span><a class="self-link" href="#worklet-group-effect"></a></h3>
-   <p><code class="idl"><a data-link-type="idl" href="#workletgroupeffect" id="ref-for-workletgroupeffect-2">WorkletGroupEffect</a></code> is a type of <a data-link-type="dfn" href="https://w3c.github.io/web-animations/level-2/#group-effect">group effect</a> which allows its children local time to be
-mutated individually.</p>
-   <p>A <a data-link-type="dfn" href="#worklet-animation" id="ref-for-worklet-animation-13">worklet animation</a>’s effect can additionally be of <code class="idl"><a data-link-type="idl" href="#workletgroupeffect" id="ref-for-workletgroupeffect-3">WorkletGroupEffect</a></code> type. When a <code class="idl"><a data-link-type="idl" href="#workletanimation" id="ref-for-workletanimation-3">WorkletAnimation</a></code> uses a <code class="idl"><a data-link-type="idl" href="#workletgroupeffect" id="ref-for-workletgroupeffect-4">WorkletGroupEffect</a></code>, its corresponding <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-23">animator instance</a> can
-directly control the effect’s children <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#local-time">local time</a>s. This effectively means that a single
-worklet animation can coordinate multiple effects which is necessary for some usecases.</p>
+   <p><code class="idl"><a data-link-type="idl" href="#workletgroupeffect" id="ref-for-workletgroupeffect-2">WorkletGroupEffect</a></code> is a type of <a data-link-type="dfn" href="https://w3c.github.io/web-animations/level-2/#group-effect">group effect</a> that allows it’s <a data-link-type="dfn" href="https://w3c.github.io/web-animations/level-2/#child-effect">child effect’s</a> <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#local-time">local times</a> to be mutated individually.</p>
+   <p>When a <code class="idl"><a data-link-type="idl" href="#workletgroupeffect" id="ref-for-workletgroupeffect-3">WorkletGroupEffect</a></code> is set as the <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#animation-effect">animation effect</a> of a <code class="idl"><a data-link-type="idl" href="#workletanimation" id="ref-for-workletanimation-3">WorkletAnimation</a></code>, the
+corresponding <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-23">animator instance</a> can directly control the <a data-link-type="dfn" href="https://w3c.github.io/web-animations/level-2/#child-effect">child effects</a>' <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#local-time">local
+times</a>. This allows a single worklet animation to coordinate multiple effects - see <a href="#example-2">§9.2 Example 2: Twitter header.</a> for an example of such a use-case.</p>
 <pre class="idl highlight def"><span class="kt">interface</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="interface" data-export="" id="workletgroupeffectreadonly"><code>WorkletGroupEffectReadOnly</code></dfn> :  <a class="n" data-link-type="idl-name" href="https://w3c.github.io/web-animations/level-2/#groupeffectreadonly">GroupEffectReadOnly</a> {};
 
 <span class="kt">interface</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="interface" data-export="" id="workletgroupeffect"><code>WorkletGroupEffect</code></dfn> :  <a class="n" data-link-type="idl-name" href="#workletgroupeffectreadonly" id="ref-for-workletgroupeffectreadonly-1">WorkletGroupEffectReadOnly</a> {};
-<a class="n" data-link-type="idl-name" href="#workletgroupeffect" id="ref-for-workletgroupeffect-5">WorkletGroupEffect</a> <span class="kt">implements</span> <a class="n" data-link-type="idl-name" href="https://w3c.github.io/web-animations/level-2/#animationeffectmutable">AnimationEffectMutable</a>;
-<a class="n" data-link-type="idl-name" href="#workletgroupeffect" id="ref-for-workletgroupeffect-6">WorkletGroupEffect</a> <span class="kt">implements</span> <a class="n" data-link-type="idl-name" href="https://w3c.github.io/web-animations/level-2/#groupeffectmutable">GroupEffectMutable</a>;
+<a class="n" data-link-type="idl-name" href="#workletgroupeffect" id="ref-for-workletgroupeffect-4">WorkletGroupEffect</a> <span class="kt">implements</span> <a class="n" data-link-type="idl-name" href="https://w3c.github.io/web-animations/level-2/#animationeffectmutable">AnimationEffectMutable</a>;
+<a class="n" data-link-type="idl-name" href="#workletgroupeffect" id="ref-for-workletgroupeffect-5">WorkletGroupEffect</a> <span class="kt">implements</span> <a class="n" data-link-type="idl-name" href="https://w3c.github.io/web-animations/level-2/#groupeffectmutable">GroupEffectMutable</a>;
 
 [<a class="nv idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed">Exposed</a>=<span class="n">Worklet</span>]
 <span class="kt">partial</span> <span class="kt">interface</span> <a class="nv idl-code" data-link-type="interface" href="https://w3c.github.io/web-animations/level-2/#animationeffectreadonly">AnimationEffectReadOnly</a> {
@@ -1914,13 +1914,13 @@ worklet animation can coordinate multiple effects which is necessary for some us
 };
 </pre>
    <div class="algorithm" data-algorithm="set-local-time">
-    <p>To set <code class="idl"><a data-link-type="idl" href="#dom-animationeffectreadonly-localtime" id="ref-for-dom-animationeffectreadonly-localtime-1">localTime</a></code> property on an <var>effect</var> to value <var>t</var>, the user agent does the action that
-corresponds to the first matching condition from the following:</p>
+    <p>To set the <code class="idl"><a data-link-type="idl" href="#dom-animationeffectreadonly-localtime" id="ref-for-dom-animationeffectreadonly-localtime-1">localTime</a></code> property on a <var>effect</var> to value <var>t</var>, the user agent should perform the
+action that corresponds to the first matching condition from the following:</p>
     <dl>
      <dt data-md="">If the <var>effect</var> does not have a parent group,
      <dd data-md="">
       <p>Set the <var>effect</var> local time to <var>t</var>.</p>
-     <dt data-md="">If the <var>effect</var> has a parent group and it is of <code class="idl"><a data-link-type="idl" href="#workletgroupeffect" id="ref-for-workletgroupeffect-7">WorkletGroupEffect</a></code> type,
+     <dt data-md="">If the <var>effect</var> has a parent group and it is of <code class="idl"><a data-link-type="idl" href="#workletgroupeffect" id="ref-for-workletgroupeffect-6">WorkletGroupEffect</a></code> type,
      <dd data-md="">
       <p>Set the effect start time to (parent’s transformed time - t). Note this effectively set’s the <var>effect</var>’s local time to t.</p>
      <dt data-md="">Otherwise
@@ -1929,14 +1929,17 @@ corresponds to the first matching condition from the following:</p>
 its parent group.</p>
     </dl>
    </div>
+   <p class="issue" id="issue-0ac49f6c"><a class="self-link" href="#issue-0ac49f6c"></a> The above algorithm should probably only apply to within the AnimationWorkletGlobalScope?</p>
    <p>[Issue](https://github.com/w3c/web-animations/issues/191)</p>
    <h3 class="heading settled" data-level="6.7" id="effect-stack-composite-order"><span class="secno">6.7. </span><span class="content">Effect Stack and Composite Order</span><a class="self-link" href="#effect-stack-composite-order"></a></h3>
-    As with other animations, <a data-link-type="dfn" href="#worklet-animation" id="ref-for-worklet-animation-14">Worklet animations</a> participates in the <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#effect-stack">effect stack</a>.
-WorkletAnimation <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#animation-class">animation class</a> is "Worklet Animation" and has a higher composite order than
-animations whose class is either "CSS animation", "CSS Animation", or have no specific class. 
-   <p class="note" role="note"><span>Note:</span> The higher composite order means <a data-link-type="dfn" href="#worklet-animation" id="ref-for-worklet-animation-15">worklet animations</a> are sorted later in the effect stack.
-Being higher in the stack combined with with the <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#animation-effect">animation effect</a>’s <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#composite-operation">composite operation</a> being replace by default helps improve the chances of user agents being
-able to run such animations in parallel to directly update the visuals.</p>
+   <p>As with other animations, <a data-link-type="dfn" href="#worklet-animation" id="ref-for-worklet-animation-13">worklet animations</a> participate in the <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#effect-stack">effect stack</a>.  A
+worklet animation’s <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#animation-class">animation class</a> is "Worklet Animation" and it has a higher composite
+order than animations whose <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#animation-class">animation class</a> is "CSS animation", "CSS Animation", or that have
+no specific class.</p>
+   <p class="note" role="note"><span>Note:</span> Having a higher composite order means that <a data-link-type="dfn" href="#worklet-animation" id="ref-for-worklet-animation-14">worklet animations</a> are sorted later in the effect
+stack. Being higher in the stack combined with with the <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#animation-effect">animation effect</a>’s <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#composite-operation">composite
+operation</a> being replace by default helps improve the chances of user agents being able to run
+such animations in parallel to directly update the visuals.</p>
    <h2 class="heading settled" data-level="7" id="security-considerations"><span class="secno">7. </span><span class="content">Security Considerations</span><a class="self-link" href="#security-considerations"></a></h2>
    <p class="issue" id="issue-de770110"><a class="self-link" href="#issue-de770110"></a> Need to decide what security considerations there are for this spec.</p>
    <h2 class="heading settled" data-level="8" id="privacy-considerations"><span class="secno">8. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy-considerations"></a></h2>
@@ -2355,10 +2358,13 @@ animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span c
    <div class="issue"> This is no longer true as we provide destroy callback.<a href="#issue-8ecade61"> ↵ </a></div>
    <div class="issue"> Consider giving user agents permission to skip running animator instances to
     throttle slow animators.<a href="#issue-07876098"> ↵ </a></div>
+   <div class="issue"> What about actually destructing animatorInstance?<a href="#issue-0eb0049e"> ↵ </a></div>
    <div class="issue"> Come with appropriate mechanism’s for <a data-link-type="dfn" href="#animator-instance">animator instance</a> to get notified when its
    animation currentTime is changing e.g., via reverse(), finish() or playbackRate change. So that
    it can react appropriately. <a href="https://github.com/wicg/animation-worklet/issues/63">&lt;https://github.com/wicg/animation-worklet/issues/63></a><a href="#issue-ecc3a1c5"> ↵ </a></div>
    <div class="issue"> Define what happens when timeline or effect is modified document scope<a href="#issue-de82681a"> ↵ </a></div>
+   <div class="issue"> Define semantics of attachment and detachment. <a href="https://github.com/wicg/animation-worklet/issues/61">&lt;https://github.com/wicg/animation-worklet/issues/61></a><a href="#issue-1b7aae40"> ↵ </a></div>
+   <div class="issue"> The above algorithm should probably only apply to within the AnimationWorkletGlobalScope?<a href="#issue-0ac49f6c"> ↵ </a></div>
    <div class="issue"> Need to decide what security considerations there are for this spec.<a href="#issue-de770110"> ↵ </a></div>
    <div class="issue"> Need to decide what privacy considerations there are for this spec.<a href="#issue-19f9ed9b"> ↵ </a></div>
    <div class="issue"> This example uses a hypothetical "phase" property on timeline as a way to detect when user
@@ -2535,8 +2541,7 @@ the last few frames.<a href="#issue-2eb87a7a"> ↵ </a></div>
     <li><a href="#ref-for-worklet-animation-3">6.1. Worklet Animation</a> <a href="#ref-for-worklet-animation-4">(2)</a>
     <li><a href="#ref-for-worklet-animation-5">6.3. Worklet Animation timing model</a> <a href="#ref-for-worklet-animation-6">(2)</a> <a href="#ref-for-worklet-animation-7">(3)</a> <a href="#ref-for-worklet-animation-8">(4)</a> <a href="#ref-for-worklet-animation-9">(5)</a> <a href="#ref-for-worklet-animation-10">(6)</a>
     <li><a href="#ref-for-worklet-animation-11">6.4. Interaction with Animator Instances</a> <a href="#ref-for-worklet-animation-12">(2)</a>
-    <li><a href="#ref-for-worklet-animation-13">6.6. WorkletGroupEffect</a>
-    <li><a href="#ref-for-worklet-animation-14">6.7. Effect Stack and Composite Order</a> <a href="#ref-for-worklet-animation-15">(2)</a>
+    <li><a href="#ref-for-worklet-animation-13">6.7. Effect Stack and Composite Order</a> <a href="#ref-for-worklet-animation-14">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="animation-animator-name">
@@ -2568,7 +2573,7 @@ the last few frames.<a href="#issue-2eb87a7a"> ↵ </a></div>
    <b><a href="#workletgroupeffect">#workletgroupeffect</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-workletgroupeffect-1">6.2. Creating a Worklet Animation</a>
-    <li><a href="#ref-for-workletgroupeffect-2">6.6. WorkletGroupEffect</a> <a href="#ref-for-workletgroupeffect-3">(2)</a> <a href="#ref-for-workletgroupeffect-4">(3)</a> <a href="#ref-for-workletgroupeffect-5">(4)</a> <a href="#ref-for-workletgroupeffect-6">(5)</a> <a href="#ref-for-workletgroupeffect-7">(6)</a>
+    <li><a href="#ref-for-workletgroupeffect-2">6.6. WorkletGroupEffect</a> <a href="#ref-for-workletgroupeffect-3">(2)</a> <a href="#ref-for-workletgroupeffect-4">(3)</a> <a href="#ref-for-workletgroupeffect-5">(4)</a> <a href="#ref-for-workletgroupeffect-6">(5)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-animationeffectreadonly-localtime">
