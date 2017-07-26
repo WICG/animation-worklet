@@ -1480,7 +1480,8 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
       <li><a href="#creating-animator-instance"><span class="secno">5.1</span> <span class="content">Creating an Animator Instance</span></a>
       <li><a href="#running-animators"><span class="secno">5.2</span> <span class="content">Running Animators</span></a>
       <li><a href="#removing-animator"><span class="secno">5.3</span> <span class="content">Removing an Animator Instance</span></a>
-      <li><a href="#requesting-animation-frames"><span class="secno">5.4</span> <span class="content">Requesting Animation Frames</span></a>
+      <li><a href="#migrating-animator"><span class="secno">5.4</span> <span class="content">Migrating an Animator Instance</span></a>
+      <li><a href="#requesting-animation-frames"><span class="secno">5.5</span> <span class="content">Requesting Animation Frames</span></a>
      </ol>
     <li>
      <a href="#web-animation-integration"><span class="secno">6</span> <span class="content">Web Animations Integration</span></a>
@@ -1654,7 +1655,11 @@ consists of:</p>
      <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="animator-current-time">animator current time</dfn> which is the corresponding <a data-link-type="dfn" href="#worklet-animation" id="ref-for-worklet-animation-1">worklet animation</a>’s current
  time.</p>
     <li data-md="">
-     <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="animator-timelines-list">animator timelines list</dfn> which is <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list">list</a> of its attached <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#timeline">timelines</a>.</p>
+     <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="animator-timeline">animator timeline</dfn> which is a <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#timeline">timeline</a>.</p>
+    <li data-md="">
+     <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="animator-attached-timelines">animator attached timelines</dfn> which is <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list">list</a> of attached <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#timeline">timelines</a></p>
+    <li data-md="">
+     <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="animator-serialized-options">animator serialized options</dfn> which is a serializable object.</p>
    </ul>
    <h3 class="heading settled" data-level="5.1" id="creating-animator-instance"><span class="secno">5.1. </span><span class="content">Creating an Animator Instance</span><a class="self-link" href="#creating-animator-instance"></a></h3>
    <p>Each <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-1">animator instance</a> lives in an <code class="idl"><a data-link-type="idl" href="#animationworkletglobalscope" id="ref-for-animationworkletglobalscope-6">AnimationWorkletGlobalScope</a></code>. The <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-2">animator instance</a> cannot be disposed arbitrarily (e.g., in the middle of running animation
@@ -1664,7 +1669,7 @@ as it may contain the scripted animation state.</p>
 when the user agent constructs a new <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-3">animator instance</a> in that scope that corresponds to a
 worklet animation in the document scope.</p>
    <div class="algorithm" data-algorithm="create-animator">
-    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="create-a-new-animator-instance">create a new animator instance</dfn> given a <var>name</var>, <var>timeline</var>, <var>effect</var>, <var>options</var>, and <var>workletGlobalScope</var>, the user agent <em>must</em> run the following steps:</p>
+    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="create-a-new-animator-instance">create a new animator instance</dfn> given a <var>name</var>, <var>timeline</var>, <var>effect</var>, <var>serializedOptions</var>, <var>serializedState</var>, and <var>workletGlobalScope</var>, the user agent <em>must</em> run the following steps:</p>
     <ol>
      <li data-md="">
       <p>Let the <var>definition</var> be the result of looking up <var>name</var> on the <var>workletGlobalScope</var>’s <a data-link-type="dfn" href="#animator-name-to-animator-definition-map" id="ref-for-animator-name-to-animator-definition-map-3">animator name to animator definition map</a>.</p>
@@ -1674,7 +1679,11 @@ worklet animation in the document scope.</p>
      <li data-md="">
       <p>Let <var>timelineList</var> be a new <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list">list</a> with <var>timeline</var> added to it.</p>
      <li data-md="">
-      <p>Let <var>animatorInstance</var> be the result of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-construct">Construct</a>(<var>animatorCtor</var>, [<var>options</var>]).</p>
+      <p>Let <var>options</var> be <a data-link-type="dfn" href="http://w3c.github.io/html/infrastructure.html#structureddeserialize">StructuredDeserialize</a>(<var>serializedOptions</var>).</p>
+     <li data-md="">
+      <p>Let <var>state</var> be <a data-link-type="dfn" href="http://w3c.github.io/html/infrastructure.html#structureddeserialize">StructuredDeserialize</a>(<var>serializedState</var>).</p>
+     <li data-md="">
+      <p>Let <var>animatorInstance</var> be the result of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-construct">Construct</a>(<var>animatorCtor</var>, [<var>options</var>, <var>state</var>]).</p>
       <p>If <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-construct">Construct</a> throws an exception, abort the following steps.</p>
      <li data-md="">
       <p>Set the following on <var>animatorInstance</var> with:</p>
@@ -1688,7 +1697,11 @@ worklet animation in the document scope.</p>
        <li data-md="">
         <p><a data-link-type="dfn" href="#animator-effect" id="ref-for-animator-effect-1">animator effect</a> being <var>effect</var></p>
        <li data-md="">
-        <p><a data-link-type="dfn" href="#animator-timelines-list" id="ref-for-animator-timelines-list-1">animator timelines list</a> being <var>timelineList</var></p>
+        <p><a data-link-type="dfn" href="#animator-timeline" id="ref-for-animator-timeline-1">animator timeline</a> being <var>timeline</var></p>
+       <li data-md="">
+        <p><a data-link-type="dfn" href="#animator-attached-timelines" id="ref-for-animator-attached-timelines-1">animator attached timelines</a> being <var>timelineList</var></p>
+       <li data-md="">
+        <p><a data-link-type="dfn" href="#animator-serialized-options" id="ref-for-animator-serialized-options-1">animator serialized options</a> being <var>options</var></p>
       </ul>
      <li data-md="">
       <p>Add <var>animatorInstance</var> to <var>workletGlobalScope</var>’s <a data-link-type="dfn" href="#animator-instance-set" id="ref-for-animator-instance-set-1">animator instance set</a>.</p>
@@ -1713,8 +1726,8 @@ instance set</a>. For each such <var>instance</var> the user agent <em>must</em>
       <p>If the <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-animation-requested-flag-4">animation requested flag</a> for <var>instance</var> is <a data-link-type="dfn" href="#frame-current" id="ref-for-frame-current-2">frame-current</a> or the effect
    belonging to the <var>instance</var> will not be visible within the visual viewport of the current
    frame the user agent <em>may</em> abort all the following steps.</p>
-      <p class="issue" id="issue-07876098"><a class="self-link" href="#issue-07876098"></a> Consider giving user agents permission to skip running animator instances to
-    throttle slow animators.</p>
+      <p class="issue" id="issue-c580570c"><a class="self-link" href="#issue-c580570c"></a> Consider giving user agents permission to skip running animator instances to
+   throttle slow animators.</p>
      <li data-md="">
       <p>Let <var>animateFunction</var> be <var>definition</var>’s <a data-link-type="dfn" href="#animate-function" id="ref-for-animate-function-2">animate function</a>.</p>
      <li data-md="">
@@ -1733,16 +1746,77 @@ in the same frame.
     <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="remove-an-animator-instance">remove an animator instance</dfn> given <var>instance</var>, and <var>workletGlobalScope</var>, the user agent <em>must</em> run the following steps:</p>
     <ol>
      <li data-md="">
-      <p>Remove <var>animatorInstance</var> from <var>workletGlobalScope</var>’s <a data-link-type="dfn" href="#animator-instance-set" id="ref-for-animator-instance-set-3">animator instance set</a>.</p>
+      <p>Remove <var>instance</var> from <var>workletGlobalScope</var>’s <a data-link-type="dfn" href="#animator-instance-set" id="ref-for-animator-instance-set-3">animator instance set</a>.</p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.4" id="requesting-animation-frames"><span class="secno">5.4. </span><span class="content">Requesting Animation Frames</span><a class="self-link" href="#requesting-animation-frames"></a></h3>
+   <h3 class="heading settled" data-level="5.4" id="migrating-animator"><span class="secno">5.4. </span><span class="content">Migrating an Animator Instance</span><a class="self-link" href="#migrating-animator"></a></h3>
+    User agents are responsible for assigning an animator to a worklet global scopes of which many can
+exist across different threads or processes. In order to give the most flexibility to user agents in
+this respect, we allow migration of an animator while it is running. 
+   <p>The section defines a migration process such that any author-defined effect that depends on internal
+state can maintain its state across such migrations. The basic mechanism for achieving this is to
+serialize the state and later restore it.</p>
+   <div class="algorithm" data-algorithm="migrate-animator">
+    <p>When user agents wants to <dfn data-dfn-type="dfn" data-noexport="" id="migrate-an-animator-instance">migrate an animator instance<a class="self-link" href="#migrate-an-animator-instance"></a></dfn> from one worklet global scope
+to another given <var>instance</var>, <var>sourceWorkletGlobalScope</var>, <var>destinationWorkletGlobalScope</var>,
+it <em>must</em> run the following steps :</p>
+    <ol>
+     <li data-md="">
+      <p>Let <var>serializedState</var> be undefined.</p>
+     <li data-md="">
+      <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task">Queue a task</a> on <var>sourceWorkletGlobalScope</var> to run the following steps:</p>
+      <ol>
+       <li data-md="">
+        <p>Let <var>animatorName</var> be <var>instance</var>’s <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-5">animator name</a></p>
+       <li data-md="">
+        <p>Let the <var>definition</var> be the result of looking up <var>animatorName</var> on the <var>sourceWorkletGlobalScope</var>’s <a data-link-type="dfn" href="#animator-name-to-animator-definition-map" id="ref-for-animator-name-to-animator-definition-map-5">animator name to animator definition map</a>.</p>
+        <p>If <var>definition</var> does not exist then abort the following steps.</p>
+       <li data-md="">
+        <p>Let <var>prototype</var> be the result of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<var>animatorCtor</var>, "prototype").</p>
+       <li data-md="">
+        <p>Let <var>onDestroyFunction</var> be the result of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<var>prototype</var>, "onDestroy").</p>
+       <li data-md="">
+        <p>If the result of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a>(<var>onDestroyFunction</var>) is false then abort the following
+steps.</p>
+       <li data-md="">
+        <p><a data-link-type="dfn" href="https://heycam.github.io/webidl/#es-invoking-callback-functions">Invoke</a> <var>onDestroyFunction</var> with <var>instance</var> as the <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-callback-this-value">callback this value</a> and let <var>state</var> be the result of this invocation.</p>
+       <li data-md="">
+        <p>Set <var>serializedState</var> to be the result of <a data-link-type="dfn" href="http://w3c.github.io/html/infrastructure.html#structuredserialize">StructuredSerialize</a>(<var>state</var>).
+If any exception is throws, then abort the following steps.</p>
+       <li data-md="">
+        <p><a data-link-type="dfn" href="#remove-an-animator-instance" id="ref-for-remove-an-animator-instance-1">remove an animator instance</a> given <var>instance</var>, and <var>sourceWorkletGlobalScope</var>.</p>
+      </ol>
+     <li data-md="">
+      <p>Wait for the above step complete.</p>
+     <li data-md="">
+      <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task">Queue a task</a> on <var>destinationWorkletGlobalScope</var> to run the following steps:</p>
+      <ol>
+       <li data-md="">
+        <p><a data-link-type="dfn" href="#create-a-new-animator-instance" id="ref-for-create-a-new-animator-instance-1">create a new animator instance</a> given:</p>
+        <ul>
+         <li data-md="">
+          <p>The <var>instance</var>’s <a data-link-type="dfn" href="#animator-name" id="ref-for-animator-name-6">animator name</a> as name.</p>
+         <li data-md="">
+          <p>The <var>instance</var>’s <a data-link-type="dfn" href="#animator-timeline" id="ref-for-animator-timeline-2">animator timeline</a> as timeline.</p>
+         <li data-md="">
+          <p>The <var>instance</var>’s <a data-link-type="dfn" href="#animator-effect" id="ref-for-animator-effect-3">animator effect</a> as effect.</p>
+         <li data-md="">
+          <p>The <var>instance</var>’s <a data-link-type="dfn" href="#animator-serialized-options" id="ref-for-animator-serialized-options-2">animator serialized options</a> as options.</p>
+         <li data-md="">
+          <p>The <var>serializedState</var> as state.</p>
+         <li data-md="">
+          <p>The <var>destinationWorkletGlobalScope</var> as workletGlobalScope.</p>
+        </ul>
+      </ol>
+    </ol>
+   </div>
+   <h3 class="heading settled" data-level="5.5" id="requesting-animation-frames"><span class="secno">5.5. </span><span class="content">Requesting Animation Frames</span><a class="self-link" href="#requesting-animation-frames"></a></h3>
    <p>Each <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-6">animator instance</a> has an associated <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="animation-requested-flag">animation requested flag</dfn>. It must be
 either <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="frame-requested">frame-requested</dfn> or <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="frame-current">frame-current</dfn>. It is initially set to <a data-link-type="dfn" href="#frame-current" id="ref-for-frame-current-3">frame-current</a>. Different circumstances can cause the <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-animation-requested-flag-5">animation requested flag</a> to be
 set to <a data-link-type="dfn" href="#frame-requested" id="ref-for-frame-requested-2">frame-requested</a>. These include the following:</p>
    <ul>
     <li data-md="">
-     <p>Changes in the <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#current-time">current time</a> of any <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#timeline">timeline</a> in the animator’s <a data-link-type="dfn" href="#animator-timelines-list" id="ref-for-animator-timelines-list-2">animator timelines list</a></p>
+     <p>Changes in the <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#current-time">current time</a> of any <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#timeline">timeline</a> in the animator’s <a data-link-type="dfn" href="#animator-attached-timelines" id="ref-for-animator-attached-timelines-2">animator attached timelines</a></p>
     <li data-md="">
      <p>Changes in the <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#current-time">current time</a> of the animator’s corresponding <a data-link-type="dfn" href="#worklet-animation" id="ref-for-worklet-animation-2">Worklet Animation</a></p>
    </ul>
@@ -1761,7 +1835,7 @@ the animation’s output.</p>
     <li data-md="">
      <p>an <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="animation-animator-name">animation animator name</dfn> which identifies its <a data-link-type="dfn" href="#animator-definition" id="ref-for-animator-definition-3">animator definition</a>.</p>
     <li data-md="">
-     <p>a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="serialized-options">serialized options</dfn> which is <a data-link-type="dfn">serializable</a> object that is used when
+     <p>a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="serialized-options">serialized options</dfn> which is serializable object that is used when
 constructing a new animator instance.</p>
    </ul>
    <figure>
@@ -1808,7 +1882,7 @@ passing the <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#
      <li data-md="">
       <p>Run the procedure to <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#set-the-target-effect-of-an-animation">set the target effect of an animation</a> on <var>workletAnimation</var> passing <var>effect</var> as the new effect.</p>
      <li data-md="">
-      <p>Let <var>serializedOptions</var> be the result of <code class="idl"><a data-link-type="idl">StructuredSerializeWithTransfer(options)</a></code>.
+      <p>Let <var>serializedOptions</var> be the result of <a data-link-type="dfn" href="http://w3c.github.io/html/infrastructure.html#structuredserialize">StructuredSerialize</a>(<var>options</var>).
 Rethrow any exceptions.</p>
      <li data-md="">
       <p>Set the <a data-link-type="dfn" href="#serialized-options" id="ref-for-serialized-options-1">serialized options</a> of <var>workletAnimation</var> to <var>serializedOptions</var>.</p>
@@ -1861,19 +1935,19 @@ instance</a> for a <a data-link-type="dfn" href="#worklet-animation" id="ref-for
      <li data-md="">
       <p>Let <var>workletGlobalScope</var> be the <code class="idl"><a data-link-type="idl" href="#animationworkletglobalscope" id="ref-for-animationworkletglobalscope-8">AnimationWorkletGlobalScope</a></code> associated with <var>workletAnimation</var>.</p>
      <li data-md="">
-      <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task">Queue a task</a> on <var>workletGlobalScope</var> to run the procedure to <a data-link-type="dfn" href="#create-a-new-animator-instance" id="ref-for-create-a-new-animator-instance-1">create a new animator
+      <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task">Queue a task</a> on <var>workletGlobalScope</var> to run the procedure to <a data-link-type="dfn" href="#create-a-new-animator-instance" id="ref-for-create-a-new-animator-instance-2">create a new animator
    instance</a>, passing:</p>
       <ul>
        <li data-md="">
-        <p>The <var>workletAnimation</var>’s animation animator name as <var>name</var>.</p>
+        <p>The <var>workletAnimation</var>’s <a data-link-type="dfn" href="#animation-animator-name" id="ref-for-animation-animator-name-2">animation animator name</a> as name.</p>
        <li data-md="">
-        <p>The <var>workletAnimation</var>’s timeline as <var>timeline</var>.</p>
+        <p>The <var>workletAnimation</var>’s <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#timeline">timeline</a> as timeline.</p>
        <li data-md="">
-        <p>The <var>workletAnimation</var>’s effect as <var>effect</var>.</p>
+        <p>The <var>workletAnimation</var>’s <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#animation-effect">animation effect</a> as effect.</p>
        <li data-md="">
-        <p>The <var>workletAnimation</var>’s serialized options as <var>options</var>.</p>
+        <p>The <var>workletAnimation</var>’s <a data-link-type="dfn" href="#serialized-options" id="ref-for-serialized-options-2">serialized options</a> as options.</p>
        <li data-md="">
-        <p>The <var>workletGlobalScope</var> as <var>workletGlobalScope</var>.</p>
+        <p>The <var>workletGlobalScope</var> as workletGlobalScope.</p>
       </ul>
      <li data-md="">
       <p>If the procedure was successful, set the resulting <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-18">animator instance</a> as corresponding to <var>workletAnimation</var>.</p>
@@ -1891,7 +1965,7 @@ following steps.</p>
      <li data-md="">
       <p>Let <var>animatorInstance</var> be <var>workletAnimation</var>’s corresponding <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-20">animator instance</a>.</p>
      <li data-md="">
-      <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task">Queue a task</a> on the <var>workletGlobalScope</var> to run the procedure to <a data-link-type="dfn" href="#remove-an-animator-instance" id="ref-for-remove-an-animator-instance-1">remove an animator
+      <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task">Queue a task</a> on the <var>workletGlobalScope</var> to run the procedure to <a data-link-type="dfn" href="#remove-an-animator-instance" id="ref-for-remove-an-animator-instance-2">remove an animator
  instance</a>, passing <var>animatorInstance</var> as instance and <var>workletGlobalScope</var> as
  workletGlobalScope.</p>
      <li data-md="">
@@ -2211,10 +2285,11 @@ animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span c
   <ul class="index">
    <li><a href="#animate-function">animate function</a><span>, in §4</span>
    <li><a href="#animation-animator-name">animation animator name</a><span>, in §6.1</span>
-   <li><a href="#animation-requested-flag">animation requested flag</a><span>, in §5.4</span>
+   <li><a href="#animation-requested-flag">animation requested flag</a><span>, in §5.5</span>
    <li><a href="#animation-worklet">Animation Worklet</a><span>, in §3</span>
    <li><a href="#dom-window-animationworklet">animationWorklet</a><span>, in §3</span>
    <li><a href="#animationworkletglobalscope">AnimationWorkletGlobalScope</a><span>, in §3</span>
+   <li><a href="#animator-attached-timelines">animator attached timelines</a><span>, in §5</span>
    <li><a href="#animator-current-time">animator current time</a><span>, in §5</span>
    <li><a href="#animator-definition">animator definition</a><span>, in §4</span>
    <li><a href="#animator-effect">animator effect</a><span>, in §5</span>
@@ -2223,13 +2298,15 @@ animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span c
    <li><a href="#animator-name">animator name</a><span>, in §4</span>
    <li><a href="#dom-workletanimation-animatorname">animatorName</a><span>, in §6.2</span>
    <li><a href="#animator-name-to-animator-definition-map">animator name to animator definition map</a><span>, in §4.1</span>
-   <li><a href="#animator-timelines-list">animator timelines list</a><span>, in §5</span>
+   <li><a href="#animator-serialized-options">animator serialized options</a><span>, in §5</span>
+   <li><a href="#animator-timeline">animator timeline</a><span>, in §5</span>
    <li><a href="#class-constructor">class constructor</a><span>, in §4</span>
    <li><a href="#create-a-new-animator-instance">create a new animator instance</a><span>, in §5.1</span>
-   <li><a href="#frame-current">frame-current</a><span>, in §5.4</span>
-   <li><a href="#frame-requested">frame-requested</a><span>, in §5.4</span>
+   <li><a href="#frame-current">frame-current</a><span>, in §5.5</span>
+   <li><a href="#frame-requested">frame-requested</a><span>, in §5.5</span>
    <li><a href="#global-execution-context">global execution context</a><span>, in §3</span>
    <li><a href="#dom-animationeffectreadonly-localtime">localTime</a><span>, in §6.6</span>
+   <li><a href="#migrate-an-animator-instance">migrate an animator instance</a><span>, in §5.4</span>
    <li><a href="#dom-animationworkletglobalscope-registeranimator">registerAnimator(name, animatorCtor)</a><span>, in §4.1</span>
    <li><a href="#remove-an-animator-instance">remove an animator instance</a><span>, in §5.3</span>
    <li><a href="#run-animators">run animators</a><span>, in §5.2</span>
@@ -2360,7 +2437,7 @@ animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span c
   <div style="counter-reset:issue">
    <div class="issue"> This is no longer true as we provide destroy callback.<a href="#issue-8ecade61"> ↵ </a></div>
    <div class="issue"> Consider giving user agents permission to skip running animator instances to
-    throttle slow animators.<a href="#issue-07876098"> ↵ </a></div>
+   throttle slow animators.<a href="#issue-c580570c"> ↵ </a></div>
    <div class="issue"> Come with appropriate mechanism’s for <a data-link-type="dfn" href="#animator-instance">animator instance</a> to get notified when its
    animation currentTime is changing e.g., via reverse(), finish() or playbackRate change. So that
    it can react appropriately. <a href="https://github.com/wicg/animation-worklet/issues/63">&lt;https://github.com/wicg/animation-worklet/issues/63></a><a href="#issue-ecc3a1c5"> ↵ </a></div>
@@ -2426,6 +2503,7 @@ the last few frames.<a href="#issue-2eb87a7a"> ↵ </a></div>
     <li><a href="#ref-for-animator-name-2">5. Animator Instance</a>
     <li><a href="#ref-for-animator-name-3">5.1. Creating an Animator Instance</a>
     <li><a href="#ref-for-animator-name-4">5.2. Running Animators</a>
+    <li><a href="#ref-for-animator-name-5">5.4. Migrating an Animator Instance</a> <a href="#ref-for-animator-name-6">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="class-constructor">
@@ -2448,6 +2526,7 @@ the last few frames.<a href="#issue-2eb87a7a"> ↵ </a></div>
     <li><a href="#ref-for-animator-name-to-animator-definition-map-1">4.1. Registering an Animator Definition</a> <a href="#ref-for-animator-name-to-animator-definition-map-2">(2)</a>
     <li><a href="#ref-for-animator-name-to-animator-definition-map-3">5.1. Creating an Animator Instance</a>
     <li><a href="#ref-for-animator-name-to-animator-definition-map-4">5.2. Running Animators</a>
+    <li><a href="#ref-for-animator-name-to-animator-definition-map-5">5.4. Migrating an Animator Instance</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-animationworkletglobalscope-registeranimator">
@@ -2462,7 +2541,7 @@ the last few frames.<a href="#issue-2eb87a7a"> ↵ </a></div>
    <ul>
     <li><a href="#ref-for-animator-instance-1">5.1. Creating an Animator Instance</a> <a href="#ref-for-animator-instance-2">(2)</a> <a href="#ref-for-animator-instance-3">(3)</a>
     <li><a href="#ref-for-animator-instance-4">5.2. Running Animators</a> <a href="#ref-for-animator-instance-5">(2)</a>
-    <li><a href="#ref-for-animator-instance-6">5.4. Requesting Animation Frames</a>
+    <li><a href="#ref-for-animator-instance-6">5.5. Requesting Animation Frames</a>
     <li><a href="#ref-for-animator-instance-7">6.1. Worklet Animation</a> <a href="#ref-for-animator-instance-8">(2)</a> <a href="#ref-for-animator-instance-9">(3)</a>
     <li><a href="#ref-for-animator-instance-10">6.3. Worklet Animation timing model</a> <a href="#ref-for-animator-instance-11">(2)</a> <a href="#ref-for-animator-instance-12">(3)</a> <a href="#ref-for-animator-instance-13">(4)</a>
     <li><a href="#ref-for-animator-instance-14">6.4. Interaction with Animator Instances</a> <a href="#ref-for-animator-instance-15">(2)</a> <a href="#ref-for-animator-instance-16">(3)</a> <a href="#ref-for-animator-instance-17">(4)</a> <a href="#ref-for-animator-instance-18">(5)</a> <a href="#ref-for-animator-instance-19">(6)</a> <a href="#ref-for-animator-instance-20">(7)</a> <a href="#ref-for-animator-instance-21">(8)</a>
@@ -2474,6 +2553,7 @@ the last few frames.<a href="#issue-2eb87a7a"> ↵ </a></div>
    <ul>
     <li><a href="#ref-for-animator-effect-1">5.1. Creating an Animator Instance</a>
     <li><a href="#ref-for-animator-effect-2">5.2. Running Animators</a>
+    <li><a href="#ref-for-animator-effect-3">5.4. Migrating an Animator Instance</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="animator-current-time">
@@ -2483,11 +2563,25 @@ the last few frames.<a href="#issue-2eb87a7a"> ↵ </a></div>
     <li><a href="#ref-for-animator-current-time-2">5.2. Running Animators</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="animator-timelines-list">
-   <b><a href="#animator-timelines-list">#animator-timelines-list</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="animator-timeline">
+   <b><a href="#animator-timeline">#animator-timeline</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-animator-timelines-list-1">5.1. Creating an Animator Instance</a>
-    <li><a href="#ref-for-animator-timelines-list-2">5.4. Requesting Animation Frames</a>
+    <li><a href="#ref-for-animator-timeline-1">5.1. Creating an Animator Instance</a>
+    <li><a href="#ref-for-animator-timeline-2">5.4. Migrating an Animator Instance</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="animator-attached-timelines">
+   <b><a href="#animator-attached-timelines">#animator-attached-timelines</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-animator-attached-timelines-1">5.1. Creating an Animator Instance</a>
+    <li><a href="#ref-for-animator-attached-timelines-2">5.5. Requesting Animation Frames</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="animator-serialized-options">
+   <b><a href="#animator-serialized-options">#animator-serialized-options</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-animator-serialized-options-1">5.1. Creating an Animator Instance</a>
+    <li><a href="#ref-for-animator-serialized-options-2">5.4. Migrating an Animator Instance</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="animator-instance-set">
@@ -2501,7 +2595,8 @@ the last few frames.<a href="#issue-2eb87a7a"> ↵ </a></div>
   <aside class="dfn-panel" data-for="create-a-new-animator-instance">
    <b><a href="#create-a-new-animator-instance">#create-a-new-animator-instance</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-create-a-new-animator-instance-1">6.4. Interaction with Animator Instances</a>
+    <li><a href="#ref-for-create-a-new-animator-instance-1">5.4. Migrating an Animator Instance</a>
+    <li><a href="#ref-for-create-a-new-animator-instance-2">6.4. Interaction with Animator Instances</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="run-animators">
@@ -2513,7 +2608,8 @@ the last few frames.<a href="#issue-2eb87a7a"> ↵ </a></div>
   <aside class="dfn-panel" data-for="remove-an-animator-instance">
    <b><a href="#remove-an-animator-instance">#remove-an-animator-instance</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-remove-an-animator-instance-1">6.4. Interaction with Animator Instances</a>
+    <li><a href="#ref-for-remove-an-animator-instance-1">5.4. Migrating an Animator Instance</a>
+    <li><a href="#ref-for-remove-an-animator-instance-2">6.4. Interaction with Animator Instances</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="animation-requested-flag">
@@ -2522,14 +2618,14 @@ the last few frames.<a href="#issue-2eb87a7a"> ↵ </a></div>
     <li><a href="#ref-for-animation-requested-flag-1">5. Animator Instance</a>
     <li><a href="#ref-for-animation-requested-flag-2">5.1. Creating an Animator Instance</a>
     <li><a href="#ref-for-animation-requested-flag-3">5.2. Running Animators</a> <a href="#ref-for-animation-requested-flag-4">(2)</a>
-    <li><a href="#ref-for-animation-requested-flag-5">5.4. Requesting Animation Frames</a> <a href="#ref-for-animation-requested-flag-6">(2)</a>
+    <li><a href="#ref-for-animation-requested-flag-5">5.5. Requesting Animation Frames</a> <a href="#ref-for-animation-requested-flag-6">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="frame-requested">
    <b><a href="#frame-requested">#frame-requested</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-frame-requested-1">5.2. Running Animators</a>
-    <li><a href="#ref-for-frame-requested-2">5.4. Requesting Animation Frames</a>
+    <li><a href="#ref-for-frame-requested-2">5.5. Requesting Animation Frames</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="frame-current">
@@ -2537,14 +2633,14 @@ the last few frames.<a href="#issue-2eb87a7a"> ↵ </a></div>
    <ul>
     <li><a href="#ref-for-frame-current-1">5.1. Creating an Animator Instance</a>
     <li><a href="#ref-for-frame-current-2">5.2. Running Animators</a>
-    <li><a href="#ref-for-frame-current-3">5.4. Requesting Animation Frames</a> <a href="#ref-for-frame-current-4">(2)</a>
+    <li><a href="#ref-for-frame-current-3">5.5. Requesting Animation Frames</a> <a href="#ref-for-frame-current-4">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="worklet-animation">
    <b><a href="#worklet-animation">#worklet-animation</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-worklet-animation-1">5. Animator Instance</a>
-    <li><a href="#ref-for-worklet-animation-2">5.4. Requesting Animation Frames</a>
+    <li><a href="#ref-for-worklet-animation-2">5.5. Requesting Animation Frames</a>
     <li><a href="#ref-for-worklet-animation-3">6.1. Worklet Animation</a> <a href="#ref-for-worklet-animation-4">(2)</a> <a href="#ref-for-worklet-animation-5">(3)</a>
     <li><a href="#ref-for-worklet-animation-6">6.3. Worklet Animation timing model</a> <a href="#ref-for-worklet-animation-7">(2)</a> <a href="#ref-for-worklet-animation-8">(3)</a> <a href="#ref-for-worklet-animation-9">(4)</a> <a href="#ref-for-worklet-animation-10">(5)</a>
     <li><a href="#ref-for-worklet-animation-11">6.4. Interaction with Animator Instances</a> <a href="#ref-for-worklet-animation-12">(2)</a>
@@ -2556,12 +2652,14 @@ the last few frames.<a href="#issue-2eb87a7a"> ↵ </a></div>
    <b><a href="#animation-animator-name">#animation-animator-name</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-animation-animator-name-1">6.2. Creating an Worklet Animation</a>
+    <li><a href="#ref-for-animation-animator-name-2">6.4. Interaction with Animator Instances</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="serialized-options">
    <b><a href="#serialized-options">#serialized-options</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-serialized-options-1">6.2. Creating an Worklet Animation</a>
+    <li><a href="#ref-for-serialized-options-2">6.4. Interaction with Animator Instances</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="workletanimation">
