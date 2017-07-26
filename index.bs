@@ -3,6 +3,7 @@ Title:  CSS Animation Worklet API
 Status: CG-DRAFT
 Group: WICG
 URL: https://wicg.github.io/animation-worklet/
+Repository: wicg/animation-worklet
 Shortname: css-animation-api
 Level: 1
 Abstract:
