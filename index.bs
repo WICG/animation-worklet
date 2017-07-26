@@ -288,11 +288,7 @@ consists of:
 Creating an Animator Instance {#creating-animator-instance}
 -----------------------------------------------------------
 
-Each <a>animator instance</a> lives in an {{AnimationWorkletGlobalScope}}. The
-<a>animator instance</a> cannot be disposed arbitrarily (e.g., in the middle of running animation
-as it may contain the scripted animation state.
-
-Issue: This is no longer true as we provide destroy callback.
+Each <a>animator instance</a> lives in an {{AnimationWorkletGlobalScope}}.
 
 The {{AnimationWorkletGlobalScope}} has an <dfn>animator instance set</dfn>. The set is populated
 when the user agent constructs a new <a>animator instance</a> in that scope that corresponds to a
