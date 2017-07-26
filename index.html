@@ -1837,7 +1837,7 @@ necessarily change it’s output, but may change the animation <a data-link-type
      <p>Similarly, invoking <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/web-animations/#dom-animation-finish">finish()</a></code> or updating a <a data-link-type="dfn" href="#worklet-animation" id="ref-for-worklet-animation-10">worklet animation’s</a> <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#playback-rate">playback
 rate</a> will only change the animation <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#play-state">play state</a> and may not change the output.</p>
     <li data-md="">
-     <p>Querying the animation effect’s local time using <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/web-animations/#dom-animationeffectreadonly-getcomputedtiming">getComputedTiming()</a></code> may return state information, in the case where the <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-13">animator instance</a> is running in a
+     <p>Querying the animation effect’s local time using <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/web-animations/#dom-animationeffectreadonly-getcomputedtiming">getComputedTiming()</a></code> may return stale information, in the case where the <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-13">animator instance</a> is running in a
 parallel execution context.</p>
    </ul>
    <p class="issue" id="issue-ecc3a1c5"><a class="self-link" href="#issue-ecc3a1c5"></a> Come with appropriate mechanism’s for <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance-14">animator instance</a> to get notified when its

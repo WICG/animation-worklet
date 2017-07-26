@@ -498,7 +498,7 @@ Here are a few implications of the above semantics:
  - Similarly, invoking {{Animation/finish()}} or updating a <a>worklet animation's</a> <a>playback
     rate</a> will only change the animation <a>play state</a> and may not change the output.
  - Querying the animation effect's local time using {{AnimationEffectReadOnly/getComputedTiming()}}
-    may return state information, in the case where the <a>animator instance</a> is running in a
+    may return stale information, in the case where the <a>animator instance</a> is running in a
     parallel execution context.
 
 Issue(63): Come with appropriate mechanism's for <a>animator instance</a> to get notified when its
