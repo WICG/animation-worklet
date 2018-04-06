@@ -1176,8 +1176,9 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version aa82ed4ababc6275b796a6e8bae93f32d8a46d2d" name="generator">
+  <meta content="Bikeshed version 3456bb73524907a10ac567d67cde058769c35261" name="generator">
   <link href="https://wicg.github.io/animation-worklet/" rel="canonical">
+  <meta content="c3132a0c60b188594e08fe8b54b6807c4b5b5fb6" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1726,7 +1727,7 @@ instance set</a>. For each such <var>instance</var> the user agent <em>must</em>
       <p>If the <a data-link-type="dfn" href="#animation-requested-flag" id="ref-for-animation-requested-flag③">animation requested flag</a> for <var>instance</var> is <a data-link-type="dfn" href="#frame-current" id="ref-for-frame-current①">frame-current</a> or the effect
    belonging to the <var>instance</var> will not be visible within the visual viewport of the current
    frame the user agent <em>may</em> abort all the following steps.</p>
-      <p class="issue" id="issue-c580570c"><a class="self-link" href="#issue-c580570c"></a> Consider giving user agents permission to skip running animator instances to
+      <p class="issue" id="issue-6d334361"><a class="self-link" href="#issue-6d334361"></a> Consider giving user agents permission to skip running animator instances to
    throttle slow animators.</p>
      <li data-md="">
       <p>Let <var>animateFunction</var> be <var>definition</var>’s <a data-link-type="dfn" href="#animate-function" id="ref-for-animate-function②">animate function</a>.</p>
@@ -1904,13 +1905,13 @@ execution context.</p>
      <p>Setting the <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#current-time" id="ref-for-current-time④">current time</a> or <a data-link-type="dfn" href="https://drafts.csswg.org/css-transitions-1/#transition-start-time" id="ref-for-transition-start-time">start time</a> of a <a data-link-type="dfn" href="#worklet-animation" id="ref-for-worklet-animation⑧">worklet animation</a> does not
 necessarily change its output, but may change the animation <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#play-state" id="ref-for-play-state">play state</a>.</p>
     <li data-md="">
-     <p>Similarly, invoking <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/web-animations/#dom-animation-finish" id="ref-for-dom-animation-finish">finish()</a></code> or updating a <a data-link-type="dfn" href="#worklet-animation" id="ref-for-worklet-animation⑨">worklet animation’s</a> <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#playback-rate" id="ref-for-playback-rate">playback
+     <p>Similarly, invoking <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/web-animations-1/#dom-animation-finish" id="ref-for-dom-animation-finish">finish()</a></code> or updating a <a data-link-type="dfn" href="#worklet-animation" id="ref-for-worklet-animation⑨">worklet animation’s</a> <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#playback-rate" id="ref-for-playback-rate">playback
 rate</a> will only change the animation <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#play-state" id="ref-for-play-state①">play state</a> and may not change the output.</p>
     <li data-md="">
-     <p>Querying the animation effect’s local time using <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/web-animations/#dom-animationeffectreadonly-getcomputedtiming" id="ref-for-dom-animationeffectreadonly-getcomputedtiming">getComputedTiming()</a></code> may return stale information, in the case where the <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance①③">animator instance</a> is running in a
+     <p>Querying the animation effect’s local time using <code class="idl"><a data-link-type="idl" href="https://www.w3.org/TR/web-animations-1/#dom-animationeffectreadonly-getcomputedtiming" id="ref-for-dom-animationeffectreadonly-getcomputedtiming">getComputedTiming()</a></code> may return stale information, in the case where the <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance①③">animator instance</a> is running in a
 parallel execution context.</p>
    </ul>
-   <p class="issue" id="issue-ecc3a1c5"><a class="self-link" href="#issue-ecc3a1c5"></a> Come with appropriate mechanism’s for <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance①④">animator instance</a> to get notified when its
+   <p class="issue" id="issue-7d7a2dd9"><a class="self-link" href="#issue-7d7a2dd9"></a> Come with appropriate mechanism’s for <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance①④">animator instance</a> to get notified when its
    animation currentTime is changing e.g., via reverse(), finish() or playbackRate change. So that
    it can react appropriately. <a href="https://github.com/wicg/animation-worklet/issues/63">&lt;https://github.com/wicg/animation-worklet/issues/63></a></p>
    <h3 class="heading settled" data-level="6.4" id="worklet-animation-animator-instances"><span class="secno">6.4. </span><span class="content">Interaction with Animator Instances</span><a class="self-link" href="#worklet-animation-animator-instances"></a></h3>
@@ -2090,7 +2091,7 @@ registerAnimator<span class="p">(</span><span class="s1">'hidey-bar'</span><span
   <span class="p">}</span>
 <span class="p">});</span>
 </pre>
-   <p class="issue" id="issue-2eb87a7a"><a class="self-link" href="#issue-2eb87a7a"></a> This example uses a hypothetical "phase" property on timeline as a way to detect when user
+   <p class="issue" id="issue-8b45d7e3"><a class="self-link" href="#issue-8b45d7e3"></a> This example uses a hypothetical "phase" property on timeline as a way to detect when user
 is no longer actively scrolling. This is a reasonable thing to have on scroll timeline. A simple
 fallback can emulate this by detecting when timeline time (i.e. scroll offset) has not changed in
 the last few frames.</p>
@@ -2333,19 +2334,14 @@ animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span c
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
-    <a data-link-type="biblio">[css-values-3]</a> defines the following terms:
+    <a data-link-type="biblio">[css-transitions-1]</a> defines the following terms:
     <ul>
-     <li><a href="https://drafts.csswg.org/css-values-4/#typedef-ident">&lt;ident></a>
+     <li><a href="https://drafts.csswg.org/css-transitions-1/#transition-start-time">start time</a>
     </ul>
    <li>
     <a data-link-type="biblio">[css-values-4]</a> defines the following terms:
     <ul>
      <li><a href="https://drafts.csswg.org/css-values-4/#typedef-ident">&lt;ident></a>
-    </ul>
-   <li>
-    <a data-link-type="biblio">[css3-transitions]</a> defines the following terms:
-    <ul>
-     <li><a href="https://drafts.csswg.org/css-transitions-1/#transition-start-time">start time</a>
     </ul>
    <li>
     <a data-link-type="biblio">[DOM]</a> defines the following terms:
@@ -2368,8 +2364,8 @@ animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span c
    <li>
     <a data-link-type="biblio">[web-animations-1]</a> defines the following terms:
     <ul>
-     <li><a href="https://w3c.github.io/web-animations/#dom-animation-finish">finish()</a>
-     <li><a href="https://w3c.github.io/web-animations/#dom-animationeffectreadonly-getcomputedtiming">getComputedTiming()</a>
+     <li><a href="https://drafts.csswg.org/web-animations-1/#dom-animation-finish">finish()</a>
+     <li><a href="https://www.w3.org/TR/web-animations-1/#dom-animationeffectreadonly-getcomputedtiming">getComputedTiming()</a>
     </ul>
    <li>
     <a data-link-type="biblio">[WebIDL]</a> defines the following terms:
@@ -2391,10 +2387,10 @@ animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span c
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
-   <dt id="biblio-css-values-3">[CSS-VALUES-3]
-   <dd>Tab Atkins Jr.; Elika Etemad. <a href="https://www.w3.org/TR/css-values-3/">CSS Values and Units Module Level 3</a>. URL: <a href="https://www.w3.org/TR/css-values-3/">https://www.w3.org/TR/css-values-3/</a>
-   <dt id="biblio-css3-transitions">[CSS3-TRANSITIONS]
-   <dd>Dean Jackson; et al. <a href="https://www.w3.org/TR/css3-transitions/">CSS Transitions</a>. URL: <a href="https://www.w3.org/TR/css3-transitions/">https://www.w3.org/TR/css3-transitions/</a>
+   <dt id="biblio-css-transitions-1">[CSS-TRANSITIONS-1]
+   <dd>David Baron; Dean Jackson; Brian Birtles. <a href="https://www.w3.org/TR/css-transitions-1/">CSS Transitions</a>. 30 November 2017. WD. URL: <a href="https://www.w3.org/TR/css-transitions-1/">https://www.w3.org/TR/css-transitions-1/</a>
+   <dt id="biblio-css-values-4">[CSS-VALUES-4]
+   <dd>CSS Values and Units Module Level 4 URL: <a href="https://drafts.csswg.org/css-values-4/">https://drafts.csswg.org/css-values-4/</a>
    <dt id="biblio-dom">[DOM]
    <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
    <dt id="biblio-html">[HTML]
@@ -2404,11 +2400,11 @@ animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span c
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-web-animations-1">[WEB-ANIMATIONS-1]
-   <dd>Brian Birtles; et al. <a href="https://www.w3.org/TR/web-animations-1/">Web Animations</a>. URL: <a href="https://www.w3.org/TR/web-animations-1/">https://www.w3.org/TR/web-animations-1/</a>
+   <dd>Brian Birtles; et al. <a href="https://www.w3.org/TR/web-animations-1/">Web Animations</a>. 13 September 2016. WD. URL: <a href="https://www.w3.org/TR/web-animations-1/">https://www.w3.org/TR/web-animations-1/</a>
    <dt id="biblio-webidl">[WebIDL]
-   <dd>Cameron McCormack; Boris Zbarsky; Tobie Langel. <a href="https://heycam.github.io/webidl/">Web IDL</a>. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
+   <dd>Cameron McCormack; Boris Zbarsky; Tobie Langel. <a href="https://heycam.github.io/webidl/">Web IDL</a>. 15 December 2016. ED. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
    <dt id="biblio-worklets-1">[WORKLETS-1]
-   <dd>Ian Kilpatrick. <a href="https://www.w3.org/TR/worklets-1/">Worklets Level 1</a>. URL: <a href="https://www.w3.org/TR/worklets-1/">https://www.w3.org/TR/worklets-1/</a>
+   <dd>Ian Kilpatrick. <a href="https://www.w3.org/TR/worklets-1/">Worklets Level 1</a>. 7 June 2016. WD. URL: <a href="https://www.w3.org/TR/worklets-1/">https://www.w3.org/TR/worklets-1/</a>
   </dl>
   <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
@@ -2452,10 +2448,10 @@ animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span c
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
    <div class="issue"> Consider giving user agents permission to skip running animator instances to
-   throttle slow animators.<a href="#issue-c580570c"> ↵ </a></div>
+   throttle slow animators.<a href="#issue-6d334361"> ↵ </a></div>
    <div class="issue"> Come with appropriate mechanism’s for <a data-link-type="dfn" href="#animator-instance">animator instance</a> to get notified when its
    animation currentTime is changing e.g., via reverse(), finish() or playbackRate change. So that
-   it can react appropriately. <a href="https://github.com/wicg/animation-worklet/issues/63">&lt;https://github.com/wicg/animation-worklet/issues/63></a><a href="#issue-ecc3a1c5"> ↵ </a></div>
+   it can react appropriately. <a href="https://github.com/wicg/animation-worklet/issues/63">&lt;https://github.com/wicg/animation-worklet/issues/63></a><a href="#issue-7d7a2dd9"> ↵ </a></div>
    <div class="issue"> Define semantics of attachment and detachment. <a href="https://github.com/wicg/animation-worklet/issues/61">&lt;https://github.com/wicg/animation-worklet/issues/61></a><a href="#issue-1b7aae40"> ↵ </a></div>
    <div class="issue"> The above algorithm should probably only apply to within the AnimationWorkletGlobalScope?<a href="#issue-0ac49f6c"> ↵ </a></div>
    <div class="issue"> Need to decide what security considerations there are for this spec.<a href="#issue-de770110"> ↵ </a></div>
@@ -2463,7 +2459,7 @@ animationWorklet<span class="p">.</span>addModule<span class="p">(</span><span c
    <div class="issue"> This example uses a hypothetical "phase" property on timeline as a way to detect when user
 is no longer actively scrolling. This is a reasonable thing to have on scroll timeline. A simple
 fallback can emulate this by detecting when timeline time (i.e. scroll offset) has not changed in
-the last few frames.<a href="#issue-2eb87a7a"> ↵ </a></div>
+the last few frames.<a href="#issue-8b45d7e3"> ↵ </a></div>
   </div>
   <aside class="dfn-panel" data-for="animation-worklet">
    <b><a href="#animation-worklet">#animation-worklet</a></b><b>Referenced in:</b>
