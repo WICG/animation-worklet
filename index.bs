@@ -175,11 +175,10 @@ animations. The worklet can be accessed via {{animationWorklet}} attribute.
 
 The {{animationWorklet}}'s <a>worklet global scope type</a> is {{AnimationWorkletGlobalScope}}.
 
-{{AnimationWorkletGlobalScope}} represents a <dfn>global execution context</dfn> of
-{{animationWorklet}}.
+{{AnimationWorkletGlobalScope}} represents the global execution context of {{animationWorklet}}.
 
 <pre class='idl'>
-partial interface Window {
+partial namespace CSS {
     [SameObject] readonly attribute Worklet animationWorklet;
 };
 </pre>
@@ -751,7 +750,7 @@ animates fully to close or open position depending on its current position.
 </div>
 
 <script>
-await animationWorklet.addModule('hidey-bar-animator.js');
+await CSS.animationWorklet.addModule('hidey-bar-animator.js');
 const scrollTimeline = new ScrollTimeline($scrollingContainer, {timeRange: 1000});
 const documentTimeline = document.timeline;
 
@@ -825,7 +824,7 @@ sync with scroll offset.
 </div>
 
 <script>
-await animationWorklet.addModule('twitter-header-animator.js');
+await CSS.animationWorklet.addModule('twitter-header-animator.js');
 const animation = new WorkletAnimation(
     'twitter-header',
     [new KeyFrameEffect($avatar,  /* scales down as we scroll up */
@@ -837,7 +836,7 @@ const animation = new WorkletAnimation(
     new ScrollTimeline($scrollingContainer, {timeRange: 1000, startScrollOffset: 0, endScrollOffset: $header.clientHeight}));
 animation.play();
 
-// Since this animation is using a group effect, the same animation instance 
+// Since this animation is using a group effect, the same animation instance
 // is accessible via different handles: $avatarEl.getAnimations()[0], $headerEl.getAnimations()[0]
 
 </script>
@@ -884,7 +883,7 @@ A simple parallax background example.
 </div>
 
 <script>
-await animationWorklet.addModule('parallax-animator.js');
+await CSS.animationWorklet.addModule('parallax-animator.js');
 const scrollTimeline = new ScrollTimeline($scrollingContainer, {timeRange: 1000});
 const scrollRange = $scrollingContainer.scrollHeight - $scrollingContainer.clientHeight;
 
