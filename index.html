@@ -1214,7 +1214,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 0af8ece51a58310888d9da3e5b2ebda903d17c18" name="generator">
   <link href="https://wicg.github.io/animation-worklet/" rel="canonical">
-  <meta content="21f700942072a5a98b9a267a5dbd27fe3890a77b" name="document-revision">
+  <meta content="9a1a8fb2a8e328a5a39cc6b57b0482e2935ef846" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1472,7 +1472,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">CSS Animation Worklet API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2018-08-03">3 August 2018</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2018-08-07">7 August 2018</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1577,7 +1577,7 @@ of <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#animation
 animations in their own dedicated thread to provide a degree of performance isolation from main
 thread.</p>
    <h3 class="heading settled" data-level="1.1" id="relationship-to-web-animations"><span class="secno">1.1. </span><span class="content">Relationship to the Web Animations API</span><a class="self-link" href="#relationship-to-web-animations"></a></h3>
-   <p>Animations running inside an <a data-link-type="dfn" href="#animation-worklet" id="ref-for-animation-worklet①">Animation Worklet</a> execution context expose the <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/web-animations/level-2/#animation" id="ref-for-animation">Animation</a></code> interface from the Web Animations specification on the main javascript execution context. This means
+   <p>Animations running inside an <a data-link-type="dfn" href="#animation-worklet" id="ref-for-animation-worklet①">Animation Worklet</a> execution context expose the <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/web-animations-1/#animation" id="ref-for-animation">Animation</a></code> interface from the Web Animations specification on the main javascript execution context. This means
 they can be controlled and inspected from main thread using many of the Web Animation APIs. However
 Animation Worklet animations follow a different timing model that enables them to be script-driven,
 stateful, and runnable in a parallel worklet execution context. As such Web Animation APIs that seek
@@ -1875,7 +1875,7 @@ an <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instan
 not directly determine the animation effect’s <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#local-time" id="ref-for-local-time">local time</a> (via its <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#inherited-time" id="ref-for-inherited-time">inherited time</a>).
 Instead the associated <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance①⓪">animator instance</a> controls the animation effect’s <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#local-time" id="ref-for-local-time①">local time</a> directly. Note that this means that the <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#timeline" id="ref-for-timeline④">timeline’s</a> current time does not fully determine the
 animation’s output.</p>
-   <p><a data-link-type="dfn" href="#worklet-animation" id="ref-for-worklet-animation③">Worklet animation</a> has the following properties in addition to the <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/web-animations/level-2/#animation" id="ref-for-animation①">Animation</a></code> interface:</p>
+   <p><a data-link-type="dfn" href="#worklet-animation" id="ref-for-worklet-animation③">Worklet animation</a> has the following properties in addition to the <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/web-animations-1/#animation" id="ref-for-animation①">Animation</a></code> interface:</p>
    <ul>
     <li data-md>
      <p>an <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="animation-animator-name">animation animator name</dfn> which identifies its <a data-link-type="dfn" href="#animator-definition" id="ref-for-animator-definition②">animator definition</a>.</p>
@@ -1894,17 +1894,17 @@ constructing a new animator instance.</p>
     </figcaption>
    </figure>
    <h3 class="heading settled" data-level="6.2" id="creating-worklet-animation"><span class="secno">6.2. </span><span class="content">Creating a Worklet Animation</span><a class="self-link" href="#creating-worklet-animation"></a></h3>
-<pre class="idl highlight def">[Constructor (DOMString animatorName,
-              optional (AnimationEffectReadOnly or sequence)? effects = null,
-              optional AnimationTimeline? timeline,
-              optional any options)]
-<c- b>interface</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="workletanimation"><code><c- g>WorkletAnimation</c-></code></dfn> : <a class="n" data-link-type="idl-name" href="https://w3c.github.io/web-animations/level-2/#animation" id="ref-for-animation②"><c- n>Animation</c-></a> {
-        <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①"><c- b>DOMString</c-></a> <dfn class="idl-code" data-dfn-for="WorkletAnimation" data-dfn-type="attribute" data-export data-readonly data-type="DOMString" id="dom-workletanimation-animatorname"><code><c- g>animatorName</c-></code><a class="self-link" href="#dom-workletanimation-animatorname"></a></dfn>;
+<pre class="idl highlight def">[<a class="idl-code" data-link-type="constructor" href="#dom-workletanimation-workletanimation" id="ref-for-dom-workletanimation-workletanimation"><c- g>Constructor</c-></a> (<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①"><c- b>DOMString</c-></a> <dfn class="idl-code" data-dfn-for="WorkletAnimation/WorkletAnimation(animatorName, effects, timeline, options)" data-dfn-type="argument" data-export id="dom-workletanimation-workletanimation-animatorname-effects-timeline-options-animatorname"><code><c- g>animatorName</c-></code><a class="self-link" href="#dom-workletanimation-workletanimation-animatorname-effects-timeline-options-animatorname"></a></dfn>,
+              <c- b>optional</c-> (<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/web-animations-1/#animationeffect" id="ref-for-animationeffect"><c- n>AnimationEffect</c-></a> <c- b>or</c-> <c- b>sequence</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/web-animations-1/#animationeffect" id="ref-for-animationeffect①"><c- n>AnimationEffect</c-></a>>)? <dfn class="idl-code" data-dfn-for="WorkletAnimation/WorkletAnimation(animatorName, effects, timeline, options)" data-dfn-type="argument" data-export id="dom-workletanimation-workletanimation-animatorname-effects-timeline-options-effects"><code><c- g>effects</c-></code><a class="self-link" href="#dom-workletanimation-workletanimation-animatorname-effects-timeline-options-effects"></a></dfn> = <c- b>null</c->,
+              <c- b>optional</c-> <a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/web-animations-1/#animationtimeline" id="ref-for-animationtimeline"><c- n>AnimationTimeline</c-></a>? <dfn class="idl-code" data-dfn-for="WorkletAnimation/WorkletAnimation(animatorName, effects, timeline, options)" data-dfn-type="argument" data-export id="dom-workletanimation-workletanimation-animatorname-effects-timeline-options-timeline"><code><c- g>timeline</c-></code><a class="self-link" href="#dom-workletanimation-workletanimation-animatorname-effects-timeline-options-timeline"></a></dfn>,
+              <c- b>optional</c-> <c- b>any</c-> <dfn class="idl-code" data-dfn-for="WorkletAnimation/WorkletAnimation(animatorName, effects, timeline, options)" data-dfn-type="argument" data-export id="dom-workletanimation-workletanimation-animatorname-effects-timeline-options-options"><code><c- g>options</c-></code><a class="self-link" href="#dom-workletanimation-workletanimation-animatorname-effects-timeline-options-options"></a></dfn>)]
+<c- b>interface</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="workletanimation"><code><c- g>WorkletAnimation</c-></code></dfn> : <a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/web-animations-1/#animation" id="ref-for-animation②"><c- n>Animation</c-></a> {
+        <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString②"><c- b>DOMString</c-></a> <dfn class="idl-code" data-dfn-for="WorkletAnimation" data-dfn-type="attribute" data-export data-readonly data-type="DOMString" id="dom-workletanimation-animatorname"><code><c- g>animatorName</c-></code><a class="self-link" href="#dom-workletanimation-animatorname"></a></dfn>;
 };
 
 </pre>
    <div class="algorithm" data-algorithm="create-worklet-animation">
-     <dfn class="idl-code" data-dfn-for="WorkletAnimation" data-dfn-type="constructor" data-export id="dom-workletanimation-workletanimation"><code>WorkletAnimation(<var>animatorName</var>, <var>effects</var>, <var>timeline</var>, <var>options</var>)</code><a class="self-link" href="#dom-workletanimation-workletanimation"></a></dfn> 
+     <dfn class="dfn-paneled idl-code" data-dfn-for="WorkletAnimation" data-dfn-type="constructor" data-export id="dom-workletanimation-workletanimation"><code>WorkletAnimation(<var>animatorName</var>, <var>effects</var>, <var>timeline</var>, <var>options</var>)</code></dfn> 
     <p>Creates a new <code class="idl"><a data-link-type="idl" href="#workletanimation" id="ref-for-workletanimation">WorkletAnimation</a></code> object using the following procedure.</p>
     <ol>
      <li data-md>
@@ -1915,10 +1915,10 @@ passing the <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#
      <li data-md>
       <p>Let <var>effect</var> be the result corresponding to the first matching condition from below.</p>
       <dl>
-       <dt data-md>If <var>effects</var> is a <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/web-animations/level-2/#animationeffectreadonly" id="ref-for-animationeffectreadonly">AnimationEffectReadOnly</a></code> object,
+       <dt data-md>If <var>effects</var> is a <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/web-animations-1/#animationeffect" id="ref-for-animationeffect②">AnimationEffect</a></code> object,
        <dd data-md>
         <p>Let effect be <var>effects</var>.</p>
-       <dt data-md>If <var>effects</var> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list②">list</a> of <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/web-animations/level-2/#animationeffectreadonly" id="ref-for-animationeffectreadonly①">AnimationEffectReadOnly</a></code> objects,
+       <dt data-md>If <var>effects</var> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list②">list</a> of <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/web-animations-1/#animationeffect" id="ref-for-animationeffect③">AnimationEffect</a></code> objects,
        <dd data-md>
         <p>Let <var>effect</var> be a new <code class="idl"><a data-link-type="idl" href="#workletgroupeffect" id="ref-for-workletgroupeffect">WorkletGroupEffect</a></code> with its children set to <var>effects</var>.</p>
        <dt data-md>Otherwise,
@@ -1957,7 +1957,7 @@ necessarily change its output, but may change the animation <a data-link-type="d
      <p>Similarly, invoking <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/web-animations-1/#dom-animation-finish" id="ref-for-dom-animation-finish">finish()</a></code> or updating a <a data-link-type="dfn" href="#worklet-animation" id="ref-for-worklet-animation⑨">worklet animation’s</a> <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#playback-rate" id="ref-for-playback-rate">playback
 rate</a> will only change the animation <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#play-state" id="ref-for-play-state①">play state</a> and may not change the output.</p>
     <li data-md>
-     <p>Querying the animation effect’s local time using <code class="idl"><a data-link-type="idl" href="https://www.w3.org/TR/web-animations-1/#dom-animationeffectreadonly-getcomputedtiming" id="ref-for-dom-animationeffectreadonly-getcomputedtiming">getComputedTiming()</a></code> may return stale information, in the case where the <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance①③">animator instance</a> is running in a
+     <p>Querying the animation effect’s local time using <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/web-animations-1/#dom-animationeffect-getcomputedtiming" id="ref-for-dom-animationeffect-getcomputedtiming">getComputedTiming()</a></code> may return stale information, in the case where the <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance①③">animator instance</a> is running in a
 parallel execution context.</p>
    </ul>
    <p class="issue" id="issue-61e3a71a"><a class="self-link" href="#issue-61e3a71a"></a> Come with appropriate mechanism’s for <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance①④">animator instance</a> to get notified when its
@@ -2041,26 +2041,24 @@ right abstractions and mechanisms to do this.</p>
    <p>When a <code class="idl"><a data-link-type="idl" href="#workletgroupeffect" id="ref-for-workletgroupeffect②">WorkletGroupEffect</a></code> is set as the <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#animation-effect" id="ref-for-animation-effect⑤">animation effect</a> of a <code class="idl"><a data-link-type="idl" href="#workletanimation" id="ref-for-workletanimation②">WorkletAnimation</a></code>, the
 corresponding <a data-link-type="dfn" href="#animator-instance" id="ref-for-animator-instance②③">animator instance</a> can directly control the <a data-link-type="dfn" href="https://w3c.github.io/web-animations/level-2/#child-effect" id="ref-for-child-effect①">child effects</a>' <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#local-time" id="ref-for-local-time⑤">local
 times</a>. This allows a single worklet animation to coordinate multiple effects - see <a href="#example-2">§9.2 Example 2: Twitter header.</a> for an example of such a use-case.</p>
-<pre class="idl highlight def"><c- b>interface</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="workletgroupeffectreadonly"><code><c- g>WorkletGroupEffectReadOnly</c-></code></dfn> :  <a class="n" data-link-type="idl-name" href="https://w3c.github.io/web-animations/level-2/#groupeffectreadonly" id="ref-for-groupeffectreadonly"><c- n>GroupEffectReadOnly</c-></a> {};
-
-<c- b>interface</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="workletgroupeffect"><code><c- g>WorkletGroupEffect</c-></code></dfn> :  <a class="n" data-link-type="idl-name" href="#workletgroupeffectreadonly" id="ref-for-workletgroupeffectreadonly"><c- n>WorkletGroupEffectReadOnly</c-></a> {};
-<a class="n" data-link-type="idl-name" href="#workletgroupeffect" id="ref-for-workletgroupeffect③"><c- n>WorkletGroupEffect</c-></a> <c- b>implements</c-> <a class="n" data-link-type="idl-name" href="https://w3c.github.io/web-animations/level-2/#animationeffectmutable" id="ref-for-animationeffectmutable"><c- n>AnimationEffectMutable</c-></a>;
-<a class="n" data-link-type="idl-name" href="#workletgroupeffect" id="ref-for-workletgroupeffect④"><c- n>WorkletGroupEffect</c-></a> <c- b>implements</c-> <a class="n" data-link-type="idl-name" href="https://w3c.github.io/web-animations/level-2/#groupeffectmutable" id="ref-for-groupeffectmutable"><c- n>GroupEffectMutable</c-></a>;
+<pre class="idl highlight def"><c- b>interface</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="workletgroupeffect"><code><c- g>WorkletGroupEffect</c-></code></dfn> {
+  <c- b>sequence</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/web-animations-1/#animationeffect" id="ref-for-animationeffect④"><c- n>AnimationEffect</c-></a>> <dfn class="idl-code" data-dfn-for="WorkletGroupEffect" data-dfn-type="method" data-export data-lt="getChildren()" id="dom-workletgroupeffect-getchildren"><code><c- g>getChildren</c-></code><a class="self-link" href="#dom-workletgroupeffect-getchildren"></a></dfn>();
+};
 
 [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed①"><c- g>Exposed</c-></a>=<c- n>AnimationWorklet</c->]
-<c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://w3c.github.io/web-animations/level-2/#animationeffectreadonly" id="ref-for-animationeffectreadonly②"><c- g>AnimationEffectReadOnly</c-></a> {
+<c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/web-animations-1/#animationeffect" id="ref-for-animationeffect⑤"><c- g>AnimationEffect</c-></a> {
     // Intended for use inside Animation Worklet scope to drive the effect.
-    <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-double" id="ref-for-idl-double"><c- b>double</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="AnimationEffectReadOnly" data-dfn-type="attribute" data-export data-type="double" id="dom-animationeffectreadonly-localtime"><code><c- g>localTime</c-></code></dfn>;
+    <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-double" id="ref-for-idl-double"><c- b>double</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="AnimationEffect" data-dfn-type="attribute" data-export data-type="double" id="dom-animationeffect-localtime"><code><c- g>localTime</c-></code></dfn>;
 };
 </pre>
    <div class="algorithm" data-algorithm="set-local-time">
-    <p>To set the <code class="idl"><a data-link-type="idl" href="#dom-animationeffectreadonly-localtime" id="ref-for-dom-animationeffectreadonly-localtime">localTime</a></code> property on a <var>effect</var> to value <var>t</var>, the user agent should perform the
+    <p>To set the <code class="idl"><a data-link-type="idl" href="#dom-animationeffect-localtime" id="ref-for-dom-animationeffect-localtime">localTime</a></code> property on a <var>effect</var> to value <var>t</var>, the user agent should perform the
 action that corresponds to the first matching condition from the following:</p>
     <dl>
      <dt data-md>If the <var>effect</var> does not have a parent group,
      <dd data-md>
       <p>Set the <var>effect</var> local time to <var>t</var>.</p>
-     <dt data-md>If the <var>effect</var> has a parent group and it is of <code class="idl"><a data-link-type="idl" href="#workletgroupeffect" id="ref-for-workletgroupeffect⑤">WorkletGroupEffect</a></code> type,
+     <dt data-md>If the <var>effect</var> has a parent group and it is of <code class="idl"><a data-link-type="idl" href="#workletgroupeffect" id="ref-for-workletgroupeffect③">WorkletGroupEffect</a></code> type,
      <dd data-md>
       <p>Set the effect start time to (parent’s transformed time - t). Note this effectively set’s the <var>effect</var>’s local time to t.</p>
      <dt data-md>Otherwise
@@ -2069,8 +2067,9 @@ action that corresponds to the first matching condition from the following:</p>
 its parent group.</p>
     </dl>
    </div>
-   <p class="issue" id="issue-0ac49f6c"><a class="self-link" href="#issue-0ac49f6c"></a> The above algorithm should probably only apply to within the AnimationWorkletGlobalScope?</p>
-   <p>[Issue](https://github.com/w3c/web-animations/issues/191)</p>
+   <p class="issue" id="issue-82bc9872"><a class="self-link" href="#issue-82bc9872"></a> The above interface exposes a conservative subset
+of GroupEffect proposed as part of web-animation-2. Once that is available we
+should switch to it. <a href="https://github.com/w3c/csswg-drafts/issues/2071">&lt;https://github.com/w3c/csswg-drafts/issues/2071></a></p>
    <h3 class="heading settled" data-level="6.8" id="effect-stack-composite-order"><span class="secno">6.8. </span><span class="content">Effect Stack and Composite Order</span><a class="self-link" href="#effect-stack-composite-order"></a></h3>
    <p>As with other animations, <a data-link-type="dfn" href="#worklet-animation" id="ref-for-worklet-animation①③">worklet animations</a> participate in the <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#effect-stack" id="ref-for-effect-stack">effect stack</a>.  A
 worklet animation does not have a specific <a data-link-type="dfn" href="https://w3c.github.io/web-animations/#animation-class" id="ref-for-animation-class">animation class</a> which means it has the same
@@ -2409,7 +2408,8 @@ registerAnimator<c- p>(</c-><c- t>'parallax'</c-><c- p>,</c-> <c- kr>class</c-> 
    <li><a href="#disassociate-animator-instance-of-worklet-animation">disassociate animator instance of worklet animation</a><span>, in §6.4</span>
    <li><a href="#frame-current">frame-current</a><span>, in §5.5</span>
    <li><a href="#frame-requested">frame-requested</a><span>, in §5.5</span>
-   <li><a href="#dom-animationeffectreadonly-localtime">localTime</a><span>, in §6.7</span>
+   <li><a href="#dom-workletgroupeffect-getchildren">getChildren()</a><span>, in §6.7</span>
+   <li><a href="#dom-animationeffect-localtime">localTime</a><span>, in §6.7</span>
    <li><a href="#migrate-an-animator-instance">migrate an animator instance</a><span>, in §5.4</span>
    <li><a href="#dom-animationworkletglobalscope-registeranimator">registerAnimator(name, animatorCtor)</a><span>, in §4.1</span>
    <li><a href="#remove-an-animator-instance">remove an animator instance</a><span>, in §5.3</span>
@@ -2421,7 +2421,6 @@ registerAnimator<c- p>(</c-><c- t>'parallax'</c-><c- p>,</c-> <c- kr>class</c-> 
    <li><a href="#workletanimation">WorkletAnimation</a><span>, in §6.2</span>
    <li><a href="#dom-workletanimation-workletanimation">WorkletAnimation(animatorName, effects, timeline, options)</a><span>, in §6.2</span>
    <li><a href="#workletgroupeffect">WorkletGroupEffect</a><span>, in §6.7</span>
-   <li><a href="#workletgroupeffectreadonly">WorkletGroupEffectReadOnly</a><span>, in §6.7</span>
   </ul>
   <aside class="dfn-panel" data-for="term-for-transition-start-time">
    <a href="https://drafts.csswg.org/css-transitions-1/#transition-start-time">https://drafts.csswg.org/css-transitions-1/#transition-start-time</a><b>Referenced in:</b>
@@ -2482,23 +2481,44 @@ registerAnimator<c- p>(</c-><c- t>'parallax'</c-><c- p>,</c-> <c- kr>class</c-> 
     <li><a href="#ref-for-struct①">5. Animator Instance</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-animation">
+   <a href="https://drafts.csswg.org/web-animations-1/#animation">https://drafts.csswg.org/web-animations-1/#animation</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-animation">1.1. Relationship to the Web Animations API</a>
+    <li><a href="#ref-for-animation①">6.1. Worklet Animation</a>
+    <li><a href="#ref-for-animation②">6.2. Creating a Worklet Animation</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-animationeffect">
+   <a href="https://drafts.csswg.org/web-animations-1/#animationeffect">https://drafts.csswg.org/web-animations-1/#animationeffect</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-animationeffect">6.2. Creating a Worklet Animation</a> <a href="#ref-for-animationeffect①">(2)</a> <a href="#ref-for-animationeffect②">(3)</a> <a href="#ref-for-animationeffect③">(4)</a>
+    <li><a href="#ref-for-animationeffect④">6.7. WorkletGroupEffect</a> <a href="#ref-for-animationeffect⑤">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-animationtimeline">
+   <a href="https://drafts.csswg.org/web-animations-1/#animationtimeline">https://drafts.csswg.org/web-animations-1/#animationtimeline</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-animationtimeline">6.2. Creating a Worklet Animation</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-dom-animation-finish">
    <a href="https://drafts.csswg.org/web-animations-1/#dom-animation-finish">https://drafts.csswg.org/web-animations-1/#dom-animation-finish</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-animation-finish">6.3. Worklet Animation timing model</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-dom-animationeffectreadonly-getcomputedtiming">
-   <a href="https://www.w3.org/TR/web-animations-1/#dom-animationeffectreadonly-getcomputedtiming">https://www.w3.org/TR/web-animations-1/#dom-animationeffectreadonly-getcomputedtiming</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-dom-animationeffect-getcomputedtiming">
+   <a href="https://drafts.csswg.org/web-animations-1/#dom-animationeffect-getcomputedtiming">https://drafts.csswg.org/web-animations-1/#dom-animationeffect-getcomputedtiming</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-animationeffectreadonly-getcomputedtiming">6.3. Worklet Animation timing model</a>
+    <li><a href="#ref-for-dom-animationeffect-getcomputedtiming">6.3. Worklet Animation timing model</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-DOMString">
    <a href="https://heycam.github.io/webidl/#idl-DOMString">https://heycam.github.io/webidl/#idl-DOMString</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-idl-DOMString">3. Animation Worklet</a>
-    <li><a href="#ref-for-idl-DOMString①">6.2. Creating a Worklet Animation</a>
+    <li><a href="#ref-for-idl-DOMString①">6.2. Creating a Worklet Animation</a> <a href="#ref-for-idl-DOMString②">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-Exposed">
@@ -2584,8 +2604,11 @@ registerAnimator<c- p>(</c-><c- t>'parallax'</c-><c- p>,</c-> <c- kr>class</c-> 
    <li>
     <a data-link-type="biblio">[web-animations-1]</a> defines the following terms:
     <ul>
+     <li><span class="dfn-paneled" id="term-for-animation" style="color:initial">Animation</span>
+     <li><span class="dfn-paneled" id="term-for-animationeffect" style="color:initial">AnimationEffect</span>
+     <li><span class="dfn-paneled" id="term-for-animationtimeline" style="color:initial">AnimationTimeline</span>
      <li><span class="dfn-paneled" id="term-for-dom-animation-finish" style="color:initial">finish()</span>
-     <li><span class="dfn-paneled" id="term-for-dom-animationeffectreadonly-getcomputedtiming" style="color:initial">getComputedTiming()</span>
+     <li><span class="dfn-paneled" id="term-for-dom-animationeffect-getcomputedtiming" style="color:initial">getComputedTiming()</span>
     </ul>
    <li>
     <a data-link-type="biblio">[WebIDL]</a> defines the following terms:
@@ -2642,28 +2665,26 @@ registerAnimator<c- p>(</c-><c- t>'parallax'</c-><c- p>,</c-> <c- kr>class</c-> 
 
 [ <a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed②"><c- g>Exposed</c-></a>=<c- n>AnimationWorklet</c->, <a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Global" id="ref-for-Global①"><c- g>Global</c-></a>=<a class="n" data-link-type="idl-name"><c- n>AnimationWorklet</c-></a> ]
 <c- b>interface</c-> <a href="#animationworkletglobalscope"><code><c- g>AnimationWorkletGlobalScope</c-></code></a> : <a class="n" data-link-type="idl-name" href="https://drafts.css-houdini.org/worklets/#workletglobalscope" id="ref-for-workletglobalscope⑤"><c- n>WorkletGlobalScope</c-></a> {
-    <c- b>void</c-> <a class="idl-code" data-link-type="method" href="#dom-animationworkletglobalscope-registeranimator" id="ref-for-dom-animationworkletglobalscope-registeranimator②"><c- g>registerAnimator</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString②"><c- b>DOMString</c-></a> <a href="#dom-animationworkletglobalscope-registeranimator-name-animatorctor-name"><code><c- g>name</c-></code></a>, <a class="n" data-link-type="idl-name" href="#callbackdef-voidfunction" id="ref-for-callbackdef-voidfunction①"><c- n>VoidFunction</c-></a> <a href="#dom-animationworkletglobalscope-registeranimator-name-animatorctor-animatorctor"><code><c- g>animatorCtor</c-></code></a>);
+    <c- b>void</c-> <a class="idl-code" data-link-type="method" href="#dom-animationworkletglobalscope-registeranimator" id="ref-for-dom-animationworkletglobalscope-registeranimator②"><c- g>registerAnimator</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString③"><c- b>DOMString</c-></a> <a href="#dom-animationworkletglobalscope-registeranimator-name-animatorctor-name"><code><c- g>name</c-></code></a>, <a class="n" data-link-type="idl-name" href="#callbackdef-voidfunction" id="ref-for-callbackdef-voidfunction①"><c- n>VoidFunction</c-></a> <a href="#dom-animationworkletglobalscope-registeranimator-name-animatorctor-animatorctor"><code><c- g>animatorCtor</c-></code></a>);
 };
 
-[Constructor (DOMString animatorName,
-              optional (AnimationEffectReadOnly or sequence)? effects = null,
-              optional AnimationTimeline? timeline,
-              optional any options)]
-<c- b>interface</c-> <a href="#workletanimation"><code><c- g>WorkletAnimation</c-></code></a> : <a class="n" data-link-type="idl-name" href="https://w3c.github.io/web-animations/level-2/#animation" id="ref-for-animation②①"><c- n>Animation</c-></a> {
-        <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①①"><c- b>DOMString</c-></a> <a data-readonly data-type="DOMString" href="#dom-workletanimation-animatorname"><code><c- g>animatorName</c-></code></a>;
+[<a class="idl-code" data-link-type="constructor" href="#dom-workletanimation-workletanimation" id="ref-for-dom-workletanimation-workletanimation①"><c- g>Constructor</c-></a> (<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①①"><c- b>DOMString</c-></a> <a href="#dom-workletanimation-workletanimation-animatorname-effects-timeline-options-animatorname"><code><c- g>animatorName</c-></code></a>,
+              <c- b>optional</c-> (<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/web-animations-1/#animationeffect" id="ref-for-animationeffect⑥"><c- n>AnimationEffect</c-></a> <c- b>or</c-> <c- b>sequence</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/web-animations-1/#animationeffect" id="ref-for-animationeffect①①"><c- n>AnimationEffect</c-></a>>)? <a href="#dom-workletanimation-workletanimation-animatorname-effects-timeline-options-effects"><code><c- g>effects</c-></code></a> = <c- b>null</c->,
+              <c- b>optional</c-> <a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/web-animations-1/#animationtimeline" id="ref-for-animationtimeline①"><c- n>AnimationTimeline</c-></a>? <a href="#dom-workletanimation-workletanimation-animatorname-effects-timeline-options-timeline"><code><c- g>timeline</c-></code></a>,
+              <c- b>optional</c-> <c- b>any</c-> <a href="#dom-workletanimation-workletanimation-animatorname-effects-timeline-options-options"><code><c- g>options</c-></code></a>)]
+<c- b>interface</c-> <a href="#workletanimation"><code><c- g>WorkletAnimation</c-></code></a> : <a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/web-animations-1/#animation" id="ref-for-animation②①"><c- n>Animation</c-></a> {
+        <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString②①"><c- b>DOMString</c-></a> <a data-readonly data-type="DOMString" href="#dom-workletanimation-animatorname"><code><c- g>animatorName</c-></code></a>;
 };
 
 
-<c- b>interface</c-> <a href="#workletgroupeffectreadonly"><code><c- g>WorkletGroupEffectReadOnly</c-></code></a> :  <a class="n" data-link-type="idl-name" href="https://w3c.github.io/web-animations/level-2/#groupeffectreadonly" id="ref-for-groupeffectreadonly①"><c- n>GroupEffectReadOnly</c-></a> {};
-
-<c- b>interface</c-> <a href="#workletgroupeffect"><code><c- g>WorkletGroupEffect</c-></code></a> :  <a class="n" data-link-type="idl-name" href="#workletgroupeffectreadonly" id="ref-for-workletgroupeffectreadonly①"><c- n>WorkletGroupEffectReadOnly</c-></a> {};
-<a class="n" data-link-type="idl-name" href="#workletgroupeffect" id="ref-for-workletgroupeffect③①"><c- n>WorkletGroupEffect</c-></a> <c- b>implements</c-> <a class="n" data-link-type="idl-name" href="https://w3c.github.io/web-animations/level-2/#animationeffectmutable" id="ref-for-animationeffectmutable①"><c- n>AnimationEffectMutable</c-></a>;
-<a class="n" data-link-type="idl-name" href="#workletgroupeffect" id="ref-for-workletgroupeffect④①"><c- n>WorkletGroupEffect</c-></a> <c- b>implements</c-> <a class="n" data-link-type="idl-name" href="https://w3c.github.io/web-animations/level-2/#groupeffectmutable" id="ref-for-groupeffectmutable①"><c- n>GroupEffectMutable</c-></a>;
+<c- b>interface</c-> <a href="#workletgroupeffect"><code><c- g>WorkletGroupEffect</c-></code></a> {
+  <c- b>sequence</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/web-animations-1/#animationeffect" id="ref-for-animationeffect④①"><c- n>AnimationEffect</c-></a>> <a href="#dom-workletgroupeffect-getchildren"><code><c- g>getChildren</c-></code></a>();
+};
 
 [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed①①"><c- g>Exposed</c-></a>=<c- n>AnimationWorklet</c->]
-<c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://w3c.github.io/web-animations/level-2/#animationeffectreadonly" id="ref-for-animationeffectreadonly②①"><c- g>AnimationEffectReadOnly</c-></a> {
+<c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/web-animations-1/#animationeffect" id="ref-for-animationeffect⑤①"><c- g>AnimationEffect</c-></a> {
     // Intended for use inside Animation Worklet scope to drive the effect.
-    <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-double" id="ref-for-idl-double①"><c- b>double</c-></a> <a data-type="double" href="#dom-animationeffectreadonly-localtime"><code><c- g>localTime</c-></code></a>;
+    <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-double" id="ref-for-idl-double①"><c- b>double</c-></a> <a data-type="double" href="#dom-animationeffect-localtime"><code><c- g>localTime</c-></code></a>;
 };
 
 </pre>
@@ -2675,7 +2696,9 @@ registerAnimator<c- p>(</c-><c- t>'parallax'</c-><c- p>,</c-> <c- kr>class</c-> 
    animation currentTime is changing e.g., via reverse(), finish() or playbackRate change. So that
    it can react appropriately. <a href="https://github.com/wicg/animation-worklet/issues/63">&lt;https://github.com/wicg/animation-worklet/issues/63></a><a href="#issue-61e3a71a"> ↵ </a></div>
    <div class="issue"> Define semantics of attachment and detachment. <a href="https://github.com/wicg/animation-worklet/issues/61">&lt;https://github.com/wicg/animation-worklet/issues/61></a><a href="#issue-1b7aae40"> ↵ </a></div>
-   <div class="issue"> The above algorithm should probably only apply to within the AnimationWorkletGlobalScope?<a href="#issue-0ac49f6c"> ↵ </a></div>
+   <div class="issue"> The above interface exposes a conservative subset
+of GroupEffect proposed as part of web-animation-2. Once that is available we
+should switch to it. <a href="https://github.com/w3c/csswg-drafts/issues/2071">&lt;https://github.com/w3c/csswg-drafts/issues/2071></a><a href="#issue-82bc9872"> ↵ </a></div>
    <div class="issue"> Need to decide what security considerations there are for this spec.<a href="#issue-de770110"> ↵ </a></div>
    <div class="issue"> Need to decide what privacy considerations there are for this spec.<a href="#issue-19f9ed9b"> ↵ </a></div>
    <div class="issue"> This example uses a hypothetical "phase" property on timeline as a way to detect when user
@@ -2898,6 +2921,12 @@ the last few frames.<a href="#issue-8b45d7e3"> ↵ </a></div>
     <li><a href="#ref-for-workletanimation②">6.7. WorkletGroupEffect</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="dom-workletanimation-workletanimation">
+   <b><a href="#dom-workletanimation-workletanimation">#dom-workletanimation-workletanimation</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-workletanimation-workletanimation">6.2. Creating a Worklet Animation</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="associate-animator-instance-of-worklet-animation">
    <b><a href="#associate-animator-instance-of-worklet-animation">#associate-animator-instance-of-worklet-animation</a></b><b>Referenced in:</b>
    <ul>
@@ -2916,23 +2945,17 @@ the last few frames.<a href="#issue-8b45d7e3"> ↵ </a></div>
     <li><a href="#ref-for-set-animator-instance-of-worklet-animation">6.4. Interaction with Animator Instances</a> <a href="#ref-for-set-animator-instance-of-worklet-animation①">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="workletgroupeffectreadonly">
-   <b><a href="#workletgroupeffectreadonly">#workletgroupeffectreadonly</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-workletgroupeffectreadonly">6.7. WorkletGroupEffect</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="workletgroupeffect">
    <b><a href="#workletgroupeffect">#workletgroupeffect</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-workletgroupeffect">6.2. Creating a Worklet Animation</a>
-    <li><a href="#ref-for-workletgroupeffect①">6.7. WorkletGroupEffect</a> <a href="#ref-for-workletgroupeffect②">(2)</a> <a href="#ref-for-workletgroupeffect③">(3)</a> <a href="#ref-for-workletgroupeffect④">(4)</a> <a href="#ref-for-workletgroupeffect⑤">(5)</a>
+    <li><a href="#ref-for-workletgroupeffect①">6.7. WorkletGroupEffect</a> <a href="#ref-for-workletgroupeffect②">(2)</a> <a href="#ref-for-workletgroupeffect③">(3)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="dom-animationeffectreadonly-localtime">
-   <b><a href="#dom-animationeffectreadonly-localtime">#dom-animationeffectreadonly-localtime</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="dom-animationeffect-localtime">
+   <b><a href="#dom-animationeffect-localtime">#dom-animationeffect-localtime</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-animationeffectreadonly-localtime">6.7. WorkletGroupEffect</a>
+    <li><a href="#ref-for-dom-animationeffect-localtime">6.7. WorkletGroupEffect</a>
    </ul>
   </aside>
 <script>/* script-var-click-highlighting */
