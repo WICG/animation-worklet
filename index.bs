@@ -705,9 +705,9 @@ action that corresponds to the first matching condition from the following:
 
 </div>
 
-Issue(w3c/csswg-drafts#2071): The above interface exposes a conservative
-of subset of GroupEffect proposed as part of web-animation-2. Once that is available we should
-switch to it.
+Issue(w3c/csswg-drafts#2071): The above interface exposes a conservative subset
+of GroupEffect proposed as part of web-animation-2. Once that is available we
+should switch to it.
 
 
 Effect Stack and Composite Order {#effect-stack-composite-order}
