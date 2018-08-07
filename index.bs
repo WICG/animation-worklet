@@ -245,8 +245,8 @@ following steps:
         <a>TypeError</a> and abort all these steps.
 
     4. Let |animatorCtor| be the result of <a>converting</a> animatorCtorValue to the
-        <a>VoidFunction</a> <a>callback function</a> type.  Rethrow any exceptions from the
-        conversion and abort all these steps.
+        <a>VoidFunction</a> <a>callback function</a> type. If an exception is thrown, rethrow the
+        exception and abort all these steps.
 
     4. Let |prototype| be the result of <a>Get</a>(|animatorCtorValue|, "prototype").
 
@@ -256,14 +256,14 @@ following steps:
     6. Let |animateValue| be the result of <a>Get</a>(|prototype|, "animate").
 
     7. Let |animate| be the result of <a>converting</a> |animateValue| to the <a>Function</a>
-        <a>callback function</a> type. Rethrow any exceptions from the conversion and
-        abort all these steps.
+        <a>callback function</a> type. If an exception is thrown, rethrow the exception and abort
+        all these steps.
 
     8. Let |destroyValue| be the result of <a>Get</a>(|prototype|, "onDestroy").
 
     9. Let |destroy| be the result of <a>converting</a> |destroyValue| to the <a>Function</a>
-        <a>callback function</a> type. Rethrow any exceptions from the conversion and
-        abort all these steps.
+        <a>callback function</a> type. If an exception is thrown, rethrow the exception and abort
+        all these steps.
 
 
     8. Let |definition| be a new <a>animator definition</a> with:
@@ -333,8 +333,8 @@ To <dfn>create a new animator instance</dfn> given a |name|, |timeline|, |effect
     5. Let |state| be <a>StructuredDeserialize</a>(|serializedState|).
 
     6. Let |animatorInstance| be the result of <a>constructing</a> |animatorCtor| with
-      [|options|, |state| as args. Rethrown any exception from construction and abort the following
-      steps.
+        [|options|, |state| as args. If an exception is thrown, rethrow the exception and abort all
+        these steps.
 
     7. Set the following on |animatorInstance| with:
         - <a>animator name</a> being |name|
@@ -436,9 +436,9 @@ To <dfn>migrate an animator instance</dfn> from one {{WorkletGlobalScope}} to an
      3. Let |destroyFunction| be the <a>destroy function</a> of |definition|.
 
 
-     4. <a>Invoke</a> |onDestroyFunction| with |instance| as the <a>callback this value</a> and
-        let |state| be the result of the invocation. If any exception is thrown, then abort the
-        following steps.
+     4. <a>Invoke</a> |destroyFunction| with |instance| as the <a>callback this value</a> and
+        let |state| be the result of the invocation. If any exception is thrown, rethrow the
+        exception and abort the following steps.
 
      5. Set |serializedState| to be the result of <a>StructuredSerialize</a>(|state|).
         If any exception is thrown, then abort the following steps.

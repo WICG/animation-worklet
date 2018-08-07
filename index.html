@@ -1214,7 +1214,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 0af8ece51a58310888d9da3e5b2ebda903d17c18" name="generator">
   <link href="https://wicg.github.io/animation-worklet/" rel="canonical">
-  <meta content="c1e5a738b3a3547206030d67dcf2faeb8b8dfcbb" name="document-revision">
+  <meta content="3d64760638d532490bbcab0de183223e3eecc48f" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1472,7 +1472,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">CSS Animation Worklet API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2018-08-03">3 August 2018</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2018-08-07">7 August 2018</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1669,8 +1669,8 @@ steps.</p>
      <li data-md>
       <p>If the result of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-isconstructor" id="ref-for-sec-isconstructor">IsConstructor</a>(<var>animatorCtorValue</var>) is false, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw" id="ref-for-dfn-throw②">throw</a> a <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-native-error-types-used-in-this-standard-typeerror" id="ref-for-sec-native-error-types-used-in-this-standard-typeerror①">TypeError</a> and abort all these steps.</p>
      <li data-md>
-      <p>Let <var>animatorCtor</var> be the result of <a data-link-type="dfn" href="https://heycam.github.io/webidl/#es-type-mapping" id="ref-for-es-type-mapping">converting</a> animatorCtorValue to the <a data-link-type="dfn" href="https://heycam.github.io/webidl/#VoidFunction" id="ref-for-VoidFunction②">VoidFunction</a> <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-callback-function" id="ref-for-dfn-callback-function③">callback function</a> type.  Rethrow any exceptions from the
-conversion and abort all these steps.</p>
+      <p>Let <var>animatorCtor</var> be the result of <a data-link-type="dfn" href="https://heycam.github.io/webidl/#es-type-mapping" id="ref-for-es-type-mapping">converting</a> animatorCtorValue to the <a data-link-type="dfn" href="https://heycam.github.io/webidl/#VoidFunction" id="ref-for-VoidFunction②">VoidFunction</a> <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-callback-function" id="ref-for-dfn-callback-function③">callback function</a> type. If an exception is thrown, rethrow the
+exception and abort all these steps.</p>
      <li data-md>
       <p>Let <var>prototype</var> be the result of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-get-o-p" id="ref-for-sec-get-o-p">Get</a>(<var>animatorCtorValue</var>, "prototype").</p>
      <li data-md>
@@ -1678,13 +1678,13 @@ conversion and abort all these steps.</p>
      <li data-md>
       <p>Let <var>animateValue</var> be the result of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-get-o-p" id="ref-for-sec-get-o-p①">Get</a>(<var>prototype</var>, "animate").</p>
      <li data-md>
-      <p>Let <var>animate</var> be the result of <a data-link-type="dfn" href="https://heycam.github.io/webidl/#es-type-mapping" id="ref-for-es-type-mapping①">converting</a> <var>animateValue</var> to the <a data-link-type="dfn" href="https://heycam.github.io/webidl/#Function" id="ref-for-Function②">Function</a> <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-callback-function" id="ref-for-dfn-callback-function④">callback function</a> type. Rethrow any exceptions from the conversion and
-abort all these steps.</p>
+      <p>Let <var>animate</var> be the result of <a data-link-type="dfn" href="https://heycam.github.io/webidl/#es-type-mapping" id="ref-for-es-type-mapping①">converting</a> <var>animateValue</var> to the <a data-link-type="dfn" href="https://heycam.github.io/webidl/#Function" id="ref-for-Function②">Function</a> <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-callback-function" id="ref-for-dfn-callback-function④">callback function</a> type. If an exception is thrown, rethrow the exception and abort
+all these steps.</p>
      <li data-md>
       <p>Let <var>destroyValue</var> be the result of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-get-o-p" id="ref-for-sec-get-o-p②">Get</a>(<var>prototype</var>, "onDestroy").</p>
      <li data-md>
-      <p>Let <var>destroy</var> be the result of <a data-link-type="dfn" href="https://heycam.github.io/webidl/#es-type-mapping" id="ref-for-es-type-mapping②">converting</a> <var>destroyValue</var> to the <a data-link-type="dfn" href="https://heycam.github.io/webidl/#Function" id="ref-for-Function③">Function</a> <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-callback-function" id="ref-for-dfn-callback-function⑤">callback function</a> type. Rethrow any exceptions from the conversion and
-abort all these steps.</p>
+      <p>Let <var>destroy</var> be the result of <a data-link-type="dfn" href="https://heycam.github.io/webidl/#es-type-mapping" id="ref-for-es-type-mapping②">converting</a> <var>destroyValue</var> to the <a data-link-type="dfn" href="https://heycam.github.io/webidl/#Function" id="ref-for-Function③">Function</a> <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-callback-function" id="ref-for-dfn-callback-function⑤">callback function</a> type. If an exception is thrown, rethrow the exception and abort
+all these steps.</p>
      <li data-md>
       <p>Let <var>definition</var> be a new <a data-link-type="dfn" href="#animator-definition" id="ref-for-animator-definition">animator definition</a> with:</p>
       <ul>
@@ -1742,8 +1742,8 @@ when the user agent constructs a new <a data-link-type="dfn" href="#animator-ins
       <p>Let <var>state</var> be <a data-link-type="dfn" href="http://w3c.github.io/html/infrastructure.html#structureddeserialize" id="ref-for-structureddeserialize①">StructuredDeserialize</a>(<var>serializedState</var>).</p>
      <li data-md>
       <p>Let <var>animatorInstance</var> be the result of <a data-link-type="dfn" href="https://heycam.github.io/webidl/#construct-a-callback-function" id="ref-for-construct-a-callback-function">constructing</a> <var>animatorCtor</var> with
-  [<var>options</var>, <var>state</var> as args. Rethrown any exception from construction and abort the following
-  steps.</p>
+[<var>options</var>, <var>state</var> as args. If an exception is thrown, rethrow the exception and abort all
+these steps.</p>
      <li data-md>
       <p>Set the following on <var>animatorInstance</var> with:</p>
       <ul>
@@ -1829,9 +1829,9 @@ of any author-defined effect, and restore it after migration.</p>
        <li data-md>
         <p>Let <var>destroyFunction</var> be the <a data-link-type="dfn" href="#destroy-function" id="ref-for-destroy-function①">destroy function</a> of <var>definition</var>.</p>
        <li data-md>
-        <p><a data-link-type="dfn" href="https://heycam.github.io/webidl/#invoke-a-callback-function" id="ref-for-invoke-a-callback-function①">Invoke</a> <var>onDestroyFunction</var> with <var>instance</var> as the <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-callback-this-value" id="ref-for-dfn-callback-this-value①">callback this value</a> and
-let <var>state</var> be the result of the invocation. If any exception is thrown, then abort the
-following steps.</p>
+        <p><a data-link-type="dfn" href="https://heycam.github.io/webidl/#invoke-a-callback-function" id="ref-for-invoke-a-callback-function①">Invoke</a> <var>destroyFunction</var> with <var>instance</var> as the <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-callback-this-value" id="ref-for-dfn-callback-this-value①">callback this value</a> and
+let <var>state</var> be the result of the invocation. If any exception is thrown, rethrow the
+exception and abort the following steps.</p>
        <li data-md>
         <p>Set <var>serializedState</var> to be the result of <a data-link-type="dfn" href="http://w3c.github.io/html/infrastructure.html#structuredserialize" id="ref-for-structuredserialize">StructuredSerialize</a>(<var>state</var>).
 If any exception is thrown, then abort the following steps.</p>
