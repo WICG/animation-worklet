@@ -162,12 +162,11 @@ registerAnimator('animation-with-local-state', class {
 
 # Examples
 
-**TODO**: Add gifs that visualize these effects
-
 ## Hidey Bar
 An example of header effect where a header is moved with scroll and as soon as finger is lifted
 it animates fully to close or open position depending on its current position.
 
+![Hidey bar demo](img/hidey-bar-demo.gif)
 
 ``` html
 <div id='scrollingContainer'>
@@ -233,6 +232,8 @@ registerAnimator('hidey-bar', class {
 ## Twitter Header
 An example of twitter profile header effect where two elements (avatar, and header) are updated in
 sync with scroll offset.
+
+![Twitter header demo](img/twitter-header-demo.gif)
 
 ```html
 
