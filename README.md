@@ -132,7 +132,7 @@ hooks:
 
 ```js
 // in document scope
-new WorklerAnimation('animation-with-local-state', [], [], {value: 1});
+new WorkletAnimation('animation-with-local-state', [], [], {value: 1});
 ```
 
 
