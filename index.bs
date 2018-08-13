@@ -690,7 +690,7 @@ times</a>. This allows a single worklet animation to coordinate multiple effects
 [[#example-2]] for an example of such a use-case.
 
 <xmp class='idl'>
-[Exposed=Window]
+[Exposed=AnimationWorklet]
 interface WorkletGroupEffect {
   sequence<AnimationEffect> getChildren();
 };
