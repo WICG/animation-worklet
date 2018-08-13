@@ -1212,9 +1212,8 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version 0af8ece51a58310888d9da3e5b2ebda903d17c18" name="generator">
+  <meta content="Bikeshed version ca499dee738ad325bae89163f1eee6d8a2978cf4" name="generator">
   <link href="https://wicg.github.io/animation-worklet/" rel="canonical">
-  <meta content="26264503e48ed9ed311680c45c18bc1e9ee56732" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1472,7 +1471,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">CSS Animation Worklet API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2018-08-08">8 August 2018</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2018-08-13">13 August 2018</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -2098,7 +2097,7 @@ await CSS<c- p>.</c->animationWorklet<c- p>.</c->addModule<c- p>(</c-><c- t>'hid
 <c- c1>// currenTime values directly.</c->
 <c- kr>const</c-> animation <c- o>=</c-> <c- k>new</c-> WorkletAnimation<c- p>(</c->
     <c- t>'hidey-bar'</c-><c- p>,</c->
-    <c- k>new</c-> KeyFrameEffect<c- p>(</c->$header<c- p>,</c->
+    <c- k>new</c-> KeyframeEffect<c- p>(</c->$header<c- p>,</c->
                         <c- p>[{</c->transform<c- o>:</c-> <c- t>'translateX(100px)'</c-><c- p>},</c-> <c- p>{</c->transform<c- o>:</c-> <c- t>'translateX(0px)'</c-><c- p>}],</c->
                         <c- p>{</c->duration<c- o>:</c-> <c- mi>1000</c-><c- p>,</c-> iterations<c- o>:</c-> <c- mi>1</c-><c- p>,</c-> fill<c- o>:</c-> <c- t>'both'</c-> <c- p>}]),</c->
     scrollTimeline<c- p>,</c->
@@ -2156,10 +2155,10 @@ sync with scroll offset.
 await CSS<c- p>.</c->animationWorklet<c- p>.</c->addModule<c- p>(</c-><c- t>'twitter-header-animator.js'</c-><c- p>);</c->
 <c- kr>const</c-> animation <c- o>=</c-> <c- k>new</c-> WorkletAnimation<c- p>(</c->
     <c- t>'twitter-header'</c-><c- p>,</c->
-    <c- p>[</c-><c- k>new</c-> KeyFrameEffect<c- p>(</c->$avatar<c- p>,</c->  <c- d>/* scales down as we scroll up */</c->
+    <c- p>[</c-><c- k>new</c-> KeyframeEffect<c- p>(</c->$avatar<c- p>,</c->  <c- d>/* scales down as we scroll up */</c->
                     <c- p>[{</c->transform<c- o>:</c-> <c- t>'scale(1)'</c-><c- p>},</c-> <c- p>{</c->transform<c- o>:</c-> <c- t>'scale(0.5)'</c-><c- p>}],</c->
                     <c- p>{</c->duration<c- o>:</c-> <c- mi>1000</c-><c- p>,</c-> iterations<c- o>:</c-> <c- mi>1</c-><c- p>}),</c->
-    <c- k>new</c-> KeyFrameEffect<c- p>(</c->$header<c- p>,</c-> <c- d>/* loses transparency as we scroll up */</c->
+    <c- k>new</c-> KeyframeEffect<c- p>(</c->$header<c- p>,</c-> <c- d>/* loses transparency as we scroll up */</c->
                     <c- p>[{</c->opacity<c- o>:</c-> <c- mi>0</c-><c- p>},</c-> <c- p>{</c->opacity<c- o>:</c-> <c- mf>0.8</c-><c- p>}],</c->
                     <c- p>{</c->duration<c- o>:</c-> <c- mi>1000</c-><c- p>,</c-> iterations<c- o>:</c-> <c- mi>1</c-><c- p>})],</c->
     <c- k>new</c-> ScrollTimeline<c- p>(</c->$scrollingContainer<c- p>,</c-> <c- p>{</c->timeRange<c- o>:</c-> <c- mi>1000</c-><c- p>,</c-> startScrollOffset<c- o>:</c-> <c- mi>0</c-><c- p>,</c-> endScrollOffset<c- o>:</c-> $header<c- p>.</c->clientHeight<c- p>}));</c->
