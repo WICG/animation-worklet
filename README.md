@@ -176,7 +176,7 @@ it animates fully to close or open position depending on its current position.
 </div>
 
 <script>
-animationWorklet.addModule('hidey-bar-animator.js');
+await CSS.animationWorklet.addModule('hidey-bar-animator.js');
 const scrollTimeline = new ScrollTimeline($scrollingContainer, {timeRange: 100});
 const documentTimeline = document.timeline;
 
@@ -242,7 +242,7 @@ sync with scroll offset.
 </div>
 
 <script>
-await animationWorklet.addModule('twitter-header-animator.js');
+await CSS.animationWorklet.addModule('twitter-header-animator.js');
 const animation = new WorkletAnimation('twitter-header',
   [new KeyframeEffect($avatar,  /* scales down as we scroll up */
                       [{transform: 'scale(1)'}, {transform: 'scale(0.5)'}],
@@ -295,7 +295,7 @@ registerAnimator('twitter-header', class {
 </div>
 
 <script>
-await animationWorklet.addModule('parallax-animator.js');
+await CSS.animationWorklet.addModule('parallax-animator.js');
 const scrollTimeline = new ScrollTimeline($scrollingContainer, {timeRange: 1000});
 const scrollRange = $scrollingContainer.scrollHeight - $scrollingContainer.clientHeight;
 
